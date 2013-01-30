@@ -1,0 +1,20 @@
+Desert Oasis
+====================
+MapTop: 	606207
+MapBottom:	32768
+MapRight:	614399
+MapLeft:	40960
+
+Ohana LE
+====================
+MapTop: 	630783
+MapBottom:	57344
+MapRight:	589823
+MapLeft:	73728
+
+Antiga Shipyard
+====================
+MapTop: 	614399
+MapBottom:	57344
+MapRight:	614399
+MapLeft:	73728
