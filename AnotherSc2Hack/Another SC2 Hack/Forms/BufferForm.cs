@@ -1442,7 +1442,9 @@ namespace Another_SC2_Hack.Classes
                     _pInfo.UnitId(i).Equals((int)Typo.UnitId.ZbSpinecrawler) |
                     _pInfo.UnitId(i).Equals((int)Typo.UnitId.ZbSporecrawler))
                 {
-                    buffer.Graphics.DrawRectangle(new Pen(Brushes.Yellow, 2),
+                    var clBound = (_pInfo.UnitTargetFilter(i) & 0x0000000200000000) > 0 ? Color.Transparent : Color.Yellow;
+
+                    buffer.Graphics.DrawRectangle(new Pen(clBound, 2),
                                                   iUnitX - ((int) (dModifiedSize/2) + 0.5f),
                                                   iUnitY - ((int) (dModifiedSize/2) + 0.5f),
                                                   (int) dModifiedSize + 1,
@@ -1458,7 +1460,10 @@ namespace Another_SC2_Hack.Classes
                 if (_pInfo.UnitId(i).Equals((int) Typo.UnitId.TuMedivac) ||
                     _pInfo.UnitId(i).Equals((int) Typo.UnitId.PuWarpprism))
                 {
-                    buffer.Graphics.DrawRectangle(new Pen(Brushes.Purple, 2),
+                    
+                    var clBound = (_pInfo.UnitTargetFilter(i) & 0x0000000200000000) > 0 ? Color.Transparent : Color.Purple;
+
+                    buffer.Graphics.DrawRectangle(new Pen(clBound, 2),
                                                   iUnitX - ((int) (dModifiedSize/2) + 0.5f),
                                                   iUnitY - ((int) (dModifiedSize/2) + 0.5f),
                                                   (int) dModifiedSize + 1,
@@ -1476,7 +1481,9 @@ namespace Another_SC2_Hack.Classes
                     {
                         if (_pInfo.UnitEnergy(i) >= 25)
                         {
-                            buffer.Graphics.DrawRectangle(new Pen(Brushes.Blue, 2),
+                            var clBound = (_pInfo.UnitTargetFilter(i) & 0x0000000200000000) > 0 ? Color.Transparent : Color.Blue;
+
+                            buffer.Graphics.DrawRectangle(new Pen(clBound, 2),
                                                           iUnitX - ((int)(dModifiedSize / 2) + 0.5f),
                                                           iUnitY - ((int)(dModifiedSize / 2) + 0.5f),
                                                           (int)dModifiedSize + 1,
@@ -1491,7 +1498,9 @@ namespace Another_SC2_Hack.Classes
                     {
                         if (_pInfo.UnitEnergy(i) >= 25)
                         {
-                            buffer.Graphics.DrawRectangle(new Pen(Brushes.Blue, 2),
+                            var clBound = (_pInfo.UnitTargetFilter(i) & 0x0000000200000000) > 0 ? Color.Transparent : Color.Blue;
+
+                            buffer.Graphics.DrawRectangle(new Pen(clBound, 2),
                                                           iUnitX - ((int)(dModifiedSize / 2) + 0.5f),
                                                           iUnitY - ((int)(dModifiedSize / 2) + 0.5f),
                                                           (int)dModifiedSize + 1,
@@ -1506,7 +1515,9 @@ namespace Another_SC2_Hack.Classes
                     {
                         if (_pInfo.UnitEnergy(i) >= 50)
                         {
-                            buffer.Graphics.DrawRectangle(new Pen(Brushes.Blue, 2),
+                            var clBound = (_pInfo.UnitTargetFilter(i) & 0x0000000200000000) > 0 ? Color.Transparent : Color.Blue;
+
+                            buffer.Graphics.DrawRectangle(new Pen(clBound, 2),
                                                           iUnitX - ((int)(dModifiedSize / 2) + 0.5f),
                                                           iUnitY - ((int)(dModifiedSize / 2) + 0.5f),
                                                           (int)dModifiedSize + 1,
