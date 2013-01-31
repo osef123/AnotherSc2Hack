@@ -87,7 +87,6 @@
             // 
             // rtbOutput
             // 
-            this.rtbOutput.Enabled = false;
             this.rtbOutput.Location = new System.Drawing.Point(6, 19);
             this.rtbOutput.Name = "rtbOutput";
             this.rtbOutput.Size = new System.Drawing.Size(341, 127);
