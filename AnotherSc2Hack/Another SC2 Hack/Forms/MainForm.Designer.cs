@@ -81,12 +81,13 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tpGame = new System.Windows.Forms.TabPage();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.lblResolution = new System.Windows.Forms.Label();
             this.lblGametype = new System.Windows.Forms.Label();
             this.lblShowFps = new System.Windows.Forms.Label();
             this.tpSettings = new System.Windows.Forms.TabPage();
-            this.pnlShow = new Another_SC2_Hack.Classes.BufferPanel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.slblTimer = new System.Windows.Forms.ToolStripStatusLabel();
+            this.pnlShow = new Another_SC2_Hack.Classes.BufferPanel();
             this.msSimpleStrip.SuspendLayout();
             this.gbRes.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -101,7 +102,6 @@
             // 
             // tmrTick
             // 
-            this.tmrTick.Enabled = true;
             this.tmrTick.Tick += new System.EventHandler(this.tmrTick_Tick);
             // 
             // msSimpleStrip
@@ -127,7 +127,7 @@
             // 
             this.fsSecondExit.Image = global::Another_SC2_Hack.Properties.Resources.close;
             this.fsSecondExit.Name = "fsSecondExit";
-            this.fsSecondExit.Size = new System.Drawing.Size(152, 22);
+            this.fsSecondExit.Size = new System.Drawing.Size(95, 22);
             this.fsSecondExit.Text = "Exit ";
             this.fsSecondExit.Click += new System.EventHandler(this.fsSecondExit_Click);
             // 
@@ -609,6 +609,7 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.lblResolution);
             this.groupBox4.Controls.Add(this.lblGametype);
             this.groupBox4.Controls.Add(this.lblShowFps);
             this.groupBox4.Location = new System.Drawing.Point(21, 17);
@@ -618,23 +619,32 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Gameinformation";
             // 
+            // lblResolution
+            // 
+            this.lblResolution.AutoSize = true;
+            this.lblResolution.Location = new System.Drawing.Point(17, 78);
+            this.lblResolution.Name = "lblResolution";
+            this.lblResolution.Size = new System.Drawing.Size(41, 13);
+            this.lblResolution.TabIndex = 2;
+            this.lblResolution.Text = "label10";
+            // 
             // lblGametype
             // 
             this.lblGametype.AutoSize = true;
             this.lblGametype.Location = new System.Drawing.Point(17, 50);
             this.lblGametype.Name = "lblGametype";
-            this.lblGametype.Size = new System.Drawing.Size(41, 13);
+            this.lblGametype.Size = new System.Drawing.Size(147, 13);
             this.lblGametype.TabIndex = 1;
-            this.lblGametype.Text = "label10";
+            this.lblGametype.Text = "STARCRAFT 2 NOT FOUND";
             // 
             // lblShowFps
             // 
             this.lblShowFps.AutoSize = true;
             this.lblShowFps.Location = new System.Drawing.Point(17, 25);
             this.lblShowFps.Name = "lblShowFps";
-            this.lblShowFps.Size = new System.Drawing.Size(41, 13);
+            this.lblShowFps.Size = new System.Drawing.Size(147, 13);
             this.lblShowFps.TabIndex = 0;
-            this.lblShowFps.Text = "label10";
+            this.lblShowFps.Text = "STARCRAFT 2 NOT FOUND";
             // 
             // tpSettings
             // 
@@ -651,15 +661,6 @@
             this.tpSettings.Text = "Settings";
             this.tpSettings.UseVisualStyleBackColor = true;
             // 
-            // pnlShow
-            // 
-            this.pnlShow.CurrentItem = 0;
-            this.pnlShow.Location = new System.Drawing.Point(20, 86);
-            this.pnlShow.MaxItem = 2;
-            this.pnlShow.Name = "pnlShow";
-            this.pnlShow.Size = new System.Drawing.Size(674, 17);
-            this.pnlShow.TabIndex = 6;
-            // 
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -674,8 +675,17 @@
             // 
             this.slblTimer.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.slblTimer.Name = "slblTimer";
-            this.slblTimer.Size = new System.Drawing.Size(181, 23);
-            this.slblTimer.Text = "toolStripStatusLabel1";
+            this.slblTimer.Size = new System.Drawing.Size(235, 23);
+            this.slblTimer.Text = "STARCRAFT 2 NOT FOUND";
+            // 
+            // pnlShow
+            // 
+            this.pnlShow.CurrentItem = 0;
+            this.pnlShow.Location = new System.Drawing.Point(20, 86);
+            this.pnlShow.MaxItem = 2;
+            this.pnlShow.Name = "pnlShow";
+            this.pnlShow.Size = new System.Drawing.Size(674, 17);
+            this.pnlShow.TabIndex = 6;
             // 
             // MainForm
             // 
@@ -776,6 +786,7 @@
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Label lblShowFps;
         private System.Windows.Forms.Label lblGametype;
+        private System.Windows.Forms.Label lblResolution;
 
     }
 }

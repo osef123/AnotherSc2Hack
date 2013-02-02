@@ -181,7 +181,8 @@ namespace Another_SC2_Hack.Forms
         private void MainForm_Load(object sender, EventArgs e)
         {
             /* Change window Title */
-            Text = Environment.TickCount.ToString(CultureInfo.InvariantCulture);
+            var rnd = new Random();
+            Text = rnd.Next(0, 999999999).ToString(CultureInfo.InvariantCulture);
 
 
             while (_fResPanelFont == null)
@@ -189,10 +190,9 @@ namespace Another_SC2_Hack.Forms
                 if (File.Exists("Settings.cfg"))
                     ReadSaveFile();
 
-                
-
                 else
                 {
+                    /* Set standard values */
                     SetStandardValues();
                     Various.InitResolution(this);
                 }
@@ -204,21 +204,51 @@ namespace Another_SC2_Hack.Forms
             pnlShow.MaxItem = Max;
             pnlShow.CurrentItem = 1;
 
-
-            _pInfo = new PlayerInfo(new BufferForm(Typo.BufferformType.Dummy, this));
+            /* Here a check is performed which needs SC2 */
+            if (Various.StarcraftAvailable())
+                _pInfo = new PlayerInfo(new BufferForm(Typo.BufferformType.Dummy, this));
 
             /* Change Windowstyle */
             ChangeWindowStyle();
 
             /* Update at startup */
             fsSecondCheckforUpdate_Click(sender, e);
+
+            /* Set text for Resolution Label */
+            if (Various.CheckResolution())
+            {
+                lblResolution.ForeColor = Color.Green;
+                lblResolution.Text = "Your resolution is supported!";
+            }
+
+            else
+            {
+                lblResolution.ForeColor = Color.Red;
+                lblResolution.Text = "Your resolution is NOT supported!";
+            }
+
+            /* Activate timer */
+            tmrTick.Enabled = true;
         }
 
         /*** Our Maintimer, will handle the toggle for the Panels ***/
         private void tmrTick_Tick(object sender, EventArgs e)
         {
-            /* Close this if required */
-            //CloseSc2Process();
+            /* Leave if SC2 is not found */
+            if (Various.StarcraftAvailable() && _pInfo == null)
+                _pInfo = new PlayerInfo(new BufferForm(Typo.BufferformType.Dummy, this));
+
+            if (!Various.StarcraftAvailable())
+            {
+                _pInfo = null;
+                lblGametype.Text = "STARCRAFT 2 NOT FOUND";
+                lblShowFps.Text = "STARCRAFT 2 NOT FOUND";
+                slblTimer.Text = "STARCRAFT 2 NOT FOUND";
+                slblTimer.ForeColor = Color.Black;
+
+                return;
+            }
+             
 
             /* We have to refresh this */
             HandleInput(ref _bfRes, Typo.BufferformType.Ressource, _sResShortcut, _kResHotkey1, _kResHotkey2, _kResHotkey3);
@@ -2266,20 +2296,27 @@ namespace Another_SC2_Hack.Forms
         /*** Change SC2's Window- style ***/
         private void ChangeWindowStyle()
         {
+            /* Will exit if sc2 is not loaded */
+            if (!Various.StarcraftAvailable())
+                return;
+
             var sc2 = Process.GetProcessesByName("SC2")[0].MainWindowHandle;
 
-            
-            var iStyle = (int)Pinvokes.GetWindowLongPtr(sc2,
-                                                Pinvokes.GWL_EXSTYLE);
 
-            if (iStyle.Equals((int)Typo.WindowStyle.Fullscreen))
+            var iStyle = (int) Pinvokes.GetWindowLongPtr(sc2,
+                                                         Pinvokes.GWL_EXSTYLE);
+
+            if (iStyle.Equals((int) Typo.WindowStyle.Fullscreen))
             {
                 var msgResult =
-                    MessageBox.Show("Fullscreen detected!\n\nThe hack won't work.\nDo you need to change the style!",
-                                    "SC2 Style");
+                    MessageBox.Show(
+                        "Fullscreen detected!\n\nThe hack won't work.\nDo you need to change the style!",
+                        "SC2 Style");
 
 
             }
+
+
         }
 
         /*** Show Fps on Label ***/
@@ -2331,24 +2368,6 @@ namespace Another_SC2_Hack.Forms
         private void fsSecondExit_Click(object sender, EventArgs e)
         {
             Close();
-        }
-
-        /* Close if there is no SC2 */
-        private void CloseSc2Process()
-        {
-            var allProcs = Process.GetProcesses();
-
-            foreach (var process in allProcs)
-            {
-                if (process.ProcessName.Equals("SC2"))
-                    return;
-            }
-
-            CreatSaveFile();
-            Environment.Exit(0);
-
-
-
         }
     }
 }

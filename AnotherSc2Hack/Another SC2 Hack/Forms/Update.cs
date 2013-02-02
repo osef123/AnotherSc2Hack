@@ -3,7 +3,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
-using System.Net;   
+using System.Net;
+using System.Net.NetworkInformation;
 
 namespace Another_SC2_Hack.Forms
 {
@@ -53,10 +54,35 @@ namespace Another_SC2_Hack.Forms
         /* Actual search- routine */
         public void InitSearch()
         {
+            /* We ping the Server first to exclude exceptions! */
+            var myPing = new Ping();
+
+            var myResult = myPing.Send("Dropbox.com", 5);
+
+            if (myResult != null && myResult.Status != IPStatus.Success)
+            {
+                MessageBox.Show("Can not reach Server!\n\nTry later!", "FAILED");
+                Close();
+                return;
+            }
+
+
             /* Connect to server */
             var privateWebClient = new WebClient();
 
-            var strSource = privateWebClient.DownloadString(StrOnlinePath);
+            string strSource = string.Empty;
+
+            try
+            {
+                strSource = privateWebClient.DownloadString(StrOnlinePath);
+            }
+
+            catch
+            {
+                MessageBox.Show("Can not reach Server!\n\nTry later!", "FAILED");
+                Close();
+                return;
+            }
 
             /* Build version from this file */
             var curVer = new Version(System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
@@ -77,8 +103,9 @@ namespace Another_SC2_Hack.Forms
 
             _bToggle = false;
             Text = "Done! - No new Version found!";
-
+            Close();
         }
+
 
         /* Parses out a string of Line x */
         private string GetStringItems(int line, string source)
@@ -154,6 +181,7 @@ namespace Another_SC2_Hack.Forms
                 _strDownloadString + " " 
                 + "\"" 
                 + Application.StartupPath +  "\\" + fi.Name + "\"");
+
             Process.Start(inf);
         }
     }

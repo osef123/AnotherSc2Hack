@@ -73,7 +73,10 @@ namespace Another_SC2_Hack.Classes
             }
 
             if (!bFlag)
-                Environment.Exit(0);
+            {
+                MessageBox.Show("Starcraft 2 is not found!", "STARCRAFT MISSING");
+                return;
+            }
                 
 
 
@@ -2044,6 +2047,10 @@ namespace Another_SC2_Hack.Classes
 
             /* Change window style */
             ChangeWindowStyle();
+
+            /* Close this panel if SC2 is not loaded */
+            if (!Various.StarcraftAvailable())
+                Close();
         }
 
         /*** Will change the window- style ***/
@@ -2080,6 +2087,9 @@ namespace Another_SC2_Hack.Classes
         /* Change location */
         private void BufferForm_Move(object sender, MouseEventArgs e)
         {
+            if (_bSetSize)
+                return;
+
             if (e.Button == MouseButtons.Left)
             {
                 Point mousePos = Control.MousePosition;
@@ -2143,6 +2153,10 @@ namespace Another_SC2_Hack.Classes
         /* Change size of Form using scroll */
         private void BufferForm_MouseWheel(object sender, MouseEventArgs e)
         {
+            if (_bSetSize)
+                return;
+
+
             /* We break the scalling if we come to the point of no return..
              * There is an issue which changes the forms scale when overscalling */
             if (Width >= Screen.PrimaryScreen.Bounds.Width &&
