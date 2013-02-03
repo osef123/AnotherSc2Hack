@@ -231,14 +231,18 @@ namespace Another_SC2_Hack.Classes
         }
 
         /*** Drawing Instance for the Ressource- Part ***/
+
         private void RessourceDrawing(BufferedGraphics buffer)
         {
+            if (_pInfo.Playercount() <= 0)
+                return;
+
             _tmrMainTick.Interval = _myForm._iResInterval;
-            Opacity = (float)_myForm._iResOpacity / 100;
+            Opacity = (float) _myForm._iResOpacity/100;
             Width = _myForm._iResWidth;
             Height = _myForm._iResHeigth*_pInfo.Playercount();
             Location = new Point(_myForm._iResX, _myForm._iResY);
-            var fDiagonalSize = (float)Math.Sqrt((Math.Pow(Width, 2) + Math.Pow(Height / _pInfo.Playercount(), 2)));
+            var fDiagonalSize = (float) Math.Sqrt((Math.Pow(Width, 2) + Math.Pow(Height/_pInfo.Playercount(), 2)));
             //fFontSize = 12/fDiagonalSize;
 
             var i2 = 0;
@@ -311,7 +315,7 @@ namespace Another_SC2_Hack.Classes
 
 
                 /* Draw Background per box */
-                var clBackground = i2 % 2 == 0
+                var clBackground = i2%2 == 0
                                        ? Color.FromArgb(255, Color.Gray)
                                        : Color.FromArgb(255, Color.LightSlateGray);
 
@@ -319,21 +323,22 @@ namespace Another_SC2_Hack.Classes
 
 
                 buffer.Graphics.FillRectangle(new SolidBrush(clBackground), 0,
-                    0 + (Height / _pInfo.Playercount()) * i2,
-                    Width,
-                    Height / _pInfo.Playercount());
+                                              0 + (Height/_pInfo.Playercount())*i2,
+                                              Width,
+                                              Height/_pInfo.Playercount());
 
                 /* Draw a frame per Box */
                 buffer.Graphics.DrawRectangle(new Pen(new SolidBrush(clUsercolor), 2), 1,
-                    1 + (Height / _pInfo.Playercount()) * i2,
-                    Width - 2,
-                    Height / _pInfo.Playercount() - 2);
+                                              1 + (Height/_pInfo.Playercount())*i2,
+                                              Width - 2,
+                                              Height/_pInfo.Playercount() - 2);
 
                 /* Draw the PlayerName */
                 buffer.Graphics.DrawString(_pInfo.Name(i),
-                    new Font(_myForm._fResPanelFont.Name, fFontSize * fDiagonalSize, FontStyle.Bold),
-                    new SolidBrush(Color.FromArgb(255, clUsercolor)),
-                    new PointF(10, 10 + (Height / _pInfo.Playercount()) * i2));
+                                           new Font(_myForm._fResPanelFont.Name, fFontSize*fDiagonalSize,
+                                                    FontStyle.Bold),
+                                           new SolidBrush(Color.FromArgb(255, clUsercolor)),
+                                           new PointF(10, 10 + (Height/_pInfo.Playercount())*i2));
 
                 /* Draw the PlayerTeam */
                 /* CALCS
@@ -347,28 +352,36 @@ namespace Another_SC2_Hack.Classes
                  * 0,7905543952733969f comes from the standart formular (416/526,213)
                  */
                 buffer.Graphics.DrawString("#" + _pInfo.Team(i).ToString(CultureInfo.InvariantCulture),
-                    new Font(_myForm._fResPanelFont.Name, fFontSize * fDiagonalSize, FontStyle.Regular),
-                    new SolidBrush(Color.FromArgb(255, Color.White)),
-                    new PointF(0.2357412793860572f * fDiagonalSize, 10 + (Height / _pInfo.Playercount()) * i2));
+                                           new Font(_myForm._fResPanelFont.Name, fFontSize*fDiagonalSize,
+                                                    FontStyle.Regular),
+                                           new SolidBrush(Color.FromArgb(255, Color.White)),
+                                           new PointF(0.2357412793860572f*fDiagonalSize,
+                                                      10 + (Height/_pInfo.Playercount())*i2));
 
                 /* Draw Minerals of Player */
                 buffer.Graphics.DrawString(_pInfo.Minerals(i).ToString(CultureInfo.InvariantCulture),
-                    new Font(_myForm._fResPanelFont.Name, fFontSize * fDiagonalSize, FontStyle.Regular),
-                    new SolidBrush(Color.FromArgb(255, Color.White)),
-                    new PointF(0.3626788913631649f * fDiagonalSize, 10 + (Height / _pInfo.Playercount()) * i2));
+                                           new Font(_myForm._fResPanelFont.Name, fFontSize*fDiagonalSize,
+                                                    FontStyle.Regular),
+                                           new SolidBrush(Color.FromArgb(255, Color.White)),
+                                           new PointF(0.3626788913631649f*fDiagonalSize,
+                                                      10 + (Height/_pInfo.Playercount())*i2));
 
                 /* Draw Gas of Player */
                 buffer.Graphics.DrawString(_pInfo.Gas(i).ToString(CultureInfo.InvariantCulture),
-                    new Font(_myForm._fResPanelFont.Name, fFontSize * fDiagonalSize, FontStyle.Regular),
-                    new SolidBrush(Color.FromArgb(255, Color.White)),
-                    new PointF(0.5857264095515113f * fDiagonalSize, 10 + (Height / _pInfo.Playercount()) * i2));
+                                           new Font(_myForm._fResPanelFont.Name, fFontSize*fDiagonalSize,
+                                                    FontStyle.Regular),
+                                           new SolidBrush(Color.FromArgb(255, Color.White)),
+                                           new PointF(0.5857264095515113f*fDiagonalSize,
+                                                      10 + (Height/_pInfo.Playercount())*i2));
 
                 /* Draw Supply of Player */
                 buffer.Graphics.DrawString(_pInfo.SupplyMin(i).ToString(CultureInfo.InvariantCulture) + "/" +
-                _pInfo.SupplyMax(i).ToString(CultureInfo.InvariantCulture),
-                    new Font(_myForm._fResPanelFont.Name, fFontSize * fDiagonalSize, FontStyle.Regular),
-                    new SolidBrush(Color.FromArgb(255, Color.White)),
-                    new PointF(0.8087739277398577f * fDiagonalSize, 10 + (Height / _pInfo.Playercount()) * i2));
+                                           _pInfo.SupplyMax(i).ToString(CultureInfo.InvariantCulture),
+                                           new Font(_myForm._fResPanelFont.Name, fFontSize*fDiagonalSize,
+                                                    FontStyle.Regular),
+                                           new SolidBrush(Color.FromArgb(255, Color.White)),
+                                           new PointF(0.8087739277398577f*fDiagonalSize,
+                                                      10 + (Height/_pInfo.Playercount())*i2));
 
                 Image imgMin = null,
                       imgGas = null,
@@ -397,29 +410,33 @@ namespace Another_SC2_Hack.Classes
 
                 /* Draw Mineral- Icon */
                 buffer.Graphics.DrawImage(imgMin,
-                                          0.3082770576586901f * fDiagonalSize,
-                                          7 + (Height / _pInfo.Playercount()) * i2, 0.0532194943007624f * fDiagonalSize,
-                                          0.0532194943007624f * fDiagonalSize);
+                                          0.3082770576586901f*fDiagonalSize,
+                                          7 + (Height/_pInfo.Playercount())*i2, 0.0532194943007624f*fDiagonalSize,
+                                          0.0532194943007624f*fDiagonalSize);
 
                 /* Draw Gas- Icon */
                 buffer.Graphics.DrawImage(imgGas,
-                                          0.5313245758470366f * fDiagonalSize,
-                                          7 + (Height / _pInfo.Playercount()) * i2, 0.0532194943007624f * fDiagonalSize,
-                                          0.0532194943007624f * fDiagonalSize);
+                                          0.5313245758470366f*fDiagonalSize,
+                                          7 + (Height/_pInfo.Playercount())*i2, 0.0532194943007624f*fDiagonalSize,
+                                          0.0532194943007624f*fDiagonalSize);
 
                 /* Draw Supply- Icon */
                 buffer.Graphics.DrawImage(imgSup,
-                                          0.754372094035383f * fDiagonalSize,
-                                          7 + (Height / _pInfo.Playercount()) * i2, 0.0532194943007624f * fDiagonalSize,
-                                          0.0532194943007624f * fDiagonalSize);
+                                          0.754372094035383f*fDiagonalSize,
+                                          7 + (Height/_pInfo.Playercount())*i2, 0.0532194943007624f*fDiagonalSize,
+                                          0.0532194943007624f*fDiagonalSize);
 
                 i2++;
             }
+
         }
 
         /*** Drawing Instance for the Income- Part ***/
         private void IncomeDrawing(BufferedGraphics buffer)
         {
+            if (_pInfo.Playercount() <= 0)
+                return;
+
             _tmrMainTick.Interval = _myForm._iIncInterval;
             Opacity = (float)_myForm._iIncOpacity / 100;
             Width = _myForm._iIncWidth;
@@ -593,6 +610,9 @@ namespace Another_SC2_Hack.Classes
         /*** Drawing Instance for the Apm- Part ***/
         private void ApmDrawing(BufferedGraphics buffer)
         {
+            if (_pInfo.Playercount() <= 0)
+                return;
+
             _tmrMainTick.Interval = _myForm._iApmInterval;
             Opacity = (float)_myForm._iApmOpacity / 100;
             Width = _myForm._iApmWidth;
@@ -717,6 +737,9 @@ namespace Another_SC2_Hack.Classes
         /*** Drawing Instance for the Army- Part ***/
         private void ArmyDrawing(BufferedGraphics buffer)
         {
+            if (_pInfo.Playercount() <= 0)
+                return;
+
             _tmrMainTick.Interval = _myForm._iArmInterval;
             Opacity = (float)_myForm._iArmOpacity / 100;
             Width = _myForm._iArmWidth;
@@ -891,6 +914,9 @@ namespace Another_SC2_Hack.Classes
         /*** Drawing Instance for the Worker- Part ***/
         private void WorkerDrawing(BufferedGraphics buffer)
         {
+            if (_pInfo.Playercount() <= 0)
+                return;
+
             _tmrMainTick.Interval = _myForm._iWorInterval;
             Opacity = (float)_myForm._iWorOpacity / 100;
             Width = _myForm._iWorWidth;

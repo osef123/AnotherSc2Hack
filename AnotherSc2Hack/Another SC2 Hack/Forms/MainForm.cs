@@ -176,8 +176,11 @@ namespace Another_SC2_Hack.Forms
 
 
         #endregion
-     
 
+
+        #region Controls And their Methods
+
+        /*** Load stuff on start ***/
         private void MainForm_Load(object sender, EventArgs e)
         {
             /* Change window Title */
@@ -248,7 +251,7 @@ namespace Another_SC2_Hack.Forms
 
                 return;
             }
-             
+
 
             /* We have to refresh this */
             HandleInput(ref _bfRes, Typo.BufferformType.Ressource, _sResShortcut, _kResHotkey1, _kResHotkey2, _kResHotkey3);
@@ -263,15 +266,15 @@ namespace Another_SC2_Hack.Forms
             FillStatuslabel();
 
             /* Show Fps in Label */
-            ShowFps(); 
+            ShowFps();
         }
 
         /*** Change font for a Panel ***/
         private void btnResFont_Click(object sender, EventArgs e)
         {
             var fd = new FontDialog();
-            
-            
+
+
             DialogResult dr = fd.ShowDialog();
 
             if (dr == DialogResult.OK)
@@ -306,6 +309,582 @@ namespace Another_SC2_Hack.Forms
 
             InsertDataIntoControl();
         }
+
+        /*** Check if the Input is okay and take over variables' content ***/
+        private void txtResRef_TextChanged(object sender, EventArgs e)
+        {
+            if (txtResRef.Text.Length < 1)
+                return;
+
+            int dummy = 0;
+
+            if (int.TryParse(txtResRef.Text, NumberStyles.Integer, null, out dummy))
+            {
+            }
+
+            else
+                txtResRef.Text = txtResRef.Text.Remove(txtResRef.Text.Length - 1, 1);
+
+            txtResRef.Select(txtResRef.Text.Length, 0);
+
+            if (dummy <= 0)
+                dummy = 1;
+
+            /* Check which Panelsetting was active */
+            switch (_iCurrent)
+            {
+                case 0:
+                    _iResInterval = dummy;
+                    break;
+
+                case 1:
+                    _iIncInterval = dummy;
+                    break;
+
+                case 2:
+                    _iWorInterval = dummy;
+                    break;
+
+                case 3:
+                    _iApmInterval = dummy;
+                    break;
+
+                case 4:
+                    _iArmInterval = dummy;
+                    break;
+
+                case 5:
+                    _iMapInterval = dummy;
+                    break;
+
+                case 6:
+                    _iNotInterval = dummy;
+                    break;
+            }
+        }
+
+        /*** First Hotkey ***/
+        private void txtRes1_KeyDown(object sender, KeyEventArgs e)
+        {
+            txtRes1.Text = e.KeyCode.ToString();
+            e.SuppressKeyPress = true;
+
+            switch (_iCurrent)
+            {
+                case 0:
+                    _kResHotkey1 = e.KeyCode;
+                    break;
+
+                case 1:
+                    _kIncHotkey1 = e.KeyCode;
+                    break;
+
+                case 2:
+                    _kWorHotkey1 = e.KeyCode;
+                    break;
+
+                case 3:
+                    _kApmHotkey1 = e.KeyCode;
+                    break;
+
+                case 4:
+                    _kArmHotkey1 = e.KeyCode;
+                    break;
+
+                case 5:
+                    _kMapHotkey1 = e.KeyCode;
+                    break;
+
+                case 6:
+                    _kNotHotkey1 = e.KeyCode;
+                    break;
+            }
+        }
+
+        /*** Second Hotkey ***/
+        private void txtRes2_KeyDown(object sender, KeyEventArgs e)
+        {
+            txtRes2.Text = e.KeyCode.ToString();
+            e.SuppressKeyPress = true;
+
+            switch (_iCurrent)
+            {
+                case 0:
+                    _kResHotkey2 = e.KeyCode;
+                    break;
+
+                case 1:
+                    _kIncHotkey2 = e.KeyCode;
+                    break;
+
+                case 2:
+                    _kWorHotkey2 = e.KeyCode;
+                    break;
+
+                case 3:
+                    _kApmHotkey2 = e.KeyCode;
+                    break;
+
+                case 4:
+                    _kArmHotkey2 = e.KeyCode;
+                    break;
+
+                case 5:
+                    _kMapHotkey2 = e.KeyCode;
+                    break;
+
+                case 6:
+                    _kNotHotkey2 = e.KeyCode;
+                    break;
+            }
+        }
+
+        /*** Third Hotkey ***/
+        private void txtRes3_KeyDown(object sender, KeyEventArgs e)
+        {
+            txtRes3.Text = e.KeyCode.ToString();
+            e.SuppressKeyPress = true;
+
+            switch (_iCurrent)
+            {
+                case 0:
+                    _kResHotkey3 = e.KeyCode;
+                    break;
+
+                case 1:
+                    _kIncHotkey3 = e.KeyCode;
+                    break;
+
+                case 2:
+                    _kWorHotkey3 = e.KeyCode;
+                    break;
+
+                case 3:
+                    _kApmHotkey3 = e.KeyCode;
+                    break;
+
+                case 4:
+                    _kArmHotkey3 = e.KeyCode;
+                    break;
+
+                case 5:
+                    _kMapHotkey3 = e.KeyCode;
+                    break;
+
+                case 6:
+                    _kNotHotkey3 = e.KeyCode;
+                    break;
+            }
+        }
+
+        /*** Goes to the next Panelrectangle ***/
+        private void btnNext_Click(object sender, EventArgs e)
+        {
+            if (_iCurrent + 1 < Max)
+                _iCurrent++;
+
+            pnlShow.CurrentItem = _iCurrent + 1;
+
+            //Refresh Controls
+            InsertDataIntoControl();
+        }
+
+        /*** Goes to the previous Panelrectangle ***/
+        private void btnPrev_Click(object sender, EventArgs e)
+        {
+            if (_iCurrent < 1)
+            {
+
+            }
+            else
+                _iCurrent--;
+
+            pnlShow.CurrentItem = _iCurrent + 1;
+
+            //Refresh Controls
+            InsertDataIntoControl();
+        }
+
+        /*** Set color for the destination- Line ***/
+        private void btnColorDestinationLine_Click(object sender, EventArgs e)
+        {
+            ColorDialog cd = new ColorDialog();
+
+            var res = cd.ShowDialog();
+
+            if (res.Equals(DialogResult.OK))
+                _cMapColorofDestinationLine = cd.Color;
+
+            btnColorDestinationLine.Text = _cMapColorofDestinationLine.Name;
+            btnColorDestinationLine.ForeColor = _cMapColorofDestinationLine;
+        }
+
+        /*** Remove AI Setting ***/
+        private void cbResRemAI_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (_iCurrent)
+            {
+                case 0:
+                    _bResRemoveAi = Convert.ToBoolean(cbResRemAI.SelectedItem);
+                    break;
+
+                case 1:
+                    _bIncRemoveAi = Convert.ToBoolean(cbResRemAI.SelectedItem);
+                    break;
+
+
+                case 3:
+                    _bApmRemoveAi = Convert.ToBoolean(cbResRemAI.SelectedItem);
+                    break;
+
+
+                case 4:
+                    _bArmRemoveAi = Convert.ToBoolean(cbResRemAI.SelectedItem);
+                    break;
+
+
+                case 5:
+                    _bMapRemoveAi = Convert.ToBoolean(cbResRemAI.SelectedItem);
+                    break;
+            }
+        }
+
+        /*** Remove LocalPlayer Setting ***/
+        private void cbResRemLocal_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (_iCurrent)
+            {
+                case 0:
+                    _bResRemoveLocalplayer = Convert.ToBoolean(cbResRemLocal.SelectedItem);
+                    break;
+
+                case 1:
+                    _bIncRemoveLocalplayer = Convert.ToBoolean(cbResRemLocal.SelectedItem);
+                    break;
+
+
+                case 3:
+                    _bApmRemoveLocalplayer = Convert.ToBoolean(cbResRemLocal.SelectedItem);
+                    break;
+
+
+                case 4:
+                    _bArmRemoveLocalplayer = Convert.ToBoolean(cbResRemLocal.SelectedItem);
+                    break;
+
+
+                case 5:
+                    _bMapRemoveLocalplayer = Convert.ToBoolean(cbResRemLocal.SelectedItem);
+                    break;
+            }
+        }
+
+        /*** Remove Allie Setting ***/
+        private void cbResRemAllie_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (_iCurrent)
+            {
+                case 0:
+                    _bResRemoveAllie = Convert.ToBoolean(cbResRemAllie.SelectedItem);
+                    break;
+
+                case 1:
+                    _bIncRemoveAllie = Convert.ToBoolean(cbResRemAllie.SelectedItem);
+                    break;
+
+                case 3:
+                    _bApmRemoveAllie = Convert.ToBoolean(cbResRemAllie.SelectedItem);
+                    break;
+
+                case 4:
+                    _bArmRemoveAllie = Convert.ToBoolean(cbResRemAllie.SelectedItem);
+                    break;
+
+                case 5:
+                    _bMapRemoveAllie = Convert.ToBoolean(cbResRemAllie.SelectedItem);
+                    break;
+            }
+        }
+
+        /*** Remove Dead Player Setting ***/
+        private void cbResRemDead_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (_iCurrent)
+            {
+                case 0:
+                    _bResRemoveDeadPlayer = Convert.ToBoolean(cbResRemDead.SelectedItem);
+                    break;
+
+                case 1:
+                    _bIncRemoveDeadPlayer = Convert.ToBoolean(cbResRemDead.SelectedItem);
+                    break;
+
+                case 3:
+                    _bApmRemoveDeadPlayer = Convert.ToBoolean(cbResRemDead.SelectedItem);
+                    break;
+
+                case 4:
+                    _bArmRemoveDeadPlayer = Convert.ToBoolean(cbResRemDead.SelectedItem);
+                    break;
+
+            }
+        }
+
+        /*** Remove Observer Setting ***/
+        private void cbResRemObs_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (_iCurrent)
+            {
+                case 0:
+                    _bResRemoveObserver = Convert.ToBoolean(cbResRemObs.SelectedItem);
+                    break;
+
+                case 1:
+                    _bIncRemoveObserver = Convert.ToBoolean(cbResRemObs.SelectedItem);
+                    break;
+
+                case 3:
+                    _bApmRemoveObserver = Convert.ToBoolean(cbResRemObs.SelectedItem);
+                    break;
+
+                case 4:
+                    _bArmRemoveObserver = Convert.ToBoolean(cbResRemObs.SelectedItem);
+                    break;
+            }
+        }
+
+        /*** Remove Referee Setting ***/
+        private void cbResRemReferee_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (_iCurrent)
+            {
+                case 0:
+                    _bResRemoveReferee = Convert.ToBoolean(cbResRemReferee.SelectedItem);
+                    break;
+
+                case 1:
+                    _bIncRemoveReferee = Convert.ToBoolean(cbResRemReferee.SelectedItem);
+                    break;
+
+                case 3:
+                    _bApmRemoveReferee = Convert.ToBoolean(cbResRemReferee.SelectedItem);
+                    break;
+
+                case 4:
+                    _bArmRemoveReferee = Convert.ToBoolean(cbResRemReferee.SelectedItem);
+                    break;
+            }
+        }
+
+        /*** Set Shortcut (Toggle) Setting ***/
+        private void txtResShortcut_TextChanged(object sender, EventArgs e)
+        {
+            switch (_iCurrent)
+            {
+                case 0:
+                    _sResShortcut = txtResShortcut.Text;
+                    break;
+
+                case 1:
+                    _sIncShortcut = txtResShortcut.Text;
+                    break;
+
+                case 2:
+                    _sWorShortcut = txtResShortcut.Text;
+                    break;
+
+                case 3:
+                    _sApmShortcut = txtResShortcut.Text;
+                    break;
+
+                case 4:
+                    _sArmShortcut = txtResShortcut.Text;
+                    break;
+
+                case 5:
+                    _sMapShortcut = txtResShortcut.Text;
+                    break;
+
+                case 6:
+                    _sNotShortcut = txtResShortcut.Text;
+                    break;
+            }
+        }
+
+        /*** Set Shortcut (Position) Setting ***/
+        private void txtResPos_TextChanged(object sender, EventArgs e)
+        {
+            switch (_iCurrent)
+            {
+                case 0:
+                    _sResPos = txtResPos.Text;
+                    break;
+
+                case 1:
+                    _sIncPos = txtResPos.Text;
+                    break;
+
+                case 2:
+                    _sWorPos = txtResPos.Text;
+                    break;
+
+                case 3:
+                    _sApmPos = txtResPos.Text;
+                    break;
+
+                case 4:
+                    _sArmPos = txtResPos.Text;
+                    break;
+
+                case 5:
+                    _sMapPos = txtResPos.Text;
+                    break;
+
+                case 6:
+                    _sNotPos = txtResPos.Text;
+                    break;
+            }
+        }
+
+        /*** Set Shortcut (Size) Setting ***/
+        private void txtResSize_TextChanged(object sender, EventArgs e)
+        {
+            switch (_iCurrent)
+            {
+                case 0:
+                    _sResSize = txtResSize.Text;
+                    break;
+
+                case 1:
+                    _sIncSize = txtResSize.Text;
+                    break;
+
+                case 2:
+                    _sWorSize = txtResSize.Text;
+                    break;
+
+                case 3:
+                    _sApmSize = txtResSize.Text;
+                    break;
+
+                case 4:
+                    _sArmSize = txtResSize.Text;
+                    break;
+
+                case 5:
+                    _sMapSize = txtResSize.Text;
+                    break;
+
+                case 6:
+                    _sNotSize = txtResSize.Text;
+                    break;
+            }
+        }
+
+        /*** Set the Opacity ***/
+        private void txtResOpacity_TextChanged(object sender, EventArgs e)
+        {
+            if (txtResOpacity.Text.Length < 1)
+                return;
+
+            int dummy = 0;
+
+            if (!int.TryParse(txtResOpacity.Text, NumberStyles.Integer, null, out dummy))
+            {
+                MessageBox.Show("Try numbers...");
+                return;
+            }
+
+
+            switch (_iCurrent)
+            {
+                case 0:
+                    _iResOpacity = dummy;
+                    break;
+
+                case 1:
+                    _iIncOpacity = dummy;
+                    break;
+
+                case 2:
+                    _iWorOpacity = dummy;
+                    break;
+
+                case 3:
+                    _iApmOpacity = dummy;
+                    break;
+
+                case 4:
+                    _iArmOpacity = dummy;
+                    break;
+
+                case 5:
+                    _iMapOpacity = dummy;
+                    break;
+
+                case 6:
+                    _iNotOpacity = dummy;
+                    break;
+            }
+        }
+
+        /*** Enable DestinationLine Setting***/
+        private void cbDestinationLine_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (_iCurrent.Equals(5))
+                _bShowDestinationLine = Convert.ToBoolean(cbDestinationLine.SelectedItem);
+        }
+
+        /*** Button to save the actual stuff ***/
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            CreatSaveFile();
+        }
+
+        /*** When closing, save everything ***/
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            CreatSaveFile();
+        }
+
+        /*** Changes the Panel size and position. Based on resolution ***/
+        private void btnAdjustResolution_Click(object sender, EventArgs e)
+        {
+            Various.InitResolution(this);
+        }
+
+        /*** Check for updates ***/
+        private void fsSecondCheckforUpdate_Click(object sender, EventArgs e)
+        {
+            CreatSaveFile();
+
+            if (_upCheckforUpdates == null)
+                _upCheckforUpdates = new Update();
+
+            if (_upCheckforUpdates.Created)
+                _upCheckforUpdates.Close();
+
+            else
+            {
+                _upCheckforUpdates = new Update();
+                _upCheckforUpdates.Show();
+            }
+
+        }
+
+        /*** Close this ***/
+        private void fsSecondExit_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        /*** Opens a message box and tells you what resolution is supported ***/
+        private void lblWhatResolutions_Click(object sender, EventArgs e)
+        {
+            Various.PrintResolutionMessage();
+        }
+
+        #endregion
 
         /*** Set some standard values ***/
         private void SetStandardValues()
@@ -1626,543 +2205,6 @@ namespace Another_SC2_Hack.Forms
             sw.Close();
         }
 
-        /*** Check if the Input is okay and take over variables' content ***/
-        private void txtResRef_TextChanged(object sender, EventArgs e)
-        {
-            if (txtResRef.Text.Length < 1) 
-                return;
-
-            int dummy = 0;
-
-            if (int.TryParse(txtResRef.Text, NumberStyles.Integer, null, out dummy))
-            {
-            }
-
-            else
-                txtResRef.Text = txtResRef.Text.Remove(txtResRef.Text.Length - 1, 1);
-
-            txtResRef.Select(txtResRef.Text.Length, 0);
-
-            if (dummy <= 0)
-                dummy = 1;
-
-            /* Check which Panelsetting was active */
-            switch (_iCurrent)
-            {
-                case 0:
-                    _iResInterval = dummy;
-                    break;
-
-                case 1:
-                    _iIncInterval = dummy;
-                    break;
-
-                case 2:
-                    _iWorInterval = dummy;
-                    break;
-
-                case 3:
-                    _iApmInterval = dummy;
-                    break;
-
-                case 4:
-                    _iArmInterval = dummy;
-                    break;
-
-                case 5:
-                    _iMapInterval = dummy;
-                    break;
-
-                case 6:
-                    _iNotInterval = dummy;
-                    break;
-            }
-        }
-
-        /*** First Hotkey ***/
-        private void txtRes1_KeyDown(object sender, KeyEventArgs e)
-        {
-            txtRes1.Text = e.KeyCode.ToString();
-            e.SuppressKeyPress = true;
-
-            switch (_iCurrent)
-            {
-                case 0:
-                    _kResHotkey1 = e.KeyCode;
-                    break;
-
-                case 1:
-                    _kIncHotkey1 = e.KeyCode;
-                    break;
-
-                case 2:
-                    _kWorHotkey1 = e.KeyCode;
-                    break;
-
-                case 3:
-                    _kApmHotkey1 = e.KeyCode;
-                    break;
-
-                case 4:
-                    _kArmHotkey1 = e.KeyCode;
-                    break;
-
-                case 5:
-                    _kMapHotkey1 = e.KeyCode;
-                    break;
-
-                case 6:
-                    _kNotHotkey1 = e.KeyCode;
-                    break;
-            }
-        }
-
-        /*** Second Hotkey ***/
-        private void txtRes2_KeyDown(object sender, KeyEventArgs e)
-        {
-            txtRes2.Text = e.KeyCode.ToString();
-            e.SuppressKeyPress = true;
-
-            switch (_iCurrent)
-            {
-                case 0:
-                    _kResHotkey2 = e.KeyCode;
-                    break;
-
-                case 1:
-                    _kIncHotkey2 = e.KeyCode;
-                    break;
-
-                case 2:
-                    _kWorHotkey2 = e.KeyCode;
-                    break;
-
-                case 3:
-                    _kApmHotkey2 = e.KeyCode;
-                    break;
-
-                case 4:
-                    _kArmHotkey2 = e.KeyCode;
-                    break;
-
-                case 5:
-                    _kMapHotkey2 = e.KeyCode;
-                    break;
-
-                case 6:
-                    _kNotHotkey2 = e.KeyCode;
-                    break;
-            }
-        }
-
-        /*** Third Hotkey ***/
-        private void txtRes3_KeyDown(object sender, KeyEventArgs e)
-        {
-            txtRes3.Text = e.KeyCode.ToString();
-            e.SuppressKeyPress = true;
-
-            switch (_iCurrent)
-            {
-                case 0:
-                    _kResHotkey3 = e.KeyCode;
-                    break;
-
-                case 1:
-                    _kIncHotkey3 = e.KeyCode;
-                    break;
-
-                case 2:
-                    _kWorHotkey3 = e.KeyCode;
-                    break;
-
-                case 3:
-                    _kApmHotkey3 = e.KeyCode;
-                    break;
-
-                case 4:
-                    _kArmHotkey3 = e.KeyCode;
-                    break;
-
-                case 5:
-                    _kMapHotkey3 = e.KeyCode;
-                    break;
-
-                case 6:
-                    _kNotHotkey3 = e.KeyCode;
-                    break;
-            }
-        }
-
-        /*** Goes to the next Panelrectangle ***/
-        private void btnNext_Click(object sender, EventArgs e)
-        {
-            if (_iCurrent + 1 < Max)
-                _iCurrent++;
-
-            pnlShow.CurrentItem = _iCurrent + 1;
-
-            //Refresh Controls
-            InsertDataIntoControl();
-        }
-
-        /*** Goes to the previous Panelrectangle ***/
-        private void btnPrev_Click(object sender, EventArgs e)
-        {
-            if (_iCurrent < 1)
-            {
-
-            }
-            else
-                _iCurrent--;
-
-            pnlShow.CurrentItem = _iCurrent + 1;
-
-            //Refresh Controls
-            InsertDataIntoControl();
-        }
-
-        /*** Set color for the destination- Line ***/
-        private void btnColorDestinationLine_Click(object sender, EventArgs e)
-        {
-            ColorDialog cd = new ColorDialog();
-
-            var res = cd.ShowDialog();
-
-            if (res.Equals(DialogResult.OK))
-                _cMapColorofDestinationLine = cd.Color;
-
-            btnColorDestinationLine.Text = _cMapColorofDestinationLine.Name;
-            btnColorDestinationLine.ForeColor = _cMapColorofDestinationLine;
-        }
-
-        /*** Remove AI Setting ***/
-        private void cbResRemAI_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            switch (_iCurrent)
-            {
-                case 0:
-                    _bResRemoveAi = Convert.ToBoolean(cbResRemAI.SelectedItem);
-                    break;
-
-                case 1:
-                    _bIncRemoveAi = Convert.ToBoolean(cbResRemAI.SelectedItem);
-                    break;
-
-
-                case 3:
-                    _bApmRemoveAi = Convert.ToBoolean(cbResRemAI.SelectedItem);
-                    break;
-
-
-                case 4:
-                    _bArmRemoveAi = Convert.ToBoolean(cbResRemAI.SelectedItem);
-                    break;
-
-
-                case 5:
-                    _bMapRemoveAi = Convert.ToBoolean(cbResRemAI.SelectedItem);
-                    break;    
-            }
-        }
-
-        /*** Remove LocalPlayer Setting ***/
-        private void cbResRemLocal_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            switch (_iCurrent)
-            {
-                case 0:
-                   _bResRemoveLocalplayer = Convert.ToBoolean(cbResRemLocal.SelectedItem);
-                    break;
-
-                case 1:
-                    _bIncRemoveLocalplayer = Convert.ToBoolean(cbResRemLocal.SelectedItem);
-                    break;
-
-
-                case 3:
-                    _bApmRemoveLocalplayer = Convert.ToBoolean(cbResRemLocal.SelectedItem);
-                    break;
-
-
-                case 4:
-                    _bArmRemoveLocalplayer = Convert.ToBoolean(cbResRemLocal.SelectedItem);
-                    break;
-
-
-                case 5:
-                    _bMapRemoveLocalplayer = Convert.ToBoolean(cbResRemLocal.SelectedItem);
-                    break;
-            }
-        }
-
-        /*** Remove Allie Setting ***/
-        private void cbResRemAllie_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            switch (_iCurrent)
-            {
-                case 0:
-                    _bResRemoveAllie = Convert.ToBoolean(cbResRemAllie.SelectedItem);
-                    break;
-
-                case 1:
-                    _bIncRemoveAllie = Convert.ToBoolean(cbResRemAllie.SelectedItem);
-                    break;
-
-                case 3:
-                    _bApmRemoveAllie = Convert.ToBoolean(cbResRemAllie.SelectedItem);
-                    break;
-
-                case 4:
-                    _bArmRemoveAllie = Convert.ToBoolean(cbResRemAllie.SelectedItem);
-                    break;
-
-                case 5:
-                    _bMapRemoveAllie = Convert.ToBoolean(cbResRemAllie.SelectedItem);
-                    break;
-            }
-        }
-
-        /*** Remove Dead Player Setting ***/
-        private void cbResRemDead_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            switch (_iCurrent)
-            {
-                case 0:
-                    _bResRemoveDeadPlayer = Convert.ToBoolean(cbResRemDead.SelectedItem);
-                    break;
-
-                case 1:
-                    _bIncRemoveDeadPlayer = Convert.ToBoolean(cbResRemDead.SelectedItem);
-                    break;
-
-                case 3:
-                    _bApmRemoveDeadPlayer = Convert.ToBoolean(cbResRemDead.SelectedItem);
-                    break;
-
-                case 4:
-                    _bArmRemoveDeadPlayer = Convert.ToBoolean(cbResRemDead.SelectedItem);
-                    break;
-
-            }
-        }
-
-        /*** Remove Observer Setting ***/
-        private void cbResRemObs_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            switch (_iCurrent)
-            {
-                case 0:
-                    _bResRemoveObserver = Convert.ToBoolean(cbResRemObs.SelectedItem);
-                    break;
-
-                case 1:
-                    _bIncRemoveObserver = Convert.ToBoolean(cbResRemObs.SelectedItem);
-                    break;
-
-                case 3:
-                    _bApmRemoveObserver = Convert.ToBoolean(cbResRemObs.SelectedItem);
-                    break;
-
-                case 4:
-                    _bArmRemoveObserver = Convert.ToBoolean(cbResRemObs.SelectedItem);
-                    break;
-            }
-        }
-
-        /*** Remove Referee Setting ***/
-        private void cbResRemReferee_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            switch (_iCurrent)
-            {
-                case 0:
-                    _bResRemoveReferee = Convert.ToBoolean(cbResRemReferee.SelectedItem);
-                    break;
-
-                case 1:
-                    _bIncRemoveReferee = Convert.ToBoolean(cbResRemReferee.SelectedItem);
-                    break;
-
-                case 3:
-                    _bApmRemoveReferee = Convert.ToBoolean(cbResRemReferee.SelectedItem);
-                    break;
-
-                case 4:
-                    _bArmRemoveReferee = Convert.ToBoolean(cbResRemReferee.SelectedItem);
-                    break;
-            }
-        }
-
-        /*** Set Shortcut (Toggle) Setting ***/
-        private void txtResShortcut_TextChanged(object sender, EventArgs e)
-        {
-            switch (_iCurrent)
-            {
-                case 0:
-                    _sResShortcut = txtResShortcut.Text;
-                    break;
-
-                case 1:
-                    _sIncShortcut = txtResShortcut.Text;
-                    break;
-
-                case 2:
-                    _sWorShortcut = txtResShortcut.Text;
-                    break;
-
-                case 3:
-                    _sApmShortcut = txtResShortcut.Text;
-                    break;
-
-                case 4:
-                    _sArmShortcut = txtResShortcut.Text;
-                    break;
-
-                case 5:
-                    _sMapShortcut = txtResShortcut.Text;
-                    break;
-
-                case 6:
-                    _sNotShortcut = txtResShortcut.Text;
-                    break;
-            }
-        }
-
-        /*** Set Shortcut (Position) Setting ***/
-        private void txtResPos_TextChanged(object sender, EventArgs e)
-        {
-            switch (_iCurrent)
-            {
-                case 0:
-                    _sResPos = txtResPos.Text;
-                    break;
-
-                case 1:
-                    _sIncPos = txtResPos.Text;
-                    break;
-
-                case 2:
-                    _sWorPos = txtResPos.Text;
-                    break;
-
-                case 3:
-                    _sApmPos = txtResPos.Text;
-                    break;
-
-                case 4:
-                    _sArmPos = txtResPos.Text;
-                    break;
-
-                case 5:
-                    _sMapPos = txtResPos.Text;
-                    break;
-
-                case 6:
-                    _sNotPos = txtResPos.Text;
-                    break;
-            }
-        }
-
-        /*** Set Shortcut (Size) Setting ***/
-        private void txtResSize_TextChanged(object sender, EventArgs e)
-        {
-            switch (_iCurrent)
-            {
-                case 0:
-                    _sResSize = txtResSize.Text;
-                    break;
-
-                case 1:
-                    _sIncSize = txtResSize.Text;
-                    break;
-
-                case 2:
-                    _sWorSize = txtResSize.Text;
-                    break;
-
-                case 3:
-                    _sApmSize = txtResSize.Text;
-                    break;
-
-                case 4:
-                    _sArmSize = txtResSize.Text;
-                    break;
-
-                case 5:
-                    _sMapSize = txtResSize.Text;
-                    break;
-
-                case 6:
-                    _sNotSize = txtResSize.Text;
-                    break;
-            }
-        }
-
-        /*** Set the Opacity ***/
-        private void txtResOpacity_TextChanged(object sender, EventArgs e)
-        {
-            if (txtResOpacity.Text.Length < 1)
-                return;
-
-            int dummy = 0;
-
-            if (!int.TryParse(txtResOpacity.Text, NumberStyles.Integer, null, out dummy))
-            {
-                MessageBox.Show("Try numbers...");
-                return;
-            }
-
-
-            switch (_iCurrent)
-            {
-                case 0:
-                    _iResOpacity = dummy;
-                    break;
-
-                case 1:
-                    _iIncOpacity = dummy;
-                    break;
-
-                case 2:
-                    _iWorOpacity = dummy;
-                    break;
-
-                case 3:
-                    _iApmOpacity = dummy;
-                    break;
-
-                case 4:
-                    _iArmOpacity = dummy;
-                    break;
-
-                case 5:
-                    _iMapOpacity = dummy;
-                    break;
-
-                case 6:
-                    _iNotOpacity = dummy;
-                    break;
-            }
-        }
-
-        /*** Enable DestinationLine Setting***/
-        private void cbDestinationLine_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (_iCurrent.Equals(5))
-                _bShowDestinationLine = Convert.ToBoolean(cbDestinationLine.SelectedItem);
-        }
-
-        /*** Button to save the actual stuff ***/
-        private void btnSave_Click(object sender, EventArgs e)
-        {
-            CreatSaveFile();
-        }
-
-        /*** When closing, save everything ***/
-        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            CreatSaveFile();
-        }
-
         /*** Check if the Hotkey(s) are pressed ***/
         public bool HotkeysPressed(Keys ikeya, Keys ikeyb, Keys ikeyc)
         {
@@ -2345,29 +2387,9 @@ namespace Another_SC2_Hack.Forms
             lblGametype.Text = "Gametype: " + strGametype;
         }
 
-        /* Check for updates */
-        private void fsSecondCheckforUpdate_Click(object sender, EventArgs e)
-        {
-            CreatSaveFile();
 
-            if (_upCheckforUpdates == null)
-                _upCheckforUpdates = new Update();
 
-            if (_upCheckforUpdates.Created)
-                _upCheckforUpdates.Close();
-
-            else
-            {
-                _upCheckforUpdates = new Update();
-                _upCheckforUpdates.Show();
-            }
-
-        }
-
-        /* Close this */
-        private void fsSecondExit_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
+       
+       
     }
 }

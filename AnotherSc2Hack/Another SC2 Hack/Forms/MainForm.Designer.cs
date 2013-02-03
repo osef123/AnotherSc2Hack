@@ -87,7 +87,9 @@
             this.tpSettings = new System.Windows.Forms.TabPage();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.slblTimer = new System.Windows.Forms.ToolStripStatusLabel();
+            this.btnAdjustResolution = new System.Windows.Forms.Button();
             this.pnlShow = new Another_SC2_Hack.Classes.BufferPanel();
+            this.lblWhatResolutions = new System.Windows.Forms.Label();
             this.msSimpleStrip.SuspendLayout();
             this.gbRes.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -609,6 +611,8 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.lblWhatResolutions);
+            this.groupBox4.Controls.Add(this.btnAdjustResolution);
             this.groupBox4.Controls.Add(this.lblResolution);
             this.groupBox4.Controls.Add(this.lblGametype);
             this.groupBox4.Controls.Add(this.lblShowFps);
@@ -678,6 +682,16 @@
             this.slblTimer.Size = new System.Drawing.Size(235, 23);
             this.slblTimer.Text = "STARCRAFT 2 NOT FOUND";
             // 
+            // btnAdjustResolution
+            // 
+            this.btnAdjustResolution.Location = new System.Drawing.Point(239, 73);
+            this.btnAdjustResolution.Name = "btnAdjustResolution";
+            this.btnAdjustResolution.Size = new System.Drawing.Size(103, 23);
+            this.btnAdjustResolution.TabIndex = 3;
+            this.btnAdjustResolution.Text = "Adjust Resolution";
+            this.btnAdjustResolution.UseVisualStyleBackColor = true;
+            this.btnAdjustResolution.Click += new System.EventHandler(this.btnAdjustResolution_Click);
+            // 
             // pnlShow
             // 
             this.pnlShow.CurrentItem = 0;
@@ -686,6 +700,16 @@
             this.pnlShow.Name = "pnlShow";
             this.pnlShow.Size = new System.Drawing.Size(674, 17);
             this.pnlShow.TabIndex = 6;
+            // 
+            // lblWhatResolutions
+            // 
+            this.lblWhatResolutions.AutoSize = true;
+            this.lblWhatResolutions.Location = new System.Drawing.Point(348, 78);
+            this.lblWhatResolutions.Name = "lblWhatResolutions";
+            this.lblWhatResolutions.Size = new System.Drawing.Size(13, 13);
+            this.lblWhatResolutions.TabIndex = 4;
+            this.lblWhatResolutions.Text = "?";
+            this.lblWhatResolutions.Click += new System.EventHandler(this.lblWhatResolutions_Click);
             // 
             // MainForm
             // 
@@ -787,6 +811,8 @@
         private System.Windows.Forms.Label lblShowFps;
         private System.Windows.Forms.Label lblGametype;
         private System.Windows.Forms.Label lblResolution;
+        private System.Windows.Forms.Button btnAdjustResolution;
+        private System.Windows.Forms.Label lblWhatResolutions;
 
     }
 }
