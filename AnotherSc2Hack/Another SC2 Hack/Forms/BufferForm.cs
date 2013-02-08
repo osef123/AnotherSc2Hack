@@ -1461,98 +1461,148 @@ namespace Another_SC2_Hack.Classes
                                          (int)(dModifiedSize));
 
 
-                #region Color Defensive- Buldings Yellow
+                #region Color Defensive- Buldings ONLY ENEMIES
 
-                //Draw yellow square around unit
-                if (_pInfo.UnitId(i).Equals((int)Typo.UnitId.TbBunker) |
-                    _pInfo.UnitId(i).Equals((int)Typo.UnitId.TbTurret) | 
-                    _pInfo.UnitId(i).Equals((int)Typo.UnitId.TbPlanetary) |
-                    _pInfo.UnitId(i).Equals((int)Typo.UnitId.PbCannon) |
-                    _pInfo.UnitId(i).Equals((int)Typo.UnitId.ZbSpinecrawler) |
-                    _pInfo.UnitId(i).Equals((int)Typo.UnitId.ZbSporecrawler))
+                if (_myForm._bMapColorDefensive)
                 {
-                    var clBound = (_pInfo.UnitTargetFilter(i) & 0x0000000200000000) > 0 ? Color.Transparent : Color.Yellow;
+                    if (!_pInfo.UnitOwner(i).Equals(_pInfo.LocalPlayer() + 1))
+                    {
+                        //Draw yellow square around unit
+                        if (_pInfo.UnitId(i).Equals((int) Typo.UnitId.TbBunker) |
+                            _pInfo.UnitId(i).Equals((int) Typo.UnitId.TbTurret) |
+                            _pInfo.UnitId(i).Equals((int) Typo.UnitId.TbPlanetary) |
+                            _pInfo.UnitId(i).Equals((int) Typo.UnitId.PbCannon) |
+                            _pInfo.UnitId(i).Equals((int) Typo.UnitId.ZbSpinecrawler) |
+                            _pInfo.UnitId(i).Equals((int) Typo.UnitId.ZbSporecrawler))
+                        {
+                            var clBound = (_pInfo.UnitTargetFilter(i) & 0x0000000200000000) > 0
+                                              ? Color.Transparent
+                                              : _myForm._cMapColorDefensive;
 
-                    buffer.Graphics.DrawRectangle(new Pen(clBound, 2),
-                                                  iUnitX - ((int) (dModifiedSize/2) + 0.5f),
-                                                  iUnitY - ((int) (dModifiedSize/2) + 0.5f),
-                                                  (int) dModifiedSize + 1,
-                                                  (int) dModifiedSize + 1);
+                            buffer.Graphics.DrawRectangle(new Pen(clBound, 2),
+                                                          iUnitX - ((int) (dModifiedSize/2) + 0.5f),
+                                                          iUnitY - ((int) (dModifiedSize/2) + 0.5f),
+                                                          (int) dModifiedSize + 1,
+                                                          (int) dModifiedSize + 1);
+                        }
+                    }
                 }
 
                 #endregion
              
-                #region Color Dropships and Warpprisms Purple
+                #region Color Dropships and Warpprisms ONLY ENEMIES
 
-
-
-                if (_pInfo.UnitId(i).Equals((int) Typo.UnitId.TuMedivac) ||
-                    _pInfo.UnitId(i).Equals((int) Typo.UnitId.PuWarpprism))
+                if (_myForm._bMapColorMedics)
                 {
-                    
-                    var clBound = (_pInfo.UnitTargetFilter(i) & 0x0000000200000000) > 0 ? Color.Transparent : Color.Purple;
+                    if (!_pInfo.UnitOwner(i).Equals(_pInfo.LocalPlayer() + 1))
+                    {
+                        if (_pInfo.UnitId(i).Equals((int) Typo.UnitId.TuMedivac) ||
+                            _pInfo.UnitId(i).Equals((int) Typo.UnitId.PuWarpprism))
+                        {
 
-                    buffer.Graphics.DrawRectangle(new Pen(clBound, 2),
-                                                  iUnitX - ((int) (dModifiedSize/2) + 0.5f),
-                                                  iUnitY - ((int) (dModifiedSize/2) + 0.5f),
-                                                  (int) dModifiedSize + 1,
-                                                  (int) dModifiedSize + 1);
+                            var clBound = (_pInfo.UnitTargetFilter(i) & 0x0000000200000000) > 0
+                                              ? Color.Transparent
+                                              : _myForm._cMapColorMedics;
+
+                            buffer.Graphics.DrawRectangle(new Pen(clBound, 2),
+                                                          iUnitX - ((int) (dModifiedSize/2) + 0.5f),
+                                                          iUnitY - ((int) (dModifiedSize/2) + 0.5f),
+                                                          (int) dModifiedSize + 1,
+                                                          (int) dModifiedSize + 1);
+                        }
+                    }
+                }
+
+                #endregion
+
+                #region Color DTs Purple ONLY ENEMIES
+
+                if (_myForm._bMapColorDT)
+                {
+                    if (!_pInfo.UnitOwner(i).Equals(_pInfo.LocalPlayer() + 1))
+                    {
+                        if (_pInfo.UnitId(i).Equals((int) Typo.UnitId.PuDarktemplar))
+                        {
+
+                            var clBound = (_pInfo.UnitTargetFilter(i) & 0x0000000200000000) > 0
+                                              ? Color.Transparent
+                                              : _myForm._cMapColorDT;
+
+                            buffer.Graphics.DrawRectangle(new Pen(clBound, 2),
+                                                          iUnitX - ((int) (dModifiedSize/2) + 0.5f),
+                                                          iUnitY - ((int) (dModifiedSize/2) + 0.5f),
+                                                          (int) dModifiedSize + 1,
+                                                          (int) dModifiedSize + 1);
+                        }
+                    }
                 }
 
                 #endregion
 
                 #region Color Queens, Orbitals and Nexi 
 
-                //Draw yellow square around unit
-                if (_pInfo.UnitId(i).Equals((int)Typo.UnitId.ZuQueen))
+                if (_myForm._bMapColorNexiOcQueen)
                 {
-                    if (_pInfo.UnitOwner(i).Equals(_pInfo.LocalPlayer() + 1))
-                    {
-                        if (_pInfo.UnitEnergy(i) >= 25)
-                        {
-                            var clBound = (_pInfo.UnitTargetFilter(i) & 0x0000000200000000) > 0 ? Color.Transparent : Color.Blue;
 
-                            buffer.Graphics.DrawRectangle(new Pen(clBound, 2),
-                                                          iUnitX - ((int)(dModifiedSize / 2) + 0.5f),
-                                                          iUnitY - ((int)(dModifiedSize / 2) + 0.5f),
-                                                          (int)dModifiedSize + 1,
-                                                          (int)dModifiedSize + 1);
+                    //Draw yellow square around unit
+                    if (_pInfo.UnitId(i).Equals((int) Typo.UnitId.ZuQueen))
+                    {
+                        if (_pInfo.UnitOwner(i).Equals(_pInfo.LocalPlayer() + 1))
+                        {
+                            if (_pInfo.UnitEnergy(i) >= 25)
+                            {
+                                var clBound = (_pInfo.UnitTargetFilter(i) & 0x0000000200000000) > 0
+                                                  ? Color.Transparent
+                                                  : _myForm._cMapColorNexiOcQueen;
+
+                                buffer.Graphics.DrawRectangle(new Pen(clBound, 2),
+                                                              iUnitX - ((int) (dModifiedSize/2) + 0.5f),
+                                                              iUnitY - ((int) (dModifiedSize/2) + 0.5f),
+                                                              (int) dModifiedSize + 1,
+                                                              (int) dModifiedSize + 1);
+                            }
                         }
                     }
-                }
 
-                if (_pInfo.UnitId(i).Equals((int)Typo.UnitId.PbNexus))
-                {
-                    if (_pInfo.UnitOwner(i).Equals(_pInfo.LocalPlayer() + 1))
+                    if (_pInfo.UnitId(i).Equals((int) Typo.UnitId.PbNexus))
                     {
-                        if (_pInfo.UnitEnergy(i) >= 25)
+                        if (_pInfo.UnitOwner(i).Equals(_pInfo.LocalPlayer() + 1))
                         {
-                            var clBound = (_pInfo.UnitTargetFilter(i) & 0x0000000200000000) > 0 ? Color.Transparent : Color.Blue;
+                            if (_pInfo.UnitEnergy(i) >= 25)
+                            {
+                                var clBound = (_pInfo.UnitTargetFilter(i) & 0x0000000200000000) > 0
+                                                  ? Color.Transparent
+                                                  : _myForm._cMapColorNexiOcQueen;
 
-                            buffer.Graphics.DrawRectangle(new Pen(clBound, 2),
-                                                          iUnitX - ((int)(dModifiedSize / 2) + 0.5f),
-                                                          iUnitY - ((int)(dModifiedSize / 2) + 0.5f),
-                                                          (int)dModifiedSize + 1,
-                                                          (int)dModifiedSize + 1);
+                                buffer.Graphics.DrawRectangle(new Pen(clBound, 2),
+                                                              iUnitX - ((int) (dModifiedSize/2) + 0.5f),
+                                                              iUnitY - ((int) (dModifiedSize/2) + 0.5f),
+                                                              (int) dModifiedSize + 1,
+                                                              (int) dModifiedSize + 1);
+                            }
                         }
                     }
-                }
 
-                if (_pInfo.UnitId(i).Equals((int)Typo.UnitId.TbOrbital))
-                {
-                    if (_pInfo.UnitOwner(i).Equals(_pInfo.LocalPlayer() + 1))
+                    if (_pInfo.UnitId(i).Equals((int) Typo.UnitId.TbOrbitalAir) ||
+                        _pInfo.UnitId(i).Equals((int) Typo.UnitId.TbOrbitalGround))
                     {
-                        if (_pInfo.UnitEnergy(i) >= 50)
+                        if (_pInfo.UnitOwner(i).Equals(_pInfo.LocalPlayer() + 1))
                         {
-                            var clBound = (_pInfo.UnitTargetFilter(i) & 0x0000000200000000) > 0 ? Color.Transparent : Color.Blue;
+                            if (_pInfo.UnitEnergy(i) >= 50)
+                            {
+                                var clBound = (_pInfo.UnitTargetFilter(i) & 0x0000000200000000) > 0
+                                                  ? Color.Transparent
+                                                  : _myForm._cMapColorNexiOcQueen;
 
-                            buffer.Graphics.DrawRectangle(new Pen(clBound, 2),
-                                                          iUnitX - ((int)(dModifiedSize / 2) + 0.5f),
-                                                          iUnitY - ((int)(dModifiedSize / 2) + 0.5f),
-                                                          (int)dModifiedSize + 1,
-                                                          (int)dModifiedSize + 1);
+                                buffer.Graphics.DrawRectangle(new Pen(clBound, 2),
+                                                              iUnitX - ((int) (dModifiedSize/2) + 0.5f),
+                                                              iUnitY - ((int) (dModifiedSize/2) + 0.5f),
+                                                              (int) dModifiedSize + 1,
+                                                              (int) dModifiedSize + 1);
+                            }
                         }
                     }
+
                 }
 
                 #endregion

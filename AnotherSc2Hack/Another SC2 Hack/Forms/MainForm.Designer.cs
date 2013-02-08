@@ -37,6 +37,7 @@
             this.fsMainHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.fsSecondCheckforUpdate = new System.Windows.Forms.ToolStripMenuItem();
             this.gbRes = new System.Windows.Forms.GroupBox();
+            this.btnDetailedOptions = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label13 = new System.Windows.Forms.Label();
             this.txtResOpacity = new System.Windows.Forms.TextBox();
@@ -80,16 +81,17 @@
             this.btnPrev = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tpGame = new System.Windows.Forms.TabPage();
+            this.btnDebug = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.lblWhatResolutions = new System.Windows.Forms.Label();
+            this.btnAdjustResolution = new System.Windows.Forms.Button();
             this.lblResolution = new System.Windows.Forms.Label();
             this.lblGametype = new System.Windows.Forms.Label();
             this.lblShowFps = new System.Windows.Forms.Label();
             this.tpSettings = new System.Windows.Forms.TabPage();
+            this.pnlShow = new Another_SC2_Hack.Classes.BufferPanel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.slblTimer = new System.Windows.Forms.ToolStripStatusLabel();
-            this.btnAdjustResolution = new System.Windows.Forms.Button();
-            this.pnlShow = new Another_SC2_Hack.Classes.BufferPanel();
-            this.lblWhatResolutions = new System.Windows.Forms.Label();
             this.msSimpleStrip.SuspendLayout();
             this.gbRes.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -151,6 +153,7 @@
             // 
             // gbRes
             // 
+            this.gbRes.Controls.Add(this.btnDetailedOptions);
             this.gbRes.Controls.Add(this.groupBox3);
             this.gbRes.Controls.Add(this.groupBox2);
             this.gbRes.Controls.Add(this.groupBox1);
@@ -162,6 +165,17 @@
             this.gbRes.TabIndex = 4;
             this.gbRes.TabStop = false;
             this.gbRes.Text = "Ressource Settings";
+            // 
+            // btnDetailedOptions
+            // 
+            this.btnDetailedOptions.Enabled = false;
+            this.btnDetailedOptions.Location = new System.Drawing.Point(446, 261);
+            this.btnDetailedOptions.Name = "btnDetailedOptions";
+            this.btnDetailedOptions.Size = new System.Drawing.Size(208, 23);
+            this.btnDetailedOptions.TabIndex = 38;
+            this.btnDetailedOptions.Text = "Detailed Options";
+            this.btnDetailedOptions.UseVisualStyleBackColor = true;
+            this.btnDetailedOptions.Click += new System.EventHandler(this.btnDetailedOptions_Click);
             // 
             // groupBox3
             // 
@@ -600,6 +614,7 @@
             // 
             // tpGame
             // 
+            this.tpGame.Controls.Add(this.btnDebug);
             this.tpGame.Controls.Add(this.groupBox4);
             this.tpGame.Location = new System.Drawing.Point(4, 22);
             this.tpGame.Name = "tpGame";
@@ -608,6 +623,17 @@
             this.tpGame.TabIndex = 0;
             this.tpGame.Text = "Game";
             this.tpGame.UseVisualStyleBackColor = true;
+            // 
+            // btnDebug
+            // 
+            this.btnDebug.Location = new System.Drawing.Point(21, 196);
+            this.btnDebug.Name = "btnDebug";
+            this.btnDebug.Size = new System.Drawing.Size(114, 41);
+            this.btnDebug.TabIndex = 1;
+            this.btnDebug.Text = "Show Debug- Panel";
+            this.btnDebug.UseVisualStyleBackColor = true;
+            this.btnDebug.Visible = false;
+            this.btnDebug.Click += new System.EventHandler(this.btnDebug_Click);
             // 
             // groupBox4
             // 
@@ -622,6 +648,26 @@
             this.groupBox4.TabIndex = 0;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Gameinformation";
+            // 
+            // lblWhatResolutions
+            // 
+            this.lblWhatResolutions.AutoSize = true;
+            this.lblWhatResolutions.Location = new System.Drawing.Point(348, 78);
+            this.lblWhatResolutions.Name = "lblWhatResolutions";
+            this.lblWhatResolutions.Size = new System.Drawing.Size(13, 13);
+            this.lblWhatResolutions.TabIndex = 4;
+            this.lblWhatResolutions.Text = "?";
+            this.lblWhatResolutions.Click += new System.EventHandler(this.lblWhatResolutions_Click);
+            // 
+            // btnAdjustResolution
+            // 
+            this.btnAdjustResolution.Location = new System.Drawing.Point(239, 73);
+            this.btnAdjustResolution.Name = "btnAdjustResolution";
+            this.btnAdjustResolution.Size = new System.Drawing.Size(103, 23);
+            this.btnAdjustResolution.TabIndex = 3;
+            this.btnAdjustResolution.Text = "Adjust Resolution";
+            this.btnAdjustResolution.UseVisualStyleBackColor = true;
+            this.btnAdjustResolution.Click += new System.EventHandler(this.btnAdjustResolution_Click);
             // 
             // lblResolution
             // 
@@ -665,6 +711,15 @@
             this.tpSettings.Text = "Settings";
             this.tpSettings.UseVisualStyleBackColor = true;
             // 
+            // pnlShow
+            // 
+            this.pnlShow.CurrentItem = 0;
+            this.pnlShow.Location = new System.Drawing.Point(20, 86);
+            this.pnlShow.MaxItem = 2;
+            this.pnlShow.Name = "pnlShow";
+            this.pnlShow.Size = new System.Drawing.Size(674, 17);
+            this.pnlShow.TabIndex = 6;
+            // 
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -681,35 +736,6 @@
             this.slblTimer.Name = "slblTimer";
             this.slblTimer.Size = new System.Drawing.Size(235, 23);
             this.slblTimer.Text = "STARCRAFT 2 NOT FOUND";
-            // 
-            // btnAdjustResolution
-            // 
-            this.btnAdjustResolution.Location = new System.Drawing.Point(239, 73);
-            this.btnAdjustResolution.Name = "btnAdjustResolution";
-            this.btnAdjustResolution.Size = new System.Drawing.Size(103, 23);
-            this.btnAdjustResolution.TabIndex = 3;
-            this.btnAdjustResolution.Text = "Adjust Resolution";
-            this.btnAdjustResolution.UseVisualStyleBackColor = true;
-            this.btnAdjustResolution.Click += new System.EventHandler(this.btnAdjustResolution_Click);
-            // 
-            // pnlShow
-            // 
-            this.pnlShow.CurrentItem = 0;
-            this.pnlShow.Location = new System.Drawing.Point(20, 86);
-            this.pnlShow.MaxItem = 2;
-            this.pnlShow.Name = "pnlShow";
-            this.pnlShow.Size = new System.Drawing.Size(674, 17);
-            this.pnlShow.TabIndex = 6;
-            // 
-            // lblWhatResolutions
-            // 
-            this.lblWhatResolutions.AutoSize = true;
-            this.lblWhatResolutions.Location = new System.Drawing.Point(348, 78);
-            this.lblWhatResolutions.Name = "lblWhatResolutions";
-            this.lblWhatResolutions.Size = new System.Drawing.Size(13, 13);
-            this.lblWhatResolutions.TabIndex = 4;
-            this.lblWhatResolutions.Text = "?";
-            this.lblWhatResolutions.Click += new System.EventHandler(this.lblWhatResolutions_Click);
             // 
             // MainForm
             // 
@@ -813,6 +839,8 @@
         private System.Windows.Forms.Label lblResolution;
         private System.Windows.Forms.Button btnAdjustResolution;
         private System.Windows.Forms.Label lblWhatResolutions;
+        private System.Windows.Forms.Button btnDebug;
+        private System.Windows.Forms.Button btnDetailedOptions;
 
     }
 }

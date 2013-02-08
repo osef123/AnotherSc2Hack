@@ -102,19 +102,7 @@
             ZuInfestedterranEgg = 185,  //Valid
             TuMule = 189,               //Valid
 
-            /* Group of UnitId's */
-            TbReactor = 69 | 71 | 73,
-            TbTechlab = 68 | 70 | 72,
-            TbSupply = 78 | 49,
-            TbCc = 48 | 67,
-            TbBarracks = 51 | 77,
-            TbFactory = 74 | 57,
-            TbStarport = 75 | 58,
-            TbOrbital = 163 | 165,
-            TuViking = 66 | 65,
-            ZbHatcheriesAll = 131 | 132 | 128,
-            AllDefensive = TbBunker & TbTurret & TbPlanetary & 
-                PbCannon & ZbSporecrawler & ZbSpinecrawler
+           
         };
 
         public enum PlayerStatus

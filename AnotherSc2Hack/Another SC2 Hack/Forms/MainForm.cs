@@ -31,7 +31,8 @@ namespace Another_SC2_Hack.Forms
 
         private PlayerInfo _pInfo;
         private Update _upCheckforUpdates;
-
+        private Debug_and_Testform _dtest;
+        private DetailedOptions _dOptions;
         #region Variables used to safe/ load settings
 
         /* Ressources */
@@ -154,6 +155,16 @@ namespace Another_SC2_Hack.Forms
                     _iMapY,
                     _iMapOpacity;
 
+        public bool _bMapColorDefensive,
+                    _bMapColorMedics,
+                    _bMapColorDT,
+                    _bMapColorNexiOcQueen;
+
+        public Color _cMapColorDefensive,
+                     _cMapColorMedics,
+                     _cMapColorDT,
+                     _cMapColorNexiOcQueen;
+
         /* Notification */
         public int _iNotInterval;
 
@@ -232,6 +243,12 @@ namespace Another_SC2_Hack.Forms
 
             /* Activate timer */
             tmrTick.Enabled = true;
+
+            /* Initialise the debug- form */
+            _dtest = new Debug_and_Testform(this);
+
+            /* Initialise the detailed options Tab */
+            _dOptions = new DetailedOptions("none", this);
         }
 
         /*** Our Maintimer, will handle the toggle for the Panels ***/
@@ -845,6 +862,7 @@ namespace Another_SC2_Hack.Forms
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             CreatSaveFile();
+            Environment.Exit(0);
         }
 
         /*** Changes the Panel size and position. Based on resolution ***/
@@ -882,6 +900,38 @@ namespace Another_SC2_Hack.Forms
         private void lblWhatResolutions_Click(object sender, EventArgs e)
         {
             Various.PrintResolutionMessage();
+        }
+
+        /*** Loads the debug- panel which shows various information ***/
+        private void btnDebug_Click(object sender, EventArgs e)
+        {
+            if (_dtest == null)
+                _dtest = new Debug_and_Testform(this);
+
+            if (_dtest.Created)
+                _dtest.Close();
+
+            else
+            {
+                _dtest = new Debug_and_Testform(this);
+                _dtest.Show();
+            }
+        }
+
+        /*** Will load a window which allows way more options to configure ***/
+        private void btnDetailedOptions_Click(object sender, EventArgs e)
+        {
+            if (_dOptions == null)
+                _dOptions = new DetailedOptions("map", this);
+
+            if (_dOptions.Created)
+                _dOptions.Close();
+
+            else
+            {
+                _dOptions = new DetailedOptions("map", this);
+                _dOptions.Show();
+            }
         }
 
         #endregion
@@ -1030,7 +1080,17 @@ namespace Another_SC2_Hack.Forms
             
 
             _bShowDestinationLine = true;
+
+            _bMapColorDefensive = true;
+            _bMapColorMedics = true;
+            _bMapColorDT = true;
+            _bMapColorNexiOcQueen = true;
+
             _cMapColorofDestinationLine = Color.Yellow;
+            _cMapColorDT = Color.SteelBlue;
+            _cMapColorDefensive = Color.Yellow;
+            _cMapColorMedics = Color.Purple;
+            _cMapColorNexiOcQueen = Color.Lime;
         }
 
         /*** Put the data into the controls ***/
@@ -1081,6 +1141,7 @@ namespace Another_SC2_Hack.Forms
                     btnResFont.Enabled = true;
                     btnColorDestinationLine.Enabled = false;
                     cbDestinationLine.Enabled = false;
+                    btnDetailedOptions.Enabled = false;
 
                     break;
 
@@ -1117,6 +1178,7 @@ namespace Another_SC2_Hack.Forms
                     btnResFont.Enabled = true;
                     btnColorDestinationLine.Enabled = false;
                     cbDestinationLine.Enabled = false;
+                    btnDetailedOptions.Enabled = false;
                     break;
 
                 //Worker
@@ -1152,6 +1214,7 @@ namespace Another_SC2_Hack.Forms
                     btnResFont.Enabled = true;
                     btnColorDestinationLine.Enabled = false;
                     cbDestinationLine.Enabled = false;
+                    btnDetailedOptions.Enabled = false;
                     break;
 
                 //Apm
@@ -1187,6 +1250,7 @@ namespace Another_SC2_Hack.Forms
                     btnResFont.Enabled = true;
                     btnColorDestinationLine.Enabled = false;
                     cbDestinationLine.Enabled = false;
+                    btnDetailedOptions.Enabled = false;
                     break;
 
                 //Army
@@ -1222,6 +1286,7 @@ namespace Another_SC2_Hack.Forms
                     btnResFont.Enabled = true;
                     btnColorDestinationLine.Enabled = false;
                     cbDestinationLine.Enabled = false;
+                    btnDetailedOptions.Enabled = false;
                     break;
 
                 //Maphack
@@ -1254,6 +1319,7 @@ namespace Another_SC2_Hack.Forms
                     btnResFont.Enabled = false;
                     btnColorDestinationLine.Enabled = true;
                     cbDestinationLine.Enabled = true;
+                    btnDetailedOptions.Enabled = true;
                     break;
 
                 //Notification
@@ -1289,6 +1355,7 @@ namespace Another_SC2_Hack.Forms
                     btnResFont.Enabled = true;
                     btnColorDestinationLine.Enabled = false;
                     cbDestinationLine.Enabled = false;
+                    btnDetailedOptions.Enabled = true;
                     break;
 
 
@@ -1938,6 +2005,38 @@ namespace Another_SC2_Hack.Forms
                 if (strCurrentItem[0] == "Opacity")
                     _iMapOpacity = int.Parse(strCurrentItem[1]);
 
+                /* Color Defensive structs */
+                if (strCurrentItem[0] == "ColorDefensive")
+                    _bMapColorDefensive = Convert.ToBoolean(strCurrentItem[1]);
+
+                /* Color Medics */
+                if (strCurrentItem[0] == "ColorMedic")
+                    _bMapColorMedics = Convert.ToBoolean(strCurrentItem[1]);
+
+                /* Color DTs */
+                if (strCurrentItem[0] == "ColorDT")
+                    _bMapColorDT = Convert.ToBoolean(strCurrentItem[1]);
+
+                /* Color Nexi, Oc, Queen */
+                if (strCurrentItem[0] == "ColorNexi")
+                   _bMapColorNexiOcQueen = Convert.ToBoolean(strCurrentItem[1]);
+
+                /* Defensive Color */
+                if (strCurrentItem[0] == "DefensiveColor")
+                    _cMapColorDefensive = ColorTranslator.FromHtml(strCurrentItem[1]);
+
+                /* Medic Color */
+                if (strCurrentItem[0] == "MedicColor")
+                    _cMapColorMedics = ColorTranslator.FromHtml(strCurrentItem[1]);
+
+                /* DT Color */
+                if (strCurrentItem[0] == "DTColor")
+                    _cMapColorDT = ColorTranslator.FromHtml(strCurrentItem[1]);
+
+                /* Nexi Color */
+                if (strCurrentItem[0] == "NexiColor")
+                    _cMapColorNexiOcQueen = ColorTranslator.FromHtml(strCurrentItem[1]);
+
             }
 
             #endregion
@@ -2020,7 +2119,7 @@ namespace Another_SC2_Hack.Forms
         }
 
         /*** Write the actual data into the file ***/
-        private void CreatSaveFile()
+        public void CreatSaveFile()
         {
             if (File.Exists("Settings.cfg"))
                 File.Delete("Settings.cfg");
@@ -2177,6 +2276,14 @@ namespace Another_SC2_Hack.Forms
             sw.WriteLine("DestinationColor=" + ColorTranslator.ToHtml(_cMapColorofDestinationLine));
             sw.WriteLine("RemoveDestinationLine=" + _bShowDestinationLine);
             sw.WriteLine("Opacity=" + _iMapOpacity.ToString(CultureInfo.InvariantCulture));
+            sw.WriteLine("ColorDefensive=" + _bMapColorDefensive.ToString());
+            sw.WriteLine("ColorMedic=" + _bMapColorMedics.ToString());
+            sw.WriteLine("ColorDT=" + _bMapColorDT.ToString());
+            sw.WriteLine("ColorNexi=" + _bMapColorNexiOcQueen.ToString());
+            sw.WriteLine("DefensiveColor=" + ColorTranslator.ToHtml(_cMapColorDefensive));
+            sw.WriteLine("MedicColor=" + ColorTranslator.ToHtml(_cMapColorMedics));
+            sw.WriteLine("DTColor=" + ColorTranslator.ToHtml(_cMapColorDT));
+            sw.WriteLine("NexiColor=" + ColorTranslator.ToHtml(_cMapColorNexiOcQueen));
             sw.WriteLine("");
 
             #endregion
@@ -2386,6 +2493,9 @@ namespace Another_SC2_Hack.Forms
 
             lblGametype.Text = "Gametype: " + strGametype;
         }
+
+     
+
 
 
 

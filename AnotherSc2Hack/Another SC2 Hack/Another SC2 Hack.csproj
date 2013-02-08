@@ -72,6 +72,18 @@
     <Compile Include="Classes\Pinvokes.cs" />
     <Compile Include="Classes\PlayerInfo.cs" />
     <Compile Include="Classes\Processes.cs" />
+    <Compile Include="Forms\Debug and Testform.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Debug and Testform.Designer.cs">
+      <DependentUpon>Debug and Testform.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\DetailedOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\DetailedOptions.Designer.cs">
+      <DependentUpon>DetailedOptions.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -89,6 +101,12 @@
     <EmbeddedResource Include="Forms\BufferForm.resx">
       <DependentUpon>BufferForm.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Debug and Testform.resx">
+      <DependentUpon>Debug and Testform.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\DetailedOptions.resx">
+      <DependentUpon>DetailedOptions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

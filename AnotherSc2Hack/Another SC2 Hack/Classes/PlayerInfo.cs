@@ -13,37 +13,44 @@ namespace Another_SC2_Hack.Classes
             _myForm = frm;
         }
 
+        //Size is 4 bytes
         public Int32 CameraX(Int32 playerNum)
         {
             return (BitConverter.ToInt32(Pinvokes.ReadProcess(_myForm.HStarCraft, _myForm.OOffset.CameraX + _myForm.OOffset.Size * playerNum, 4), 0) / 4096);
         }
 
+        //Size is 4 bytes
         public Int32 CameraY(Int32 playerNum)
         {
             return (BitConverter.ToInt32(Pinvokes.ReadProcess(_myForm.HStarCraft, _myForm.OOffset.CameraY + _myForm.OOffset.Size * playerNum, 4), 0) / 4096);
         }
 
+        //Size is 4 bytes
         public Int32 CameraDistance(Int32 playerNum)
         {
             return (BitConverter.ToInt32(Pinvokes.ReadProcess(_myForm.HStarCraft, _myForm.OOffset.CameraDistance + _myForm.OOffset.Size * playerNum, 4), 0) / 4096);
         }
 
+        //Size is 1 byte
         public Int32 Status(Int32 playerNum)
         {
             return
                 Pinvokes.ReadProcess(_myForm.HStarCraft, _myForm.OOffset.Status + _myForm.OOffset.Size * playerNum, 1)[0];
         }
 
+        //Size is 4 bytes
         public Int32 NameLength(Int32 playerNum)
         {
             return (BitConverter.ToInt32(Pinvokes.ReadProcess(_myForm.HStarCraft, _myForm.OOffset.NameLenght + _myForm.OOffset.Size * playerNum, 4), 0));
         }
 
+        //Size is 1 byte + NameLength
         public string Name(Int32 playerNum)
         {
             return (Encoding.UTF8.GetString(Pinvokes.ReadProcess(_myForm.HStarCraft, _myForm.OOffset.Name + _myForm.OOffset.Size * playerNum, NameLength(playerNum))));
         }
 
+        //Size is 4 bytes
         public Color Color(Int32 playerNum)
         {
             var iColor =
@@ -120,6 +127,7 @@ namespace Another_SC2_Hack.Classes
             return System.Drawing.Color.FromArgb(iresult[0], iresult[1], iresult[2], iresult[3]);
         }
 
+        //Size is 1 byte
         public Int32 Type(Int32 playerNum)
         {
             return
@@ -127,6 +135,7 @@ namespace Another_SC2_Hack.Classes
                                    4)[0];  
         }
 
+        //Size is 4 bytes
         public Int32 Apm(Int32 playerNum)
         {
             return
@@ -134,6 +143,7 @@ namespace Another_SC2_Hack.Classes
                     Pinvokes.ReadProcess(_myForm.HStarCraft, _myForm.OOffset.Apm + _myForm.OOffset.Size*playerNum, 4), 0));
         }
 
+        //Size is 4 bytes
         public Int32 Epm(Int32 playerNum)
         {
             return
@@ -141,6 +151,7 @@ namespace Another_SC2_Hack.Classes
                     Pinvokes.ReadProcess(_myForm.HStarCraft, _myForm.OOffset.Epm + _myForm.OOffset.Size * playerNum, 4), 0));
         }
 
+        //Size is 4 bytes
         public Int32 Minerals(Int32 playerNum)
         {
             return
@@ -148,6 +159,7 @@ namespace Another_SC2_Hack.Classes
                     Pinvokes.ReadProcess(_myForm.HStarCraft, _myForm.OOffset.MineralsCurrent + _myForm.OOffset.Size * playerNum, 4), 0));
         }
 
+        //Size is 4 bytes
         public Int32 Gas(Int32 playerNum)
         {
             return
@@ -155,6 +167,7 @@ namespace Another_SC2_Hack.Classes
                     Pinvokes.ReadProcess(_myForm.HStarCraft, _myForm.OOffset.GasCurrent + _myForm.OOffset.Size * playerNum, 4), 0));
         }
 
+        //Size is 4 bytes
         public Int32 MineralsIncome(Int32 playerNum)
         {
             return
@@ -162,6 +175,7 @@ namespace Another_SC2_Hack.Classes
                     Pinvokes.ReadProcess(_myForm.HStarCraft, _myForm.OOffset.MineralsIncome + _myForm.OOffset.Size * playerNum, 4), 0));
         }
 
+        //Size is 4 bytes
         public Int32 GasIncome(Int32 playerNum)
         {
             return
@@ -169,6 +183,7 @@ namespace Another_SC2_Hack.Classes
                     Pinvokes.ReadProcess(_myForm.HStarCraft, _myForm.OOffset.GasIncome + _myForm.OOffset.Size * playerNum, 4), 0));
         }
 
+        //Size is 4 bytes
         public Int32 MineralsArmy(Int32 playerNum)
         {
             return
@@ -176,6 +191,7 @@ namespace Another_SC2_Hack.Classes
                     Pinvokes.ReadProcess(_myForm.HStarCraft, _myForm.OOffset.MineralsArmy + _myForm.OOffset.Size * playerNum, 4), 0));
         }
 
+        //Size is 4 bytes
         public Int32 GasArmy(Int32 playerNum)
         {
             return
@@ -183,6 +199,7 @@ namespace Another_SC2_Hack.Classes
                     Pinvokes.ReadProcess(_myForm.HStarCraft, _myForm.OOffset.GasArmy + _myForm.OOffset.Size * playerNum, 4), 0));
         }
 
+        //Size is 4 bytes
         public Int32 SupplyMin(Int32 playerNum)
         {
             return
@@ -190,6 +207,7 @@ namespace Another_SC2_Hack.Classes
                     Pinvokes.ReadProcess(_myForm.HStarCraft, _myForm.OOffset.SupplyMin + _myForm.OOffset.Size * playerNum, 4), 0) / 4096);
         }
 
+        //Size is 4 bytes
         public Int32 SupplyMax(Int32 playerNum)
         {
             return
@@ -197,6 +215,7 @@ namespace Another_SC2_Hack.Classes
                     Pinvokes.ReadProcess(_myForm.HStarCraft, _myForm.OOffset.SupplyMax + _myForm.OOffset.Size * playerNum, 4), 0) / 4096);
         }
 
+        //Size is 4 bytes
         public Int32 Workers(Int32 playerNum)
         {
             return
@@ -204,13 +223,16 @@ namespace Another_SC2_Hack.Classes
                     Pinvokes.ReadProcess(_myForm.HStarCraft, _myForm.OOffset.Workers + _myForm.OOffset.Size * playerNum, 4), 0));
         }
 
+        //Size is 1 byte
         public Int32 Team(Int32 playerNum)
         {
             return
-                Pinvokes.ReadProcess(_myForm.HStarCraft, _myForm.OOffset.Team + _myForm.OOffset.TeamSize*playerNum,
-                                     1)[0];
+                (
+                    Pinvokes.ReadProcess(_myForm.HStarCraft, _myForm.OOffset.Team + _myForm.OOffset.Size*playerNum, 4)
+                        [0]) + 1;
         }
 
+        //Size is 4 bytes
         public string Race(Int32 playerNum)
         {
             return
@@ -219,11 +241,13 @@ namespace Another_SC2_Hack.Classes
                                          4)));
         }
 
+        //Size is 1 byte
         public Int32 LocalPlayer()
         {
             return Pinvokes.ReadProcess(_myForm.HStarCraft, _myForm.OOffset.Localplayer4, 1)[0] - 1;
         }
 
+        //Size is 4 bytes
         public Int32 Playercount()
         {
             var iCount = 0;
@@ -281,6 +305,24 @@ namespace Another_SC2_Hack.Classes
         //Size is 4 bytes
         public Int32 UnitTotal()
         {
+            var ver = new Version(_myForm.PStarcraft.MainModule.FileVersionInfo.FileVersion);
+            var verDummy = new Version(2, 0, 0, 0);
+
+            if (ver > verDummy)
+            {
+                /* If the value of the struct address is 0, there is no unit*/
+                var iCount = 0;
+                while (
+                    BitConverter.ToInt32(
+                        Pinvokes.ReadProcess(_myForm.HStarCraft,
+                                             _myForm.OOffset.StructUnit + _myForm.OOffset.UnitSize*iCount, 4), 0) > 0)
+                    iCount++;
+
+                return iCount;
+            }
+
+
+            /* WoL */
             return (BitConverter.ToInt32(Pinvokes.ReadProcess(_myForm.HStarCraft, _myForm.OOffset.UnitTotal, 4), 0));
         }
 
@@ -384,9 +426,7 @@ namespace Another_SC2_Hack.Classes
         //Size is 4 bytes
         public bool MapIngame()
         {
-            var l = (BitConverter.ToInt32(Pinvokes.ReadProcess(_myForm.HStarCraft, _myForm.OOffset.MapIngame, 4), 0));
-
-            return l < 0;
+            return Timer() != 0;
         }
 
         //Max length is 255
