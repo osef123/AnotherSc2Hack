@@ -99,7 +99,7 @@ namespace Another_SC2_Hack.Forms
             lstUnitInfo.Items.Add("Energy: " + _pInfo.UnitEnergy(_iUnitnum).ToString());
             lstUnitInfo.Items.Add("Target Filter: " + _pInfo.UnitTargetFilter(_iUnitnum).ToString());
             lstUnitInfo.Items.Add("Id: " + _pInfo.UnitId(_iUnitnum).ToString());
-            lstUnitInfo.Items.Add("Size: " + _pInfo.UnitSize(_iUnitnum).ToString());
+            lstUnitInfo.Items.Add("Size: " + (_pInfo.UnitSize(_iUnitnum) * 4096).ToString());
 
             lblUnitNum.Text = _iUnitnum.ToString();
         }

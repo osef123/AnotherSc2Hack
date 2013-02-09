@@ -154,7 +154,7 @@ namespace Another_SC2_Hack.Classes
                     Localplayer4 = 0x1683E30;
 
                     //Unitinfo
-                    StructUnit = 0x2772B80;
+                    StructUnit = 0x02766B00;
                     UnitPosX = StructUnit + 0x44;
                     UnitPosY = StructUnit + 0x48;
                     UnitTargetFilter = StructUnit + 0x14;

@@ -89,9 +89,9 @@
             this.lblGametype = new System.Windows.Forms.Label();
             this.lblShowFps = new System.Windows.Forms.Label();
             this.tpSettings = new System.Windows.Forms.TabPage();
-            this.pnlShow = new Another_SC2_Hack.Classes.BufferPanel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.slblTimer = new System.Windows.Forms.ToolStripStatusLabel();
+            this.pnlShow = new Another_SC2_Hack.Classes.BufferPanel();
             this.msSimpleStrip.SuspendLayout();
             this.gbRes.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -632,7 +632,6 @@
             this.btnDebug.TabIndex = 1;
             this.btnDebug.Text = "Show Debug- Panel";
             this.btnDebug.UseVisualStyleBackColor = true;
-            this.btnDebug.Visible = false;
             this.btnDebug.Click += new System.EventHandler(this.btnDebug_Click);
             // 
             // groupBox4
@@ -711,15 +710,6 @@
             this.tpSettings.Text = "Settings";
             this.tpSettings.UseVisualStyleBackColor = true;
             // 
-            // pnlShow
-            // 
-            this.pnlShow.CurrentItem = 0;
-            this.pnlShow.Location = new System.Drawing.Point(20, 86);
-            this.pnlShow.MaxItem = 2;
-            this.pnlShow.Name = "pnlShow";
-            this.pnlShow.Size = new System.Drawing.Size(674, 17);
-            this.pnlShow.TabIndex = 6;
-            // 
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -736,6 +726,15 @@
             this.slblTimer.Name = "slblTimer";
             this.slblTimer.Size = new System.Drawing.Size(235, 23);
             this.slblTimer.Text = "STARCRAFT 2 NOT FOUND";
+            // 
+            // pnlShow
+            // 
+            this.pnlShow.CurrentItem = 0;
+            this.pnlShow.Location = new System.Drawing.Point(20, 86);
+            this.pnlShow.MaxItem = 2;
+            this.pnlShow.Name = "pnlShow";
+            this.pnlShow.Size = new System.Drawing.Size(674, 17);
+            this.pnlShow.TabIndex = 6;
             // 
             // MainForm
             // 

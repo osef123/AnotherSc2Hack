@@ -534,5 +534,568 @@ namespace Another_SC2_Hack.Classes
 
             return Typo.Gametype.None;
         }
+
+        /* This is a more accurate way to get the unitsize
+         * Previously, there were some mistakes about certain units
+         * This is fixed now. However, unknow units still get fed by 
+         * The found size */
+        public float UnitSize2(Int32 unitNum)
+        {
+            var iId = UnitId(unitNum);
+            float fSize = 0.0f;
+
+            switch (iId)
+            {
+                case (int)Typo.UnitId.PuColossus:
+                    fSize = 0.75f;
+                    break;
+
+                case (int)Typo.UnitId.TbTechlab:
+                    fSize = 0.75f;
+                    break;
+
+                case (int)Typo.UnitId.TbReactor:
+                    fSize = 0.75f;
+                    break;
+
+                case (int)Typo.UnitId.ZuInfestedTerran:
+                    fSize = 0.5f;
+                    break;
+
+                case (int)Typo.UnitId.ZuBanelingCocoon:
+                    fSize = 0.5f;
+                    break;
+
+                case (int)Typo.UnitId.ZuBaneling:
+                    fSize = 0.5f;
+                    break;
+
+                case (int)Typo.UnitId.PuMothership:
+                    fSize = 1.25f;
+                    break;
+
+                case (int)Typo.UnitId.TuPdd:
+                    fSize = 0.5f;
+                    break;
+
+                case (int)Typo.UnitId.ZuChangeling:
+                    fSize = 0.5f;
+                    break;
+
+                case (int)Typo.UnitId.ZuChangelingZealot:
+                    fSize = 0.5f;
+                    break;
+
+                case (int)Typo.UnitId.ZuChangelingMarineShield:
+                    fSize = 0.5f;
+                    break;
+
+                case (int)Typo.UnitId.ZuChangelingMarine:
+                    fSize = 0.5f;
+                    break;
+
+                case (int)Typo.UnitId.ZuChangelingSpeedling:
+                    fSize = 0.5f;
+                    break;
+
+                case (int)Typo.UnitId.ZuChangelingZergling:
+                    fSize = 0.5f;
+                    break;
+
+                case (int)Typo.UnitId.TbCcGround:
+                    fSize = 2.25f;
+                    break;
+
+                case (int)Typo.UnitId.TbSupplyGround:
+                    fSize = 1.25f;
+                    break;
+
+                case (int)Typo.UnitId.TbRefinery:
+                    fSize = 1.5f;
+                    break;
+
+                case (int)Typo.UnitId.TbBarracksGround:
+                    fSize = 1.5f;
+                    break;
+
+                case (int)Typo.UnitId.TbEbay:
+                    fSize = 1.25f;
+                    break;
+
+                case (int)Typo.UnitId.TbTurret:
+                    fSize = 0.75f;
+                    break;
+
+                case (int)Typo.UnitId.TbBunker:
+                    fSize = 1f;
+                    break;
+
+                case (int)Typo.UnitId.TbSensortower:
+                    fSize = 0.75f;
+                    break;
+
+                case (int)Typo.UnitId.TbGhostacademy:
+                    fSize = 1.5f;
+                    break;
+
+                case (int)Typo.UnitId.TbFactoryGround:
+                    fSize = 1.5f;
+                    break;
+
+                case (int)Typo.UnitId.TbStarportGround:
+                    fSize = 1.5f;
+                    break;
+
+                case (int)Typo.UnitId.TbArmory:
+                    fSize = 1.25f;
+                    break;
+
+                case (int)Typo.UnitId.TbFusioncore:
+                    fSize = 1.5f;
+                    break;
+
+                case (int)Typo.UnitId.TbAutoTurret:
+                    fSize = 0.75f;
+                    break;
+
+                case (int)Typo.UnitId.TuSiegetankSieged:
+                    fSize = 0.75f;
+                    break;
+
+                case (int)Typo.UnitId.TuSiegetank:
+                    fSize = 0.75f;
+                    break;
+
+                case (int)Typo.UnitId.TuVikingGround:
+                    fSize = 0.75f;
+                    break;
+
+                case (int)Typo.UnitId.TuVikingAir:
+                    fSize = 0.75f;
+                    break;
+
+                case (int)Typo.UnitId.TbCcAir:
+                    fSize = 2.25f;
+                    break;
+
+                case (int)Typo.UnitId.TbTechlabRax:
+                    fSize = 0.75f;
+                    break;
+
+                case (int)Typo.UnitId.TbReactorRax:
+                    fSize = 0.75f;
+                    break;
+
+                case (int)Typo.UnitId.TbTechlabFactory:
+                    fSize = 0.75f;
+                    break;
+
+                case (int)Typo.UnitId.TbReactorFactory:
+                    fSize = 0.75f;
+                    break;
+
+                case (int)Typo.UnitId.TbTechlabStarport:
+                    fSize = 0.75f;
+                    break;
+
+                case (int)Typo.UnitId.TbReactorStarport:
+                    fSize = 0.75f;
+                    break;
+
+                case (int)Typo.UnitId.TbFactoryAir:
+                    fSize = 1.5f;
+                    break;
+
+                case (int)Typo.UnitId.TbStarportAir:
+                    fSize = 1.5f;
+                    break;
+
+                case (int)Typo.UnitId.TuScv:
+                    fSize = 0.5f;
+                    break;
+
+                case (int)Typo.UnitId.TbRaxAir:
+                    fSize = 1.5f;
+                    break;
+
+                case (int)Typo.UnitId.TbSupplyHidden:
+                    fSize = 1.25f;
+                    break;
+
+                case (int)Typo.UnitId.TuMarine:
+                    fSize = 0.5f;
+                    break;
+
+                case (int)Typo.UnitId.TuReaper:
+                    fSize = 0.5f;
+                    break;
+
+                case (int)Typo.UnitId.TuGhost:
+                    fSize = 0.5f;
+                    break;
+
+                case (int)Typo.UnitId.TuMarauder:
+                    fSize = 0.5f;
+                    break;
+
+                case (int)Typo.UnitId.TuThor:
+                    fSize = 0.75f;
+                    break;
+
+                case (int)Typo.UnitId.TuHellion:
+                    fSize = 0.5f;
+                    break;
+
+                case (int)Typo.UnitId.TuMedivac:
+                    fSize = 0.75f;
+                    break;
+
+                case (int)Typo.UnitId.TuBanshee:
+                    fSize = 0.75f;
+                    break;
+
+                case (int)Typo.UnitId.TuRaven:
+                    fSize = 0.75f;
+                    break;
+
+                case (int)Typo.UnitId.TuBattlecruiser:
+                    fSize = 1.25f;
+                    break;
+
+                case (int)Typo.UnitId.PbNexus:
+                    fSize = 2.25f;
+                    break;
+
+                case (int)Typo.UnitId.PbPylon:
+                    fSize = 0.75f;
+                    break;
+
+                case (int)Typo.UnitId.PbAssimilator:
+                    fSize = 1.5f;
+                    break;
+
+                case (int)Typo.UnitId.PbGateway:
+                    fSize = 1.5f;
+                    break;
+
+                case (int)Typo.UnitId.PbForge:
+                    fSize = 1.5f;
+                    break;
+
+                case (int)Typo.UnitId.PbFleetbeacon:
+                    fSize = 1.5f;
+                    break;
+
+                case (int)Typo.UnitId.PbTwilightcouncil:
+                    fSize = 1.5f;
+                    break;
+
+                case (int)Typo.UnitId.PbCannon:
+                    fSize = 0.75f;
+                    break;
+
+                case (int)Typo.UnitId.PbStargate:
+                    fSize = 1.5f;
+                    break;
+
+                case (int)Typo.UnitId.PbTemplararchives:
+                    fSize = 1.5f;
+                    break;
+
+                case (int)Typo.UnitId.PbDarkshrine:
+                    fSize = 1.25f;
+                    break;
+
+                case (int)Typo.UnitId.PbRoboticssupportbay:
+                    fSize = 1.5f;
+                    break;
+
+                case (int)Typo.UnitId.PbRoboticsbay:
+                    fSize = 1.5f;
+                    break;
+
+                case (int)Typo.UnitId.PbCybercore:
+                    fSize = 1.5f;
+                    break;
+
+                case (int)Typo.UnitId.PuZealot:
+                    fSize = 0.5f;
+                    break;
+
+                case (int)Typo.UnitId.PuStalker:
+                    fSize = 0.75f;
+                    break;
+
+                case (int)Typo.UnitId.PuHightemplar:
+                    fSize = 0.5f;
+                    break;
+
+                case (int)Typo.UnitId.PuDarktemplar:
+                    fSize = 0.5f;
+                    break;
+
+                case (int)Typo.UnitId.PuSentry:
+                    fSize = 0.5f;
+                    break;
+
+                case (int)Typo.UnitId.PuPhoenix:
+                    fSize = 0.75f;
+                    break;
+
+                case (int)Typo.UnitId.PuCarrier:
+                    fSize = 1.25f;
+                    break;
+
+                case (int)Typo.UnitId.PuVoidray:
+                    fSize = 0.75f;
+                    break;
+
+                case (int)Typo.UnitId.PuWarpprismTransport:
+                    fSize = 0.75f;
+                    break;
+
+                case (int)Typo.UnitId.PuObserver:
+                    fSize = 0.5f;
+                    break;
+
+                case (int)Typo.UnitId.PuImmortal:
+                    fSize = 0.75f;
+                    break;
+
+                case (int)Typo.UnitId.PuProbe:
+                    fSize = 0.5f;
+                    break;
+
+                case (int)Typo.UnitId.PuInterceptor:
+                    fSize = 0.5f;
+                    break;
+
+                case (int)Typo.UnitId.ZbHatchery:
+                    fSize = 2.25f;
+                    break;
+
+                case (int)Typo.UnitId.ZbExtractor:
+                    fSize = 1.5f;
+                    break;
+
+                case (int)Typo.UnitId.ZbSpawningPool:
+                    fSize = 1.5f;
+                    break;
+
+                case (int)Typo.UnitId.ZbEvolutionChamber:
+                    fSize = 1.5f;
+                    break;
+
+                case (int)Typo.UnitId.ZbHydraDen:
+                    fSize = 1.5f;
+                    break;
+
+                case (int)Typo.UnitId.ZbSpire:
+                    fSize = 0.75f;
+                    break;
+
+                case (int)Typo.UnitId.ZbUltraCavern:
+                    fSize = 1.5f;
+                    break;
+
+                case (int)Typo.UnitId.ZbInfestationPit:
+                    fSize = 1.5f;
+                    break;
+
+                case (int)Typo.UnitId.ZbNydusNetwork:
+                    fSize = 1.5f;
+                    break;
+
+                case (int)Typo.UnitId.ZbBanelingNest:
+                    fSize = 1.5f;
+                    break;
+
+                case (int)Typo.UnitId.ZbRoachWarren:
+                    fSize = 1.5f;
+                    break;
+
+                case (int)Typo.UnitId.ZbSpineCrawler:
+                    fSize = 0.75f;
+                    break;
+
+                case (int)Typo.UnitId.ZbSporeCrawler:
+                    fSize = 0.75f;
+                    break;
+
+                case (int)Typo.UnitId.ZbLiar:
+                    fSize = 2.25f;
+                    break;
+
+                case (int)Typo.UnitId.ZbHive:
+                    fSize = 2.25f;
+                    break;
+
+                case (int)Typo.UnitId.ZbGreaterspire:
+                    fSize = 0.75f;
+                    break;
+
+                case (int)Typo.UnitId.ZuEgg:
+                    fSize = 0.5f;
+                    break;
+
+                case (int)Typo.UnitId.ZuDone:
+                    fSize = 0.5f;
+                    break;
+
+                case (int)Typo.UnitId.ZuZergling:
+                    fSize = 0.5f;
+                    break;
+
+                case (int)Typo.UnitId.ZuOverlord:
+                    fSize = 0.75f;
+                    break;
+
+                case (int)Typo.UnitId.ZuHydralisk:
+                    fSize = 0.5f;
+                    break;
+
+                case (int)Typo.UnitId.ZuMutalisk:
+                    fSize = 0.5f;
+                    break;
+
+                case (int)Typo.UnitId.ZuUltra:
+                    fSize = 0.75f;
+                    break;
+
+                case (int)Typo.UnitId.ZuRoach:
+                    fSize = 0.5f;
+                    break;
+
+                case (int)Typo.UnitId.ZuInfestor:
+                    fSize = 0.75f;
+                    break;
+
+                case (int)Typo.UnitId.ZuCorruptor:
+                    fSize = 0.75f;
+                    break;
+
+                case (int)Typo.UnitId.ZuBroodlordCocoon:
+                    fSize = 0.75f;
+                    break;
+
+                case (int)Typo.UnitId.ZuBroodlord:
+                    fSize = 0.75f;
+                    break;
+
+                case (int)Typo.UnitId.ZuBanelingBurrow:
+                    fSize = 0.5f;
+                    break;
+
+                case (int)Typo.UnitId.ZuDroneBurrow:
+                    fSize = 0.5f;
+                    break;
+
+                case (int)Typo.UnitId.ZuHydraBurrow:
+                    fSize = 0.5f;
+                    break;
+
+                case (int)Typo.UnitId.ZuRoachBurrow:
+                    fSize = 0.5f;
+                    break;
+
+                case (int)Typo.UnitId.ZuZerglingBurrow:
+                    fSize = 0.5f;
+                    break;
+
+                case (int)Typo.UnitId.ZuInfestedTerran2:
+                    fSize = 0.5f;
+                    break;
+
+                case (int)Typo.UnitId.ZuQueenBurrow:
+                    fSize = 0.75f;
+                    break;
+
+                case (int)Typo.UnitId.ZuQueen:
+                    fSize = 0.75f;
+                    break;
+
+                case (int)Typo.UnitId.ZuInfestorBurrow:
+                    fSize = 0.75f;
+                    break;
+
+                case (int)Typo.UnitId.ZuOverseerCocoon:
+                    fSize = 0.75f;
+                    break;
+
+                case (int)Typo.UnitId.ZuOverseer:
+                    fSize = 0.75f;
+                    break;
+
+                case (int)Typo.UnitId.TbPlanetary:
+                    fSize = 2.25f;
+                    break;
+
+                case (int)Typo.UnitId.ZuUltraBurrow:
+                    fSize = 0.75f;
+                    break;
+
+                case (int)Typo.UnitId.TbOrbitalGround:
+                    fSize = 2.25f;
+                    break;
+
+                case (int)Typo.UnitId.PbWarpgate:
+                    fSize = 1.5f;
+                    break;
+
+                case (int)Typo.UnitId.TbOrbitalAir:
+                    fSize = 2.25f;
+                    break;
+
+                case (int)Typo.UnitId.PuWarpprismPhase:
+                    fSize = 0.75f;
+                    break;
+
+                case (int)Typo.UnitId.ZbCreeptumor:
+                    fSize = 0.75f;
+                    break;
+
+                case (int)Typo.UnitId.ZbSpineCrawlerUnrooted:
+                    fSize = 0.75f;
+                    break;
+
+                case (int)Typo.UnitId.ZbSporeCrawlerUnrooted:
+                    fSize = 0.75f;
+                    break;
+
+                case (int)Typo.UnitId.PuArchon:
+                    fSize = 0.75f;
+                    break;
+
+                case (int)Typo.UnitId.ZbNydusWorm:
+                    fSize = 0.75f;
+                    break;
+
+                case (int)Typo.UnitId.ZuBroodlordEscort:
+                    fSize = 0.5f;
+                    break;
+
+                case (int)Typo.UnitId.ZuInfestedSwarmEgg:
+                    fSize = 0.5f;
+                    break;
+
+                case (int)Typo.UnitId.ZuLarva:
+                    fSize = 0.5f;
+                    break;
+
+                case (int)Typo.UnitId.TuMule:
+                    fSize = 0.5f;
+                    break;
+
+                case (int)Typo.UnitId.ZuBroodling:
+                    fSize = 0.5f;
+                    break;
+
+                default:
+                    fSize = UnitSize(unitNum);
+                    break;
+            }
+
+            return fSize;
+        }
     }
 }

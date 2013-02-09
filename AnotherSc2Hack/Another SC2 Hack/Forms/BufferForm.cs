@@ -1025,7 +1025,7 @@ namespace Another_SC2_Hack.Classes
                 var iUnitX = (_pInfo.UnitPosX(i) - _pInfo.MapLeft()) * iScale + iX;
                 var iUnitY = (_pInfo.MapTop() - _pInfo.UnitPosY(i)) * iScale + iY;
 
-                var dsize = _pInfo.UnitSize(i);
+                var dsize = _pInfo.UnitSize2(i);
 
                 #endregion
 
@@ -1309,7 +1309,7 @@ namespace Another_SC2_Hack.Classes
                 var iUnitX = (_pInfo.UnitPosX(i) - _pInfo.MapLeft()) * iScale + iX;
                 var iUnitY = (_pInfo.MapTop() - _pInfo.UnitPosY(i)) * iScale + iY;
 
-                var dsize = _pInfo.UnitSize(i);
+                var dsize = _pInfo.UnitSize2(i);
 
                 #endregion
 
@@ -1444,7 +1444,8 @@ namespace Another_SC2_Hack.Classes
 
 
                 //5.3333333333333333333333333333333 = 2 / 0,375 (0,375 beeing the smallest value ingame and 2 px the same fopr visuality
-                var dModifiedSize = 5.3333333333333333333333333333333 * dsize;
+                var dModifiedSize = (2.1781171647339959438013099741158 * iScale) * dsize;
+                //dModifiedSize += (1f / iScale);
 
                 //black bounds around
                 buffer.Graphics.DrawRectangle(new Pen(new SolidBrush(clUnitBorder)),
@@ -1472,8 +1473,8 @@ namespace Another_SC2_Hack.Classes
                             _pInfo.UnitId(i).Equals((int) Typo.UnitId.TbTurret) |
                             _pInfo.UnitId(i).Equals((int) Typo.UnitId.TbPlanetary) |
                             _pInfo.UnitId(i).Equals((int) Typo.UnitId.PbCannon) |
-                            _pInfo.UnitId(i).Equals((int) Typo.UnitId.ZbSpinecrawler) |
-                            _pInfo.UnitId(i).Equals((int) Typo.UnitId.ZbSporecrawler))
+                            _pInfo.UnitId(i).Equals((int) Typo.UnitId.ZbSpineCrawler) |
+                            _pInfo.UnitId(i).Equals((int) Typo.UnitId.ZbSporeCrawler))
                         {
                             var clBound = (_pInfo.UnitTargetFilter(i) & 0x0000000200000000) > 0
                                               ? Color.Transparent
@@ -1497,7 +1498,8 @@ namespace Another_SC2_Hack.Classes
                     if (!_pInfo.UnitOwner(i).Equals(_pInfo.LocalPlayer() + 1))
                     {
                         if (_pInfo.UnitId(i).Equals((int) Typo.UnitId.TuMedivac) ||
-                            _pInfo.UnitId(i).Equals((int) Typo.UnitId.PuWarpprism))
+                            _pInfo.UnitId(i).Equals((int) Typo.UnitId.PuWarpprismTransport) ||
+                            _pInfo.UnitId(i).Equals((int)Typo.UnitId.PuWarpprismPhase))
                         {
 
                             var clBound = (_pInfo.UnitTargetFilter(i) & 0x0000000200000000) > 0
