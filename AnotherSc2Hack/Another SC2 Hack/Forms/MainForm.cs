@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
 using Another_SC2_Hack.Classes;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Another_SC2_Hack.Forms
@@ -33,6 +34,7 @@ namespace Another_SC2_Hack.Forms
         private Update _upCheckforUpdates;
         private Debug_and_Testform _dtest;
         private DetailedOptions _dOptions;
+        
         #region Variables used to safe/ load settings
 
         /* Ressources */
@@ -284,6 +286,9 @@ namespace Another_SC2_Hack.Forms
 
             /* Show Fps in Label */
             ShowFps();
+
+            /* Color the labels */
+            ColorAndSetLabels();
         }
 
         /*** Change font for a Panel ***/
@@ -2494,12 +2499,72 @@ namespace Another_SC2_Hack.Forms
             lblGametype.Text = "Gametype: " + strGametype;
         }
 
-     
+        /*** Color the Benchmark- Labels ***/
+        private void ColorAndSetLabels()
+        {
+            /* Resource*/
+            if (_bfRes != null && _bfRes.Created)
+                lblResource.ForeColor = Color.Green;
+
+            else
+            {
+                lblResource.ForeColor = Color.Red;
+                lblResource.Text = "Resource: -";
+            }
+
+            /* Income */
+            if (_bfInc != null && _bfInc.Created)
+                lblIncome.ForeColor = Color.Green;
+
+            else
+            {
+                lblIncome.ForeColor = Color.Red;
+                lblIncome.Text = "Income: -";
+            }
 
 
+            /* Worker */
+            if (_bfWor != null && _bfWor.Created)
+                lblWorker.ForeColor = Color.Green;
+
+            else
+            {
+                lblWorker.ForeColor = Color.Red;
+                lblWorker.Text = "Worker: -";
+            }
 
 
-       
-       
-    }
+            /* Maphack */
+            if (_bfMap != null && _bfMap.Created)
+                lblMaphack.ForeColor = Color.Green;
+
+            else
+            {
+                lblMaphack.ForeColor = Color.Red;
+                lblMaphack.Text = "Maphack: -";
+            }
+
+
+            /* Apm */
+            if (_bfApm != null && _bfApm.Created)
+                lblApm.ForeColor = Color.Green;
+
+            else
+            {
+                lblApm.ForeColor = Color.Red;
+                lblApm.Text = "Apm: -";
+            }
+
+
+            /* Army */
+            if (_bfArm != null && _bfArm.Created)
+                lblArmy.ForeColor = Color.Green;
+
+            else
+            {
+                lblArmy.ForeColor = Color.Red;
+                lblArmy.Text = "Army: -";
+            }
+        }
+   }
 }

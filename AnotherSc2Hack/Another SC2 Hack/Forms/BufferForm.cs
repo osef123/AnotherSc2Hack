@@ -20,6 +20,7 @@ namespace Another_SC2_Hack.Classes
         private MainForm _myForm = null;
         private Typo.BufferformType _myType;
         private float fFontSize = 0.0217607334817899f;
+        Stopwatch _swPrimeBenching = new Stopwatch();
 
         /* Settings */
         #region Settings
@@ -157,6 +158,10 @@ namespace Another_SC2_Hack.Classes
         //Draw the actual stuff
         protected override void OnPaint(PaintEventArgs e)
         {
+            var strUsedPanel = string.Empty;
+            var iItemNum = 0;
+            _swPrimeBenching.Start();
+
             #region Excape Sequences - OKAY
 
             if (!_pInfo.MapIngame())
@@ -201,37 +206,130 @@ namespace Another_SC2_Hack.Classes
 
                 /* Check which Panel is opened */
                 if (_myType.Equals(Typo.BufferformType.Ressource))
+                {
                     RessourceDrawing(buffer);
+                    strUsedPanel = "Ressource";
+                    iItemNum = 0;
+                }
 
                 else if (_myType.Equals(Typo.BufferformType.Income))
+                {
                     IncomeDrawing(buffer);
+                    strUsedPanel = "Income";
+                    iItemNum = 1;
+                }
 
                 else if (_myType.Equals(Typo.BufferformType.Army))
+                {
                     ArmyDrawing(buffer);
+                    strUsedPanel = "Army";
+                    iItemNum = 2;
+                }
 
                 else if (_myType.Equals(Typo.BufferformType.Apm))
+                {
                     ApmDrawing(buffer);
+                    strUsedPanel = "Apm";
+                    iItemNum = 3;
+                }
 
                 else if (_myType.Equals(Typo.BufferformType.Worker))
+                {
                     WorkerDrawing(buffer);
+                    strUsedPanel = "Worker";
+                    iItemNum = 4;
+                }
 
                 else if (_myType.Equals(Typo.BufferformType.Maphack))
+                {
                     MaphackDrawing(buffer);
+                    strUsedPanel = "Maphack";
+                    iItemNum = 5;
+                }
 
                 else if (_myType.Equals(Typo.BufferformType.Units))
+                {
                     UnitDrawing(buffer);
+                    strUsedPanel = "Units";
+                    iItemNum = 6;
+                }
 
                 else if (_myType.Equals(Typo.BufferformType.Notification))
+                {
                     NotificationDrawing(buffer);
+                    strUsedPanel = "Notification";
+                    iItemNum = 7;
+                }
 
                 buffer.Render();
+                
+            }
+            context.Dispose();
+
+            /* Stopping the stopwatch */
+            _swPrimeBenching.Stop();
+
+            #region Send information to the labels 
+
+            switch (_myType)
+            {
+                case Typo.BufferformType.Ressource:
+                    _myForm.lblResource.Text = "Ressource: " +
+                                               (Math.Round(
+                                                   1000.0*(double) _swPrimeBenching.ElapsedTicks/Stopwatch.Frequency, 2))
+                                                   .ToString() +
+                                               "ms";
+                    break;
+
+                case Typo.BufferformType.Income:
+                    _myForm.lblIncome.Text = "Income: " +
+                                             (Math.Round(
+                                                 1000.0*(double) _swPrimeBenching.ElapsedTicks/Stopwatch.Frequency, 2))
+                                                 .ToString() +
+                                             "ms";
+                    break;
+
+                case Typo.BufferformType.Worker:
+                    _myForm.lblWorker.Text = "Worker: " +
+                                             (Math.Round(
+                                                 1000.0*(double) _swPrimeBenching.ElapsedTicks/Stopwatch.Frequency, 2))
+                                                 .ToString() +
+                                             "ms";
+                    break;
+
+                case Typo.BufferformType.Maphack:
+                    _myForm.lblMaphack.Text = "Maphack: " +
+                                              (Math.Round(
+                                                  1000.0*(double) _swPrimeBenching.ElapsedTicks/Stopwatch.Frequency, 2))
+                                                  .ToString() +
+                                              "ms";
+                    break;
+
+                case Typo.BufferformType.Apm:
+                    _myForm.lblApm.Text = "Apm: " +
+                                          (Math.Round(
+                                              1000.0*(double) _swPrimeBenching.ElapsedTicks/Stopwatch.Frequency, 2))
+                                              .ToString() +
+                                          "ms";
+                    break;
+
+                case Typo.BufferformType.Army:
+                    _myForm.lblArmy.Text = "Army: " +
+                                           (Math.Round(
+                                               1000.0*(double) _swPrimeBenching.ElapsedTicks/Stopwatch.Frequency, 2))
+                                               .ToString() +
+                                           "ms";
+                    break;
+
             }
 
-            context.Dispose();
+            #endregion
+
+            /* Just reset the stopwatch*/
+            _swPrimeBenching.Reset();
         }
 
         /*** Drawing Instance for the Ressource- Part ***/
-
         private void RessourceDrawing(BufferedGraphics buffer)
         {
             if (_pInfo.Playercount() <= 0)
@@ -244,6 +342,7 @@ namespace Another_SC2_Hack.Classes
             Location = new Point(_myForm._iResX, _myForm._iResY);
             var fDiagonalSize = (float) Math.Sqrt((Math.Pow(Width, 2) + Math.Pow(Height/_pInfo.Playercount(), 2)));
             //fFontSize = 12/fDiagonalSize;
+
 
             var i2 = 0;
             for (var i = 0; i < _pInfo.Playercount(); i++)
@@ -428,7 +527,6 @@ namespace Another_SC2_Hack.Classes
 
                 i2++;
             }
-
         }
 
         /*** Drawing Instance for the Income- Part ***/
