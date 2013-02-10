@@ -21,6 +21,8 @@ namespace Another_SC2_Hack.Forms
         private int _iRound;
         private const string StrOnlinePath = @"https://dl.dropbox.com/u/62845853/AnotherSc2Hack/UpdateFiles/version";
         private string _strDownloadString = string.Empty;
+        private int _iCountTimeOuts = 0;
+        private const int IMaxTimeOuts = 10;
 
         #endregion 
 
@@ -54,16 +56,25 @@ namespace Another_SC2_Hack.Forms
         /* Actual search- routine */
         public void InitSearch()
         {
+            TryAnotherRound:
+
             /* We ping the Server first to exclude exceptions! */
             var myPing = new Ping();
 
-            var myResult = myPing.Send("Dropbox.com", 5);
+            var myResult = myPing.Send("Dropbox.com", 10);
 
             if (myResult != null && myResult.Status != IPStatus.Success)
             {
-                MessageBox.Show("Can not reach Server!\n\nTry later!", "FAILED");
-                Close();
-                return;
+                if (_iCountTimeOuts >= IMaxTimeOuts)
+                {
+                    MessageBox.Show("Can not reach Server!\n\nTry later!", "FAILED");
+                    Close();
+                    return;
+                }
+
+                _iCountTimeOuts++;
+                goto TryAnotherRound;
+                
             }
 
 
