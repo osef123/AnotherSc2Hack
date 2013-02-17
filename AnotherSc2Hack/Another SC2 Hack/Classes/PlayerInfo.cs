@@ -542,7 +542,7 @@ namespace Another_SC2_Hack.Classes
         public float UnitSize2(Int32 unitNum)
         {
             var iId = UnitId(unitNum);
-            float fSize = 0.0f;
+            float fSize;
 
             switch (iId)
             {

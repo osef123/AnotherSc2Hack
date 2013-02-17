@@ -16,11 +16,12 @@ namespace Another_SC2_Hack.Classes
         public IntPtr HStarCraft = IntPtr.Zero;
         public Process PStarcraft = null;
         public Offsets OOffset;
-        private PlayerInfo _pInfo;
-        private MainForm _myForm = null;
-        private Typo.BufferformType _myType;
-        private float fFontSize = 0.0217607334817899f;
-        Stopwatch _swPrimeBenching = new Stopwatch();
+        private readonly PlayerInfo _pInfo;
+        private readonly MainForm _myForm = null;
+        private readonly Typo.BufferformType _myType;
+        private const float fFontSize = 0.0217607334817899f;
+        readonly Stopwatch _swPrimeBenching = new Stopwatch();
+        Stopwatch _swBench = new Stopwatch();
 
         /* Settings */
         #region Settings
@@ -201,65 +202,41 @@ namespace Another_SC2_Hack.Classes
                 buffer.Graphics.Clear(BackColor);
                 buffer.Graphics.CompositingMode = CompositingMode.SourceOver;
                 buffer.Graphics.CompositingQuality = CompositingQuality.HighSpeed;
-                buffer.Graphics.PixelOffsetMode = PixelOffsetMode.HighSpeed;
-                buffer.Graphics.SmoothingMode = SmoothingMode.HighSpeed;
+                buffer.Graphics.PixelOffsetMode = PixelOffsetMode.None;
+                buffer.Graphics.SmoothingMode = SmoothingMode.None;
 
                 /* Check which Panel is opened */
                 if (_myType.Equals(Typo.BufferformType.Ressource))
-                {
                     RessourceDrawing(buffer);
-                    strUsedPanel = "Ressource";
-                    iItemNum = 0;
-                }
+                
 
                 else if (_myType.Equals(Typo.BufferformType.Income))
-                {
                     IncomeDrawing(buffer);
-                    strUsedPanel = "Income";
-                    iItemNum = 1;
-                }
+                
 
                 else if (_myType.Equals(Typo.BufferformType.Army))
-                {
                     ArmyDrawing(buffer);
-                    strUsedPanel = "Army";
-                    iItemNum = 2;
-                }
+                
 
                 else if (_myType.Equals(Typo.BufferformType.Apm))
-                {
                     ApmDrawing(buffer);
-                    strUsedPanel = "Apm";
-                    iItemNum = 3;
-                }
+                
 
                 else if (_myType.Equals(Typo.BufferformType.Worker))
-                {
                     WorkerDrawing(buffer);
-                    strUsedPanel = "Worker";
-                    iItemNum = 4;
-                }
+
 
                 else if (_myType.Equals(Typo.BufferformType.Maphack))
-                {
                     MaphackDrawing(buffer);
-                    strUsedPanel = "Maphack";
-                    iItemNum = 5;
-                }
+                
 
                 else if (_myType.Equals(Typo.BufferformType.Units))
-                {
                     UnitDrawing(buffer);
-                    strUsedPanel = "Units";
-                    iItemNum = 6;
-                }
+                
 
                 else if (_myType.Equals(Typo.BufferformType.Notification))
-                {
                     NotificationDrawing(buffer);
-                    strUsedPanel = "Notification";
-                    iItemNum = 7;
-                }
+                
 
                 buffer.Render();
                 
@@ -271,54 +248,54 @@ namespace Another_SC2_Hack.Classes
 
             #region Send information to the labels 
 
+            /* Calculate stuff in ms */
+            var dTime = Math.Round(
+                1000.0*(double) _swPrimeBenching.ElapsedTicks/Stopwatch.Frequency, 2);
+            var dFps = Math.Round(1000 / dTime, 0);
+            
+
             switch (_myType)
             {
                 case Typo.BufferformType.Ressource:
                     _myForm.lblResource.Text = "Ressource: " +
-                                               (Math.Round(
-                                                   1000.0*(double) _swPrimeBenching.ElapsedTicks/Stopwatch.Frequency, 2))
-                                                   .ToString() +
-                                               "ms";
+                                               (dTime.ToString() +
+                                                "ms" + " [" + dFps  + " FPS]");
                     break;
 
                 case Typo.BufferformType.Income:
                     _myForm.lblIncome.Text = "Income: " +
-                                             (Math.Round(
-                                                 1000.0*(double) _swPrimeBenching.ElapsedTicks/Stopwatch.Frequency, 2))
-                                                 .ToString() +
-                                             "ms";
+                                             (dTime.ToString() +
+                                                "ms" + " [" + dFps + " FPS]");
                     break;
 
                 case Typo.BufferformType.Worker:
                     _myForm.lblWorker.Text = "Worker: " +
-                                             (Math.Round(
-                                                 1000.0*(double) _swPrimeBenching.ElapsedTicks/Stopwatch.Frequency, 2))
-                                                 .ToString() +
-                                             "ms";
+                                             (dTime.ToString() +
+                                                "ms" + " [" + dFps + " FPS]");
                     break;
 
                 case Typo.BufferformType.Maphack:
                     _myForm.lblMaphack.Text = "Maphack: " +
-                                              (Math.Round(
-                                                  1000.0*(double) _swPrimeBenching.ElapsedTicks/Stopwatch.Frequency, 2))
-                                                  .ToString() +
-                                              "ms";
+                                              (dTime.ToString() +
+                                                "ms" + " [" + dFps + " FPS]");
                     break;
 
                 case Typo.BufferformType.Apm:
                     _myForm.lblApm.Text = "Apm: " +
-                                          (Math.Round(
-                                              1000.0*(double) _swPrimeBenching.ElapsedTicks/Stopwatch.Frequency, 2))
-                                              .ToString() +
-                                          "ms";
+                                          (dTime.ToString() +
+                                                "ms" + " [" + dFps + " FPS]");
                     break;
 
                 case Typo.BufferformType.Army:
                     _myForm.lblArmy.Text = "Army: " +
-                                           (Math.Round(
-                                               1000.0*(double) _swPrimeBenching.ElapsedTicks/Stopwatch.Frequency, 2))
-                                               .ToString() +
-                                           "ms";
+                                           (dTime.ToString() +
+                                                "ms" + " [" + dFps + " FPS]");
+                    break;
+
+                case Typo.BufferformType.Notification:
+                    _myForm.lblNotification.Text = "Notification: " +
+                                           (dTime.ToString() +
+                                                "ms" + " [" + dFps + " FPS]");
                     break;
 
             }
@@ -1012,6 +989,7 @@ namespace Another_SC2_Hack.Classes
         /*** Drawing Instance for the Worker- Part ***/
         private void WorkerDrawing(BufferedGraphics buffer)
         {
+
             if (_pInfo.Playercount() <= 0)
                 return;
 
@@ -1027,6 +1005,8 @@ namespace Another_SC2_Hack.Classes
             var clUsercolor = _pInfo.TeamColor().Equals(2) ? Color.Green : _pInfo.Color(_pInfo.LocalPlayer());
 
             #endregion
+
+            
 
             buffer.Graphics.FillRectangle(new SolidBrush(Color.Gray), 0,
                     0,
@@ -1068,7 +1048,7 @@ namespace Another_SC2_Hack.Classes
                   iY = 0;
 
             #endregion
-
+            
             #region Get minimap Bounds
 
             double fa = (float)Height / (float)Width;
@@ -1087,7 +1067,7 @@ namespace Another_SC2_Hack.Classes
                 iX = (Width - iScale * iPlayableWidht) / 2;
             }
 
-            #endregion
+            #endregion    
 
             #region Draw Bounds
 
@@ -1114,6 +1094,7 @@ namespace Another_SC2_Hack.Classes
 
             for (var i = 0; i < _pInfo.UnitTotal(); i++)
             {
+
                 var clDesti = _myForm._cMapColorofDestinationLine;
 
 
@@ -1267,7 +1248,7 @@ namespace Another_SC2_Hack.Classes
                 #endregion
 
 
-
+                
 
                 #region Draw destination line
 
@@ -1276,15 +1257,13 @@ namespace Another_SC2_Hack.Classes
 
                 //Don't draw when it's negative
                 if (_pInfo.UnitDestPosX(i) > 10 && _pInfo.UnitDestPosY(i) > 10)
+                {
                     buffer.Graphics.DrawLine(new Pen(new SolidBrush(clDesti)), iUnitX,
-                                                iUnitY, iUnitDestX,
-                                                iUnitDestY);
+                                             iUnitY, iUnitDestX,
+                                             iUnitDestY);
+                }
 
                 #endregion
-
-
-
-
             }
 
             #endregion
@@ -1760,6 +1739,10 @@ namespace Another_SC2_Hack.Classes
         /*** Draw Notifications for specific Units ***/
         private void NotificationDrawing(BufferedGraphics buffer)
         {
+            if (!_myForm._bSupply &&
+                !_myForm._bMule)
+                return;
+
             _tmrMainTick.Interval = _myForm._iNotInterval;
             Opacity = (float)_myForm._iNotOpacity / 100;
             Width = _myForm._iNotWidth;
@@ -1767,45 +1750,128 @@ namespace Another_SC2_Hack.Classes
             Location = new Point(_myForm._iNotX, _myForm._iNotY);
             var fDiagonalSize = (float)Math.Sqrt((Math.Pow(Width, 2) + Math.Pow(Height, 2)));
 
-            #region Draw bounds
+            int iIndex = 0;
 
-            buffer.Graphics.FillRectangle(new SolidBrush(Color.Gray), 0,
-                0,
-                Width - 2,
-                Height - 2);
+            var strMessage = new string[2];
+            var iDummyDistance = 0;
+            var clWarningColor = new Color[2];
 
-            /* Draw a frame per Box */
-            buffer.Graphics.DrawRectangle(new Pen(new SolidBrush(_pInfo.Color(_pInfo.LocalPlayer())), 2), 1,
-                1,
-                Width - 2,
-                Height - 2);
+            var iDummyMuleCount = 0;         
+
+
+            #region We'll handle the messages about the supply here
+
+            if (_myForm._bSupply)
+            {
+                var iMaxSupply = _pInfo.SupplyMax(_pInfo.LocalPlayer());
+                var iCurrentSupply = _pInfo.SupplyMin(_pInfo.LocalPlayer());
+
+                if (ProofSupply(iMaxSupply, iCurrentSupply, out iDummyDistance))
+                {
+                    if (iCurrentSupply >= iMaxSupply)
+                    {
+                        clWarningColor[iIndex] = Color.Red;
+                        strMessage[iIndex] = "Supply- Warning: You are stuck!";
+                        iIndex++;
+                    }
+
+                    else
+                    {
+                        clWarningColor[iIndex] = Color.Orange;
+                        strMessage[iIndex] = "Supply- Warning: You are about to get stuck!";
+                        iIndex++;
+                    }
+                }
+
+                
+            }
 
             #endregion
 
-            return;
+            
+            #region Here we'll handle the messages about the Mule/ Queens/ Chronoboosts
 
-            for (var i = 0; i < _pInfo.UnitTotal(); i++)
+            if (_myForm._bMule)
             {
-                #region Escape Sequences
+                for (int i = 0; i < _pInfo.UnitTotal(); i++)
+                {
+                    if (_pInfo.UnitOwner(i) != _pInfo.LocalPlayer() + 1)
+                        continue;
 
-                /* Localplayer */
-                if (_pInfo.UnitOwner(i).Equals(_pInfo.LocalPlayer() + 1))
-                    continue;
-                
-                
-                /* Allie */
-                if (_pInfo.Team(_pInfo.UnitOwner(i)).Equals(_pInfo.Team(_pInfo.LocalPlayer() + 1)) &&
-                    !_pInfo.UnitOwner(i).Equals(_pInfo.LocalPlayer() + 1))
-                    continue;
+                    if (_pInfo.UnitId(i).Equals((int) Typo.UnitId.TbOrbitalGround) ||
+                        _pInfo.UnitId(i).Equals((int) Typo.UnitId.TbOrbitalAir))
+                    {
+                        if (_pInfo.UnitEnergy(i) >= 50)
+                        {
+                            iDummyMuleCount += _pInfo.UnitEnergy(i)/50;
+                            strMessage[iIndex] = "Mule- Warning: You have call-able Mule(s)!";
+                            clWarningColor[iIndex] = Color.Orange;
+                        }
+                    }
 
-                #endregion
+                    if (_pInfo.UnitId(i).Equals((int) Typo.UnitId.ZuQueen))
+                    {
+                        if (_pInfo.UnitEnergy(i) >= 25)
+                        {
+                            iDummyMuleCount += _pInfo.UnitEnergy(i)/25;
+                            strMessage[iIndex] = "Queen- Warning: You have available Injects!";
+                            clWarningColor[iIndex] = Color.Orange;
+                        }
+                    }
 
-                #region Actual Warn
+                    if (_pInfo.UnitId(i).Equals((int) Typo.UnitId.PbNexus))
+                    {
+                        if (_pInfo.UnitEnergy(i) >= 50)
+                        {
+                            iDummyMuleCount += _pInfo.UnitEnergy(i)/50;
+                            strMessage[iIndex] = "Nexus- Warning: You have Chronoboost(s)!";
+                            clWarningColor[iIndex] = Color.Orange;
+                        }
+                    }
+                }
+
+                strMessage[iIndex] += " (" + iDummyMuleCount.ToString(CultureInfo.InvariantCulture) + ")";
 
 
-
-                #endregion
+                if (iDummyMuleCount > 0)
+                    iIndex++;
             }
+
+            #endregion
+
+
+            #region Draw bounds
+
+            if (iIndex > 0)
+            {
+                buffer.Graphics.FillRectangle(new SolidBrush(Color.Gray), 0,
+                                              0,
+                                              Width - 2,
+                                              Height - 2);
+
+                /* Draw a frame per Box */
+                buffer.Graphics.DrawRectangle(new Pen(new SolidBrush(_pInfo.Color(_pInfo.LocalPlayer())), 2), 1,
+                                              1,
+                                              Width - 2,
+                                              Height - 2);
+            }
+
+            #endregion
+
+            #region Draw the actual warning
+
+            for (var i = 0; i < iIndex; i++)
+            {
+                /* Supply- warning */
+                buffer.Graphics.DrawString(strMessage[i],
+                                           new Font(_myForm._fNotPanelFont.Name, 0.028108669174579f*fDiagonalSize,
+                                                    FontStyle.Bold),
+                                           new SolidBrush(clWarningColor[i]),
+                                           new PointF(10, 10 +  i*25));
+
+            }
+
+            #endregion
         }
 
         /*** Handle Form- position ***/
@@ -1976,6 +2042,37 @@ namespace Another_SC2_Hack.Classes
                 }
 
                 if (_strBackup.Contains(_myForm._sMapPos))
+                {
+                    if (_btoggle)
+                    {
+                        _btoggle = !_btoggle;
+
+
+                        if (!_bSetPosition)
+                            _bSetPosition = true;
+                    }
+                }
+
+                if (_myForm.HotkeysPressed(Keys.Enter, Keys.Enter, Keys.Enter))
+                {
+                    _bSetPosition = false;
+                    _strBackup = "";
+                }
+            }
+
+            /* Maphack */
+            else if (_myType.Equals(Typo.BufferformType.Notification))
+            {
+
+
+                if (_bSetPosition)
+                {
+                    Location = Cursor.Position;
+                    _myForm._iNotX = Cursor.Position.X;
+                    _myForm._iNotY = Cursor.Position.Y;
+                }
+
+                if (_strBackup.Contains(_myForm._sNotPos))
                 {
                     if (_btoggle)
                     {
@@ -2168,6 +2265,34 @@ namespace Another_SC2_Hack.Classes
                 }
             }
 
+            /* Notification */
+            if (_myType.Equals(Typo.BufferformType.Notification))
+            {
+                if (_bSetSize)
+                {
+                    _myForm._iNotWidth = Cursor.Position.X - Left;
+                    _myForm._iNotHeigth = (Cursor.Position.Y - Top);
+                }
+
+                if (_strBackup.Contains(_myForm._sNotSize))
+                {
+                    if (_btoggle)
+                    {
+                        _btoggle = !_btoggle;
+
+
+                        if (!_bSetSize)
+                            _bSetSize = true;
+                    }
+                }
+
+                if (_myForm.HotkeysPressed(Keys.Enter, Keys.Enter, Keys.Enter))
+                {
+                    _bSetSize = false;
+                    _strBackup = "";
+                }
+            }
+
             
         }
 
@@ -2210,6 +2335,25 @@ namespace Another_SC2_Hack.Classes
         /*** Maintimer which ticks... ***/
         private void tmrMainTick_Tick(object sender, EventArgs e)
         {
+            /* Check if SC2 is in foreground */
+            if ((IntPtr) Pinvokes.GetForegroundWindow() != (IntPtr) PStarcraft.MainWindowHandle)
+            {
+                Visible = false;
+                return;
+            }
+
+            else
+            {
+                if (Created)
+                {
+                    Pinvokes.SetActiveWindow(Handle);
+                    Visible = true;
+                }
+            }
+
+
+
+
             Invalidate();
 
             /* Refreshes for key- input */
@@ -2475,7 +2619,6 @@ namespace Another_SC2_Hack.Classes
 
             #endregion
 
-
             #region Notification
 
             else if (_myType.Equals(Typo.BufferformType.Notification))
@@ -2483,14 +2626,14 @@ namespace Another_SC2_Hack.Classes
 
                 if (e.Delta.Equals(120))
                 {
-                    Height += 10;
-                    Width = (int)(Height * 3.4375);
+                    Height += 1;
+                    Width = (int)(Height * 6.4285714285714285714285714285714);
                 }
 
                 else if (e.Delta.Equals(-120))
                 {
-                    Height -= 10;
-                    Width = (int)(Height * 3.4375);
+                    Height -= 1;
+                    Width = (int)(Height * 6.4285714285714285714285714285714);
                 }
 
 
@@ -2499,6 +2642,112 @@ namespace Another_SC2_Hack.Classes
             }
 
             #endregion
+        }
+
+        /* Help- Method to gather the supply- count based on the max- supply */
+        private bool ProofSupply(int iMax, int iCurrent, out int distance)
+        {
+            /* There should be a bunch of types
+             * 0 - 11   =>  Distance: 1
+             * 12 - 19  =>  Distance: 2
+             * 20 - 27  =>  Distance: 3
+             * 28 - 35  =>  Distance: 4
+             * 36 - 43  =>  Distance: 4
+             * 44 - 51  =>  Distance: 4
+             * 52 - 59  =>  Distance: 5
+             * 60 - 67  =>  Distance: 5
+             * 68 - 75  =>  Distance: 5
+             * 76 - 83  =>  Distance: 5
+             * 84 - 91  =>  Distance: 5
+             * 92 - 99  =>  Distance: 5 
+             * 100+     =>  Distance: 6 */
+            distance = iMax - iCurrent;
+            
+            if (iCurrent > 0 && iCurrent < 11)
+            {
+                if (distance <= 1)
+                    return true;
+            }
+
+            else if (iCurrent > 12 && iCurrent < 19)
+            {
+                if (distance <= 2)
+                    return true;
+            }
+
+            else if (iCurrent > 20 && iCurrent < 27)
+            {
+                if (distance <= 3)
+                    return true;
+            }
+
+            else if (iCurrent > 28 && iCurrent < 35)
+            {
+                if (distance <= 4)
+                    return true;
+            }
+
+            else if (iCurrent > 36 && iCurrent < 43)
+            {
+                if (distance <= 4)
+                    return true;
+            }
+
+            else if (iCurrent > 44 && iCurrent < 51)
+            {
+                if (distance <= 4)
+                    return true;
+            }
+
+            else if (iCurrent > 52 && iCurrent < 59)
+            {
+                if (distance <= 5)
+                    return true;
+            }
+
+            else if (iCurrent > 60 && iCurrent < 67)
+            {
+                if (distance <= 5)
+                    return true;
+            }
+
+            else if (iCurrent > 68 && iCurrent < 75)
+            {
+                if (distance <= 5)
+                    return true;
+            }
+
+            else if (iCurrent > 76 && iCurrent < 83)
+            {
+                if (distance <= 5)
+                    return true;
+            }
+
+            else if (iCurrent > 84 && iCurrent < 91)
+            {
+                if (distance <= 5)
+                    return true;
+            }
+
+            else if (iCurrent > 92 && iCurrent < 99)
+            {
+                if (distance <= 5)
+                    return true;
+            }
+
+            else
+            {
+                if (iMax == 200)
+                    return false;
+
+                if (distance <= 6)
+                    return true;
+            }
+
+            return false;
+
+
+
         }
     }
 }

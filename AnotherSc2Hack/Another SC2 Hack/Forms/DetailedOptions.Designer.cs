@@ -28,9 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.btnAccept = new System.Windows.Forms.Button();
             this.btnDecline = new System.Windows.Forms.Button();
             this.gbMaphack = new System.Windows.Forms.GroupBox();
+            this.btnColorNexi = new System.Windows.Forms.Button();
+            this.cbQueenOcNexus = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.btnColorDT = new System.Windows.Forms.Button();
             this.btnColorMedivac = new System.Windows.Forms.Button();
             this.btnColorDefensive = new System.Windows.Forms.Button();
@@ -40,10 +44,16 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.btnColorNexi = new System.Windows.Forms.Button();
-            this.cbQueenOcNexus = new System.Windows.Forms.ComboBox();
-            this.label4 = new System.Windows.Forms.Label();
+            this.gbNotification = new System.Windows.Forms.GroupBox();
+            this.cbMule = new System.Windows.Forms.CheckBox();
+            this.btnConfigureBuildings = new System.Windows.Forms.Button();
+            this.btnConfigureUnits = new System.Windows.Forms.Button();
+            this.cbUnitWarning = new System.Windows.Forms.CheckBox();
+            this.cbBuildingWarning = new System.Windows.Forms.CheckBox();
+            this.cbSupplyWarning = new System.Windows.Forms.CheckBox();
+            this.ttMaininfo = new System.Windows.Forms.ToolTip(this.components);
             this.gbMaphack.SuspendLayout();
+            this.gbNotification.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnAccept
@@ -86,6 +96,39 @@
             this.gbMaphack.TabIndex = 2;
             this.gbMaphack.TabStop = false;
             this.gbMaphack.Text = "Maphack";
+            this.gbMaphack.Visible = false;
+            // 
+            // btnColorNexi
+            // 
+            this.btnColorNexi.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnColorNexi.Location = new System.Drawing.Point(277, 94);
+            this.btnColorNexi.Name = "btnColorNexi";
+            this.btnColorNexi.Size = new System.Drawing.Size(80, 23);
+            this.btnColorNexi.TabIndex = 11;
+            this.btnColorNexi.Text = "button1";
+            this.btnColorNexi.UseVisualStyleBackColor = true;
+            this.btnColorNexi.Click += new System.EventHandler(this.btnColorNexi_Click);
+            // 
+            // cbQueenOcNexus
+            // 
+            this.cbQueenOcNexus.FormattingEnabled = true;
+            this.cbQueenOcNexus.Items.AddRange(new object[] {
+            "True",
+            "False"});
+            this.cbQueenOcNexus.Location = new System.Drawing.Point(190, 96);
+            this.cbQueenOcNexus.Name = "cbQueenOcNexus";
+            this.cbQueenOcNexus.Size = new System.Drawing.Size(81, 21);
+            this.cbQueenOcNexus.TabIndex = 10;
+            this.cbQueenOcNexus.SelectedIndexChanged += new System.EventHandler(this.cbQueenOcNexus_SelectedIndexChanged);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(19, 99);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(135, 13);
+            this.label4.TabIndex = 9;
+            this.label4.Text = "Color Nexi, OC and Queen:";
             // 
             // btnColorDT
             // 
@@ -183,43 +226,96 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Color Defensive- Structures:";
             // 
-            // btnColorNexi
+            // gbNotification
             // 
-            this.btnColorNexi.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnColorNexi.Location = new System.Drawing.Point(277, 94);
-            this.btnColorNexi.Name = "btnColorNexi";
-            this.btnColorNexi.Size = new System.Drawing.Size(80, 23);
-            this.btnColorNexi.TabIndex = 11;
-            this.btnColorNexi.Text = "button1";
-            this.btnColorNexi.UseVisualStyleBackColor = true;
-            this.btnColorNexi.Click += new System.EventHandler(this.btnColorNexi_Click);
+            this.gbNotification.Controls.Add(this.cbMule);
+            this.gbNotification.Controls.Add(this.btnConfigureBuildings);
+            this.gbNotification.Controls.Add(this.btnConfigureUnits);
+            this.gbNotification.Controls.Add(this.cbUnitWarning);
+            this.gbNotification.Controls.Add(this.cbBuildingWarning);
+            this.gbNotification.Controls.Add(this.cbSupplyWarning);
+            this.gbNotification.Location = new System.Drawing.Point(415, 12);
+            this.gbNotification.Name = "gbNotification";
+            this.gbNotification.Size = new System.Drawing.Size(363, 261);
+            this.gbNotification.TabIndex = 3;
+            this.gbNotification.TabStop = false;
+            this.gbNotification.Text = "Notification";
+            this.gbNotification.Visible = false;
             // 
-            // cbQueenOcNexus
+            // cbMule
             // 
-            this.cbQueenOcNexus.FormattingEnabled = true;
-            this.cbQueenOcNexus.Items.AddRange(new object[] {
-            "True",
-            "False"});
-            this.cbQueenOcNexus.Location = new System.Drawing.Point(190, 96);
-            this.cbQueenOcNexus.Name = "cbQueenOcNexus";
-            this.cbQueenOcNexus.Size = new System.Drawing.Size(81, 21);
-            this.cbQueenOcNexus.TabIndex = 10;
-            this.cbQueenOcNexus.SelectedIndexChanged += new System.EventHandler(this.cbQueenOcNexus_SelectedIndexChanged);
+            this.cbMule.AutoSize = true;
+            this.cbMule.Location = new System.Drawing.Point(21, 47);
+            this.cbMule.Name = "cbMule";
+            this.cbMule.Size = new System.Drawing.Size(207, 17);
+            this.cbMule.TabIndex = 5;
+            this.cbMule.Text = "MULE/ Chronoboost/ Queen Warning";
+            this.cbMule.UseVisualStyleBackColor = true;
+            this.cbMule.CheckedChanged += new System.EventHandler(this.cbMule_CheckedChanged);
             // 
-            // label4
+            // btnConfigureBuildings
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(19, 99);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(135, 13);
-            this.label4.TabIndex = 9;
-            this.label4.Text = "Color Nexi, OC and Queen:";
+            this.btnConfigureBuildings.Enabled = false;
+            this.btnConfigureBuildings.Location = new System.Drawing.Point(239, 67);
+            this.btnConfigureBuildings.Name = "btnConfigureBuildings";
+            this.btnConfigureBuildings.Size = new System.Drawing.Size(46, 20);
+            this.btnConfigureBuildings.TabIndex = 4;
+            this.btnConfigureBuildings.Text = "...";
+            this.btnConfigureBuildings.UseVisualStyleBackColor = true;
+            this.btnConfigureBuildings.Click += new System.EventHandler(this.btnConfigureBuildings_Click);
+            // 
+            // btnConfigureUnits
+            // 
+            this.btnConfigureUnits.Enabled = false;
+            this.btnConfigureUnits.Location = new System.Drawing.Point(239, 90);
+            this.btnConfigureUnits.Name = "btnConfigureUnits";
+            this.btnConfigureUnits.Size = new System.Drawing.Size(46, 20);
+            this.btnConfigureUnits.TabIndex = 3;
+            this.btnConfigureUnits.Text = "...";
+            this.btnConfigureUnits.UseVisualStyleBackColor = true;
+            this.btnConfigureUnits.Click += new System.EventHandler(this.btnConfigureUnits_Click);
+            // 
+            // cbUnitWarning
+            // 
+            this.cbUnitWarning.AutoSize = true;
+            this.cbUnitWarning.Enabled = false;
+            this.cbUnitWarning.Location = new System.Drawing.Point(21, 93);
+            this.cbUnitWarning.Name = "cbUnitWarning";
+            this.cbUnitWarning.Size = new System.Drawing.Size(88, 17);
+            this.cbUnitWarning.TabIndex = 2;
+            this.cbUnitWarning.Text = "Unit- warning";
+            this.cbUnitWarning.UseVisualStyleBackColor = true;
+            this.cbUnitWarning.CheckedChanged += new System.EventHandler(this.cbUnitWarning_CheckedChanged);
+            // 
+            // cbBuildingWarning
+            // 
+            this.cbBuildingWarning.AutoSize = true;
+            this.cbBuildingWarning.Enabled = false;
+            this.cbBuildingWarning.Location = new System.Drawing.Point(21, 70);
+            this.cbBuildingWarning.Name = "cbBuildingWarning";
+            this.cbBuildingWarning.Size = new System.Drawing.Size(106, 17);
+            this.cbBuildingWarning.TabIndex = 1;
+            this.cbBuildingWarning.Text = "Building- warning";
+            this.cbBuildingWarning.UseVisualStyleBackColor = true;
+            this.cbBuildingWarning.CheckedChanged += new System.EventHandler(this.cbBuildingWarning_CheckedChanged);
+            // 
+            // cbSupplyWarning
+            // 
+            this.cbSupplyWarning.AutoSize = true;
+            this.cbSupplyWarning.Location = new System.Drawing.Point(21, 24);
+            this.cbSupplyWarning.Name = "cbSupplyWarning";
+            this.cbSupplyWarning.Size = new System.Drawing.Size(101, 17);
+            this.cbSupplyWarning.TabIndex = 0;
+            this.cbSupplyWarning.Text = "Supply Warning";
+            this.cbSupplyWarning.UseVisualStyleBackColor = true;
+            this.cbSupplyWarning.CheckedChanged += new System.EventHandler(this.cbSupplyWarning_CheckedChanged);
             // 
             // DetailedOptions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(387, 333);
+            this.ClientSize = new System.Drawing.Size(795, 333);
+            this.Controls.Add(this.gbNotification);
             this.Controls.Add(this.gbMaphack);
             this.Controls.Add(this.btnDecline);
             this.Controls.Add(this.btnAccept);
@@ -230,6 +326,8 @@
             this.Load += new System.EventHandler(this.DetailedOptions_Load);
             this.gbMaphack.ResumeLayout(false);
             this.gbMaphack.PerformLayout();
+            this.gbNotification.ResumeLayout(false);
+            this.gbNotification.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -251,5 +349,13 @@
         private System.Windows.Forms.Button btnColorNexi;
         private System.Windows.Forms.ComboBox cbQueenOcNexus;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.GroupBox gbNotification;
+        private System.Windows.Forms.Button btnConfigureBuildings;
+        private System.Windows.Forms.Button btnConfigureUnits;
+        private System.Windows.Forms.CheckBox cbUnitWarning;
+        private System.Windows.Forms.CheckBox cbBuildingWarning;
+        private System.Windows.Forms.CheckBox cbSupplyWarning;
+        private System.Windows.Forms.CheckBox cbMule;
+        private System.Windows.Forms.ToolTip ttMaininfo;
     }
 }

@@ -56,6 +56,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -63,6 +64,7 @@
     <Compile Include="Classes\BufferPanel.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Classes\PropertyGrid.cs" />
     <Compile Include="Classes\Typo.cs" />
     <Compile Include="Classes\Various.cs" />
     <Compile Include="Forms\BufferForm.cs">
@@ -96,6 +98,12 @@
     <Compile Include="Forms\Update.Designer.cs">
       <DependentUpon>Update.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Warning-Builder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Warning-Builder.Designer.cs">
+      <DependentUpon>Warning-Builder.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\BufferForm.resx">
@@ -113,6 +121,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Update.resx">
       <DependentUpon>Update.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Warning-Builder.resx">
+      <DependentUpon>Warning-Builder.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

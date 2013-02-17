@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
-using Another_SC2_Hack.Classes;
 
 namespace Another_SC2_Hack.Forms
 {
@@ -13,6 +8,7 @@ namespace Another_SC2_Hack.Forms
     {
         private string _strForm = null;
         private MainForm _mymain = null;
+        private Warning_Builder _wbWarning = null;
         public DetailedOptions(string s, MainForm fr)
         {
             _strForm = s;
@@ -22,6 +18,7 @@ namespace Another_SC2_Hack.Forms
 
         #region Variables
 
+        /* Maphack */
         private Color _cDefensive,
                       _cMedic,
                       _cDT,
@@ -32,15 +29,28 @@ namespace Another_SC2_Hack.Forms
                      _bDT,
                      _bNexi;
 
+
+        /* Notification */
+
+        private bool _bSupply,
+                     _bMule,
+                     _bUnit,
+                     _bStructure;
+
         #endregion
 
         private void DetailedOptions_Load(object sender, EventArgs e)
         {
             InitialDetails(_strForm);
+
+            /* Handl ethe tooltips */
+            ToolTipHandling();
         }
 
         private void InitialDetails(string s)
         {
+            Width = 400;
+
             switch (s)
             {
                 case "map":
@@ -66,8 +76,24 @@ namespace Another_SC2_Hack.Forms
                     btnColorDT.ForeColor = _cDT;
                     btnColorNexi.Text = _cNexi.Name;
                     btnColorNexi.ForeColor = _cNexi;
+
+                    gbMaphack.Visible = true;
                     break;
+
+                case "not":
+                    Text = "Detaailed information about: Notification";
+                    cbSupplyWarning.Checked = _mymain._bSupply;
+                    cbMule.Checked = _mymain._bMule;
+                    cbUnitWarning.Checked = _mymain._bUnit;
+                    cbBuildingWarning.Checked = _mymain._bStructures;
+
+                    gbNotification.Visible = true;
+                    gbNotification.Location = new Point(12, 12);
+                    break;
+
             }
+
+            
         }
 
         /*** Just close ***/
@@ -87,17 +113,30 @@ namespace Another_SC2_Hack.Forms
         /*** This will save the settings ***/
         private void SaveSettings()
         {
-            _mymain._cMapColorDefensive = _cDefensive;
-            _mymain._cMapColorMedics = _cMedic;
-            _mymain._cMapColorDT = _cDT;
-            _mymain._cMapColorNexiOcQueen = _cNexi;
+            switch (_strForm)
+            {
+                case "map":
+                    _mymain._cMapColorDefensive = _cDefensive;
+                    _mymain._cMapColorMedics = _cMedic;
+                    _mymain._cMapColorDT = _cDT;
+                    _mymain._cMapColorNexiOcQueen = _cNexi;
 
-            _mymain._bMapColorDefensive = _bDefensive;
-            _mymain._bMapColorMedics = _bMedic;
-            _mymain._bMapColorDT = _bDT;
-            _mymain._bMapColorNexiOcQueen = _bNexi;
+                    _mymain._bMapColorDefensive = _bDefensive;
+                    _mymain._bMapColorMedics = _bMedic;
+                    _mymain._bMapColorDT = _bDT;
+                    _mymain._bMapColorNexiOcQueen = _bNexi;
+                    break;
+
+                case "not":
+                    _mymain._bSupply = _bSupply;
+                    _mymain._bMule = _bMule;
+                    _mymain._bUnit = _bUnit;
+                    _mymain._bStructures = _bStructure;
+                    break;
+            }
 
             _mymain.CreatSaveFile();
+            
         }
 
         /*** Color for Defensive structure ***/
@@ -180,6 +219,62 @@ namespace Another_SC2_Hack.Forms
             _bNexi = Convert.ToBoolean(cbQueenOcNexus.SelectedItem);
         }
 
-       
+        /*** Configure Buildings ***/
+        private void btnConfigureBuildings_Click(object sender, EventArgs e)
+        {
+            _wbWarning = new Warning_Builder("bui");
+            _wbWarning.ShowDialog();
+        }
+
+        /*** Configure Units ***/
+        private void btnConfigureUnits_Click(object sender, EventArgs e)
+        {
+            _wbWarning = new Warning_Builder("uni");
+            _wbWarning.ShowDialog();
+        }
+
+        /*** Enable Supply- warning ***/
+        private void cbSupplyWarning_CheckedChanged(object sender, EventArgs e)
+        {
+            _bSupply = cbSupplyWarning.Checked;
+        }
+
+        /*** Enable Building- warning ***/
+        private void cbBuildingWarning_CheckedChanged(object sender, EventArgs e)
+        {
+            _bStructure = cbBuildingWarning.Checked;
+        }
+
+        /*** Enable Unit- warning ***/
+        private void cbUnitWarning_CheckedChanged(object sender, EventArgs e)
+        {
+            _bUnit = cbUnitWarning.Checked;
+        }
+
+        /*** Enable Mule- Warning ***/
+        private void cbMule_CheckedChanged(object sender, EventArgs e)
+        {
+            _bMule = cbMule.Checked;
+        }
+
+        /*** Setting the tooltips ***/
+        private void ToolTipHandling()
+        {
+            ttMaininfo.SetToolTip(cbMule, "This will print out a warning when:\nyour OC reaches 50 Energy\nyour Queen has 25 Energy\nyour Nexus has 25 Energy");
+            ttMaininfo.SetToolTip(cbSupplyWarning, "A supply- warning will be printed when you reach different stanges of the game");
+
+            ttMaininfo.SetToolTip(cbDefensive, "Will color all enemy defensive structures");
+            ttMaininfo.SetToolTip(cbDT, "Will color all enemy DT's");
+            ttMaininfo.SetToolTip(cbMedivacs, "Will color all enemy Medivacs");
+            ttMaininfo.SetToolTip(cbQueenOcNexus, "Will color your Nexus/ Queen/ OC when reaching enough Energy");
+
+            ttMaininfo.SetToolTip(btnColorDefensive, "Change the color of the defensive structures");
+            ttMaininfo.SetToolTip(btnColorDT, "Change the color of the DTs");
+            ttMaininfo.SetToolTip(btnColorMedivac, "Change the color of the Medivacs");
+            ttMaininfo.SetToolTip(btnColorNexi, "Change the color of the Nexi/ Queens/ OCs");
+
+            ttMaininfo.SetToolTip(btnAccept, "Save the settings");
+            ttMaininfo.SetToolTip(btnDecline, "Don't save the settings and just leave");
+        }
     }
 }

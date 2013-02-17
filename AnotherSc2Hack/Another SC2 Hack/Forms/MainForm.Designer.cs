@@ -82,9 +82,17 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tpGame = new System.Windows.Forms.TabPage();
             this.gbBenchmark = new System.Windows.Forms.GroupBox();
+            this.lblNotification = new System.Windows.Forms.Label();
+            this.lblArmy = new System.Windows.Forms.Label();
+            this.lblApm = new System.Windows.Forms.Label();
+            this.lblMaphack = new System.Windows.Forms.Label();
+            this.lblWorker = new System.Windows.Forms.Label();
+            this.lblIncome = new System.Windows.Forms.Label();
             this.lblResource = new System.Windows.Forms.Label();
             this.btnDebug = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.lblRamUsage = new System.Windows.Forms.Label();
+            this.lblCpuUsage = new System.Windows.Forms.Label();
             this.lblWhatResolutions = new System.Windows.Forms.Label();
             this.btnAdjustResolution = new System.Windows.Forms.Button();
             this.lblResolution = new System.Windows.Forms.Label();
@@ -94,11 +102,7 @@
             this.pnlShow = new Another_SC2_Hack.Classes.BufferPanel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.slblTimer = new System.Windows.Forms.ToolStripStatusLabel();
-            this.lblIncome = new System.Windows.Forms.Label();
-            this.lblMaphack = new System.Windows.Forms.Label();
-            this.lblWorker = new System.Windows.Forms.Label();
-            this.lblArmy = new System.Windows.Forms.Label();
-            this.lblApm = new System.Windows.Forms.Label();
+            this.ttMaininfo = new System.Windows.Forms.ToolTip(this.components);
             this.msSimpleStrip.SuspendLayout();
             this.gbRes.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -635,6 +639,7 @@
             // 
             // gbBenchmark
             // 
+            this.gbBenchmark.Controls.Add(this.lblNotification);
             this.gbBenchmark.Controls.Add(this.lblArmy);
             this.gbBenchmark.Controls.Add(this.lblApm);
             this.gbBenchmark.Controls.Add(this.lblMaphack);
@@ -643,10 +648,64 @@
             this.gbBenchmark.Controls.Add(this.lblResource);
             this.gbBenchmark.Location = new System.Drawing.Point(400, 17);
             this.gbBenchmark.Name = "gbBenchmark";
-            this.gbBenchmark.Size = new System.Drawing.Size(314, 185);
+            this.gbBenchmark.Size = new System.Drawing.Size(314, 209);
             this.gbBenchmark.TabIndex = 2;
             this.gbBenchmark.TabStop = false;
             this.gbBenchmark.Text = "Benchmark";
+            // 
+            // lblNotification
+            // 
+            this.lblNotification.AutoSize = true;
+            this.lblNotification.Location = new System.Drawing.Point(6, 177);
+            this.lblNotification.Name = "lblNotification";
+            this.lblNotification.Size = new System.Drawing.Size(41, 13);
+            this.lblNotification.TabIndex = 6;
+            this.lblNotification.Text = "label22";
+            // 
+            // lblArmy
+            // 
+            this.lblArmy.AutoSize = true;
+            this.lblArmy.Location = new System.Drawing.Point(6, 152);
+            this.lblArmy.Name = "lblArmy";
+            this.lblArmy.Size = new System.Drawing.Size(41, 13);
+            this.lblArmy.TabIndex = 5;
+            this.lblArmy.Text = "label22";
+            // 
+            // lblApm
+            // 
+            this.lblApm.AutoSize = true;
+            this.lblApm.Location = new System.Drawing.Point(6, 127);
+            this.lblApm.Name = "lblApm";
+            this.lblApm.Size = new System.Drawing.Size(41, 13);
+            this.lblApm.TabIndex = 4;
+            this.lblApm.Text = "label10";
+            // 
+            // lblMaphack
+            // 
+            this.lblMaphack.AutoSize = true;
+            this.lblMaphack.Location = new System.Drawing.Point(6, 102);
+            this.lblMaphack.Name = "lblMaphack";
+            this.lblMaphack.Size = new System.Drawing.Size(41, 13);
+            this.lblMaphack.TabIndex = 3;
+            this.lblMaphack.Text = "label14";
+            // 
+            // lblWorker
+            // 
+            this.lblWorker.AutoSize = true;
+            this.lblWorker.Location = new System.Drawing.Point(6, 77);
+            this.lblWorker.Name = "lblWorker";
+            this.lblWorker.Size = new System.Drawing.Size(41, 13);
+            this.lblWorker.TabIndex = 2;
+            this.lblWorker.Text = "label10";
+            // 
+            // lblIncome
+            // 
+            this.lblIncome.AutoSize = true;
+            this.lblIncome.Location = new System.Drawing.Point(6, 50);
+            this.lblIncome.Name = "lblIncome";
+            this.lblIncome.Size = new System.Drawing.Size(41, 13);
+            this.lblIncome.TabIndex = 1;
+            this.lblIncome.Text = "label10";
             // 
             // lblResource
             // 
@@ -659,9 +718,9 @@
             // 
             // btnDebug
             // 
-            this.btnDebug.Location = new System.Drawing.Point(21, 217);
+            this.btnDebug.Location = new System.Drawing.Point(21, 504);
             this.btnDebug.Name = "btnDebug";
-            this.btnDebug.Size = new System.Drawing.Size(114, 41);
+            this.btnDebug.Size = new System.Drawing.Size(114, 22);
             this.btnDebug.TabIndex = 1;
             this.btnDebug.Text = "Show Debug- Panel";
             this.btnDebug.UseVisualStyleBackColor = true;
@@ -669,6 +728,8 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.lblRamUsage);
+            this.groupBox4.Controls.Add(this.lblCpuUsage);
             this.groupBox4.Controls.Add(this.lblWhatResolutions);
             this.groupBox4.Controls.Add(this.btnAdjustResolution);
             this.groupBox4.Controls.Add(this.lblResolution);
@@ -676,10 +737,28 @@
             this.groupBox4.Controls.Add(this.lblShowFps);
             this.groupBox4.Location = new System.Drawing.Point(21, 17);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(373, 185);
+            this.groupBox4.Size = new System.Drawing.Size(373, 209);
             this.groupBox4.TabIndex = 0;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Gameinformation";
+            // 
+            // lblRamUsage
+            // 
+            this.lblRamUsage.AutoSize = true;
+            this.lblRamUsage.Location = new System.Drawing.Point(17, 152);
+            this.lblRamUsage.Name = "lblRamUsage";
+            this.lblRamUsage.Size = new System.Drawing.Size(41, 13);
+            this.lblRamUsage.TabIndex = 6;
+            this.lblRamUsage.Text = "label10";
+            // 
+            // lblCpuUsage
+            // 
+            this.lblCpuUsage.AutoSize = true;
+            this.lblCpuUsage.Location = new System.Drawing.Point(17, 114);
+            this.lblCpuUsage.Name = "lblCpuUsage";
+            this.lblCpuUsage.Size = new System.Drawing.Size(41, 13);
+            this.lblCpuUsage.TabIndex = 5;
+            this.lblCpuUsage.Text = "label10";
             // 
             // lblWhatResolutions
             // 
@@ -769,50 +848,10 @@
             this.slblTimer.Size = new System.Drawing.Size(235, 23);
             this.slblTimer.Text = "STARCRAFT 2 NOT FOUND";
             // 
-            // lblIncome
+            // ttMaininfo
             // 
-            this.lblIncome.AutoSize = true;
-            this.lblIncome.Location = new System.Drawing.Point(6, 50);
-            this.lblIncome.Name = "lblIncome";
-            this.lblIncome.Size = new System.Drawing.Size(41, 13);
-            this.lblIncome.TabIndex = 1;
-            this.lblIncome.Text = "label10";
-            // 
-            // lblMaphack
-            // 
-            this.lblMaphack.AutoSize = true;
-            this.lblMaphack.Location = new System.Drawing.Point(6, 102);
-            this.lblMaphack.Name = "lblMaphack";
-            this.lblMaphack.Size = new System.Drawing.Size(41, 13);
-            this.lblMaphack.TabIndex = 3;
-            this.lblMaphack.Text = "label14";
-            // 
-            // lblWorker
-            // 
-            this.lblWorker.AutoSize = true;
-            this.lblWorker.Location = new System.Drawing.Point(6, 77);
-            this.lblWorker.Name = "lblWorker";
-            this.lblWorker.Size = new System.Drawing.Size(41, 13);
-            this.lblWorker.TabIndex = 2;
-            this.lblWorker.Text = "label10";
-            // 
-            // lblArmy
-            // 
-            this.lblArmy.AutoSize = true;
-            this.lblArmy.Location = new System.Drawing.Point(6, 152);
-            this.lblArmy.Name = "lblArmy";
-            this.lblArmy.Size = new System.Drawing.Size(41, 13);
-            this.lblArmy.TabIndex = 5;
-            this.lblArmy.Text = "label22";
-            // 
-            // lblApm
-            // 
-            this.lblApm.AutoSize = true;
-            this.lblApm.Location = new System.Drawing.Point(6, 127);
-            this.lblApm.Name = "lblApm";
-            this.lblApm.Size = new System.Drawing.Size(41, 13);
-            this.lblApm.TabIndex = 4;
-            this.lblApm.Text = "label10";
+            this.ttMaininfo.BackColor = System.Drawing.Color.Black;
+            this.ttMaininfo.ForeColor = System.Drawing.Color.White;
             // 
             // MainForm
             // 
@@ -927,6 +966,10 @@
         public System.Windows.Forms.Label lblMaphack;
         public System.Windows.Forms.Label lblWorker;
         public System.Windows.Forms.Label lblIncome;
+        public System.Windows.Forms.Label lblNotification;
+        private System.Windows.Forms.ToolTip ttMaininfo;
+        private System.Windows.Forms.Label lblCpuUsage;
+        private System.Windows.Forms.Label lblRamUsage;
 
     }
 }

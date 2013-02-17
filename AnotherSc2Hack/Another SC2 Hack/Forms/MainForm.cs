@@ -1,11 +1,9 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
 using Another_SC2_Hack.Classes;
-using System.Collections.Generic;
 using System.IO;
 
 namespace Another_SC2_Hack.Forms
@@ -27,13 +25,14 @@ namespace Another_SC2_Hack.Forms
         private BufferForm _bfNot;
 
         /* Variables for the Position for the settings- group- boxes */
-        private const int Max = 6;
+        private const int Max = 7;
         private int _iCurrent = 0;
 
         private PlayerInfo _pInfo;
         private Update _upCheckforUpdates;
         private Debug_and_Testform _dtest;
         private DetailedOptions _dOptions;
+        private Stopwatch _swBenchmark;
         
         #region Variables used to safe/ load settings
 
@@ -186,20 +185,45 @@ namespace Another_SC2_Hack.Forms
 
         public Font _fNotPanelFont;
 
+        public bool _bSupply,
+                    _bMule,
+                    _bUnit,
+                    _bStructures;
 
 
         #endregion
 
+
+        /* Variables for the CPU/ RAM usage */
+        const float SampleFrequencyMillis = 1000;
+
+        protected object SyncLock = new object();
+        protected object SyncLockRam = new object();
+        protected PerformanceCounter CpuCounter;
+        protected PerformanceCounter RamCounter;
+        protected float LastSample;
+        protected DateTime LastSampleTime;
+        protected float LastSampleRam;
+        protected DateTime LastSampleTimeRam;
+
+        private float _fHighestCpu = 0.0f;
+        private float _fHighestRam = 0.0f;
 
         #region Controls And their Methods
 
         /*** Load stuff on start ***/
         private void MainForm_Load(object sender, EventArgs e)
         {
+            /* Initials the Cpu/ Ram Performance- timers */
+            ProcessorUsage();
+
+            _swBenchmark = new Stopwatch();
+
             /* Change window Title */
             var rnd = new Random();
-            Text = rnd.Next(0, 999999999).ToString(CultureInfo.InvariantCulture);
+            Text = rnd.Next(0, 99999).ToString();
 
+            
 
             while (_fResPanelFont == null)
             {
@@ -251,6 +275,9 @@ namespace Another_SC2_Hack.Forms
 
             /* Initialise the detailed options Tab */
             _dOptions = new DetailedOptions("none", this);
+
+            /* This will handle the tooltip */
+            ToolTipHandling();
         }
 
         /*** Our Maintimer, will handle the toggle for the Panels ***/
@@ -289,6 +316,12 @@ namespace Another_SC2_Hack.Forms
 
             /* Color the labels */
             ColorAndSetLabels();
+
+            /* Catches the CPU Usage */
+            lblCpuUsage.Text = "Current Cpu- usage: " + GetCpuCurrentValue(ref _fHighestCpu).ToString(CultureInfo.InvariantCulture) + " %" + "\n" + 
+                "Cpu- usage Peak: " + _fHighestCpu.ToString() + " %";
+            lblRamUsage.Text = "Current Ram- usage: " + GetRamCurrentValue(ref _fHighestRam).ToString(CultureInfo.InvariantCulture) + " MB" + "\n" +
+                "Ram- usage Peak: " + _fHighestRam.ToString() + " MB";
         }
 
         /*** Change font for a Panel ***/
@@ -926,16 +959,34 @@ namespace Another_SC2_Hack.Forms
         /*** Will load a window which allows way more options to configure ***/
         private void btnDetailedOptions_Click(object sender, EventArgs e)
         {
-            if (_dOptions == null)
-                _dOptions = new DetailedOptions("map", this);
-
-            if (_dOptions.Created)
-                _dOptions.Close();
-
-            else
+            if (_iCurrent == 5)
             {
-                _dOptions = new DetailedOptions("map", this);
-                _dOptions.Show();
+                if (_dOptions == null)
+                    _dOptions = new DetailedOptions("map", this);
+
+                if (_dOptions.Created)
+                    _dOptions.Close();
+
+                else
+                {
+                    _dOptions = new DetailedOptions("map", this);
+                    _dOptions.Show();
+                }
+            }
+
+            else if (_iCurrent == 6)
+            {
+                if (_dOptions == null)
+                    _dOptions = new DetailedOptions("not", this);
+
+                if (_dOptions.Created)
+                    _dOptions.Close();
+
+                else
+                {
+                    _dOptions = new DetailedOptions("not", this);
+                    _dOptions.Show();
+                }
             }
         }
 
@@ -1046,7 +1097,7 @@ namespace Another_SC2_Hack.Forms
             _iApmWidth = 550;
             _iWorWidth = 150;
             _iMapWidth = 262;
-            _iNotWidth = 378;
+            _iNotWidth = 400;
 
             _iResHeigth = 40;
             _iIncHeigth = 40;
@@ -1054,7 +1105,7 @@ namespace Another_SC2_Hack.Forms
             _iApmHeigth = 40;
             _iWorHeigth = 40;
             _iMapHeigth = 258;
-            _iNotHeigth = 110;
+            _iNotHeigth = 70;
 
             _iResX = 1312;
             _iIncX = 1316;
@@ -1096,6 +1147,11 @@ namespace Another_SC2_Hack.Forms
             _cMapColorDefensive = Color.Yellow;
             _cMapColorMedics = Color.Purple;
             _cMapColorNexiOcQueen = Color.Lime;
+
+            _bSupply = true;
+            _bMule = true;
+            _bUnit = true;
+            _bStructures = true;
         }
 
         /*** Put the data into the controls ***/
@@ -1371,9 +1427,6 @@ namespace Another_SC2_Hack.Forms
         /*** Read the actual data out of the file ***/
         private void ReadSaveFile()
         {
-            var fc = new FontConverter();
-            TypeConverter tc = TypeDescriptor.GetConverter(typeof(Font));
-
             var sr = new StreamReader("Settings.cfg");
 
             var strSource = sr.ReadToEnd();
@@ -2111,9 +2164,30 @@ namespace Another_SC2_Hack.Forms
                     if (strCurrentItem[0] == "PosY")
                         _iNotY = int.Parse(strCurrentItem[1]);
 
+
                     /* Opacity */
                     if (strCurrentItem[0] == "Opacity")
                         _iNotOpacity = int.Parse(strCurrentItem[1]);
+
+
+                    /* Supply Warning */
+                    if (strCurrentItem[0] == "SupplyWarning")
+                        _bSupply = Convert.ToBoolean(strCurrentItem[1]);
+
+
+                    /* MULE Warning */
+                    if (strCurrentItem[0] == "MuleWarning")
+                        _bMule = Convert.ToBoolean(strCurrentItem[1]);
+
+
+                    /* Unit Warning */
+                    if (strCurrentItem[0] == "UnitWarning")
+                        _bUnit = Convert.ToBoolean(strCurrentItem[1]);
+
+
+                    /* Structure Warning */
+                    if (strCurrentItem[0] == "StructureWarning")
+                        _bStructures = Convert.ToBoolean(strCurrentItem[1]);
 
                 }
 
@@ -2310,6 +2384,10 @@ namespace Another_SC2_Hack.Forms
             sw.WriteLine("PosX=" + _iNotX.ToString());
             sw.WriteLine("PosY=" + _iNotY.ToString());
             sw.WriteLine("Opacity=" + _iNotOpacity.ToString(CultureInfo.InvariantCulture));
+            sw.WriteLine("SupplyWarning=" + _bSupply.ToString(CultureInfo.InvariantCulture));
+            sw.WriteLine("MuleWarning=" + _bMule.ToString(CultureInfo.InvariantCulture));
+            sw.WriteLine("UnitWarning=" + _bUnit.ToString(CultureInfo.InvariantCulture));
+            sw.WriteLine("StructureWarning=" + _bStructures.ToString(CultureInfo.InvariantCulture));
             sw.WriteLine("");
 
             #endregion
@@ -2565,6 +2643,138 @@ namespace Another_SC2_Hack.Forms
                 lblArmy.ForeColor = Color.Red;
                 lblArmy.Text = "Army: -";
             }
+
+            /* Notification */
+            if (_bfNot != null && _bfNot.Created)
+                lblNotification.ForeColor = Color.Green;
+
+            else
+            {
+                lblNotification.ForeColor = Color.Red;
+                lblNotification.Text = "Notification: -";
+            }
         }
-   }
+
+        /*** This will handle the tooltip for all controls ***/
+        private void ToolTipHandling()
+        {
+            #region This is inside the "Game"- tab 
+
+            ttMaininfo.SetToolTip(lblShowFps, "This displays the FramesPerSecond");
+            ttMaininfo.SetToolTip(lblGametype, "This displays the current GameType");
+            ttMaininfo.SetToolTip(lblResolution, "This will tell you if your resolution is supported");
+            ttMaininfo.SetToolTip(btnAdjustResolution, "Here you can change the size and position of all panels!");
+            ttMaininfo.SetToolTip(btnDebug, "This button is for developers only!\nIt will show you if the Player or the Unitstruct is accurate");
+
+            ttMaininfo.SetToolTip(lblResource, "The time it takes to calculate the Resource- routine.\nChanging the refreshrate will not improve this!\n\nDrawing takes the most time!");
+            ttMaininfo.SetToolTip(lblIncome, "The time it takes to calculate the Income- routine.\nChanging the refreshrate will not improve this!\n\nDrawing takes the most time!");
+            ttMaininfo.SetToolTip(lblWorker, "The time it takes to calculate the Worker- routine.\nChanging the refreshrate will not improve this!\n\nDrawing takes the most time!");
+            ttMaininfo.SetToolTip(lblArmy, "The time it takes to calculate the Army- routine.\nChanging the refreshrate will not improve this!\n\nDrawing takes the most time!");
+            ttMaininfo.SetToolTip(lblApm, "The time it takes to calculate the Apm- routine.\nChanging the refreshrate will not improve this!\n\nDrawing takes the most time!");
+            ttMaininfo.SetToolTip(lblMaphack, "The time it takes to calculate the Maphack- routine.\nChanging the refreshrate will not improve this!\n\nDrawing takes the most time!");
+            ttMaininfo.SetToolTip(lblNotification, "The time it takes to calculate the Notification- routine.\nChanging the refreshrate will not improve this!\n\nDrawing takes the most time!");
+
+            #endregion
+
+            #region This is inside the "Settings"- tab
+
+            ttMaininfo.SetToolTip(btnPrev, "Click here to go back a step");
+            ttMaininfo.SetToolTip(btnNext, "Click here to go to the next step");
+
+            ttMaininfo.SetToolTip(txtResRef, "Change the Refreshrate (in ms)\nThe smaller it is, the higher will be the CPU consumption");
+            ttMaininfo.SetToolTip(btnResFont, "Change the font for the Panel");
+            ttMaininfo.SetToolTip(cbResRemAI, "You can remove the AI here");
+            ttMaininfo.SetToolTip(cbResRemLocal, "You can remove yourself here");
+            ttMaininfo.SetToolTip(cbResRemAllie, "Here you can remove your Allie");
+            ttMaininfo.SetToolTip(cbResRemDead, "Deadplayers are useless, remove them here");
+            ttMaininfo.SetToolTip(cbResRemObs, "Observers are useless too! Remove them here");
+            ttMaininfo.SetToolTip(cbResRemReferee, "Remove all referees here");
+            ttMaininfo.SetToolTip(btnColorDestinationLine, "Change the color for the destination. line (Maphack Panel only!)");
+            ttMaininfo.SetToolTip(cbDestinationLine, "Remove the destination- line. Or don't");
+            ttMaininfo.SetToolTip(txtResOpacity, "This will change the transparency of your Panel!");
+
+            ttMaininfo.SetToolTip(txtResShortcut, "Change the text which loads the Panel");
+            ttMaininfo.SetToolTip(txtResSize, "Change the text that changes the Panel- size");
+            ttMaininfo.SetToolTip(txtResPos, "Change the position of the Panel using this text");
+
+            ttMaininfo.SetToolTip(txtRes1, "Change the first Hotkey to start/ close a panel");
+            ttMaininfo.SetToolTip(txtRes2, "Change the second Hotkey to start/ close a panel");
+            ttMaininfo.SetToolTip(txtRes3, "Change the third Hotkey to start/ close a panel");
+
+            ttMaininfo.SetToolTip(btnDetailedOptions, "Opens additional options for the Maphack/ Notification Panel");
+            ttMaininfo.SetToolTip(btnSave, "Saves all the changes you made");
+
+            #endregion
+        }
+
+        /*** Initials the Performancecounter ***/
+        public void ProcessorUsage()
+        {
+            CpuCounter = new PerformanceCounter();
+            CpuCounter.InstanceName = Process.GetCurrentProcess().ProcessName;
+            CpuCounter.CategoryName = "Process";
+            CpuCounter.CounterName = "% Processor Time";
+            CpuCounter.ReadOnly = true;
+
+            RamCounter = new PerformanceCounter();
+            RamCounter.InstanceName = Process.GetCurrentProcess().ProcessName;
+            RamCounter.CategoryName = "Process";
+            RamCounter.CounterName = "Working Set";
+            RamCounter.ReadOnly = true;
+        }
+
+        /*** Throws out the current CPU Usage for this process ***/
+        public float GetCpuCurrentValue(ref float highest)
+        {
+            if ((DateTime.UtcNow - LastSampleTime).TotalMilliseconds > SampleFrequencyMillis)
+            {
+                lock (SyncLock)
+                {
+                    if ((DateTime.UtcNow - LastSampleTime).TotalMilliseconds > SampleFrequencyMillis)
+                    {
+                        LastSample = CpuCounter.NextValue();
+                        LastSampleTime = DateTime.UtcNow;
+
+                        LastSample /= Environment.ProcessorCount;
+
+                        if (highest < LastSample)
+                            highest = LastSample;
+                        
+
+                        if (!_pInfo.MapIngame())
+                            highest = 0;
+                    }
+                }
+            }
+
+            return LastSample;
+        }
+
+        /*** Throws out the current RAM Usage for this process ***/
+        public float GetRamCurrentValue(ref float highest)
+        {
+            if ((DateTime.UtcNow - LastSampleTimeRam).TotalMilliseconds > SampleFrequencyMillis)
+            {
+                lock (SyncLockRam)
+                {
+                    if ((DateTime.UtcNow - LastSampleTimeRam).TotalMilliseconds > SampleFrequencyMillis)
+                    {
+                        LastSampleRam = RamCounter.NextValue();
+                        LastSampleTimeRam = DateTime.UtcNow;
+
+                        LastSampleRam /= (1024*1024);
+
+                        if (highest < LastSampleRam)
+                            highest = LastSampleRam;
+
+
+                        if (!_pInfo.MapIngame())
+                            highest = 0;
+                    }
+                }
+            }
+
+            return LastSampleRam;
+        }
+    }
 }
