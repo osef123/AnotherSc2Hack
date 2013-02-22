@@ -400,6 +400,100 @@ namespace Another_SC2_Hack.Classes
 
                 #endregion
 
+                #region WoL - 2.0.4.24944
+
+                case "2.0.4.24944":
+                    //Playerinfo
+                    Struct = (int)starcraft.MainModule.BaseAddress + 0x02576F20;
+                    CameraX = Struct + 0x008;             //Valid
+                    CameraDistance = Struct + 0x00A;      //Valid
+                    CameraY = Struct + 0x00C;             //Valid
+                    Team = Struct + 0x01C;                //Valid
+                    Playertype = Struct + 0x01D;          //Valid
+                    Status = Struct + 0x01E;              //Valid
+                    Name = Struct + 0x058;                //Valid
+                    Color = Struct + 0x158;               //Valid
+                    Apm = Struct + 0x580;                 //Valid
+                    Epm = Struct + 0x5C0;                 //Valid
+                    Workers = Struct + 0x770;             //Valid
+                    SupplyMin = Struct + 0x848;           //Valid
+                    SupplyMax = Struct + 0x830;           //Valid
+                    MineralsCurrent = Struct + 0x880;     //Valid
+                    GasCurrent = Struct + 0x888;          //Valid
+                    MineralsIncome = Struct + 0x900;      //Valid
+                    GasIncome = Struct + 0x908;           //Valid
+                    MineralsArmy = Struct + 0xB68;        //Valid
+                    GasArmy = Struct + 0xB88;             //Valid
+                    Size = 0xCE0;                         //Valid
+
+                    //Race
+                    Race = (int)starcraft.MainModule.BaseAddress + 0x01EC6E40;  //Valid
+                    RaceSize = 0x10;                                            //Valid
+
+                    //ChatInput
+                    ChatBase = (int)starcraft.MainModule.BaseAddress + 0x02096858;  //Valid
+                    ChatOff0 = 0x3CC;
+                    ChatOff1 = 0x22C;
+                    ChatOff2 = 0x004;
+                    ChatOff3 = 0x004;
+                    ChatOff4 = 0x014;
+
+                    //Localplayer
+                    Localplayer4 = (int)starcraft.MainModule.BaseAddress + 0x10E19C8;   //Valid
+
+                    //Unitinfo
+                    StructUnit = (int)starcraft.MainModule.BaseAddress + 0x25F3780;     //Valid
+                    UnitPosX = StructUnit + 0x44 + 4;                                   //Valid
+                    UnitPosY = StructUnit + 0x48 + 4;                                   //Valid
+                    UnitTargetFilter = StructUnit + 0x14 + 4;                           //Valid
+                    UnitTotal = (int) starcraft.MainModule.BaseAddress + 0x2CF35C8;     //Valid
+                    UnitDestinationX = StructUnit + 0x78 + 4;                           //Valid
+                    UnitDestinationY = StructUnit + 0x7C + 4;                           //Valid
+                    UnitEnergy = StructUnit + 0x114 + 4;                                //Valid
+                    UnitOwner = StructUnit + 0x3D;                                      //Valid
+                    UnitState = StructUnit + 0x23 + 4;                                  //Not sure
+                    UnitBeeingPuked = StructUnit + 0xD4 + 4;                            //Not sure
+                    UnitMoveState = StructUnit + 0x5C;                                  //Unsure
+                    UnitModel = StructUnit + 8;                                         //Valid                                     
+                    UnitModelId = 0x06;                                                 //Valid
+                    UnitModelSize = 0x39C;                                              //Valid
+                    UnitSize = 0x1C0;                                                   //Valid
+
+                    //Mapinfo 
+                    StructMap = (int)starcraft.MainModule.BaseAddress + 0x024C4314;     //Valid
+                    MapLeft = StructMap + 0xDC;                                         //Valid
+                    MapBottom = StructMap + 0xE0;                                       //Valid
+                    MapRight = StructMap + 0xE4;                                        //Valid
+                    MapTop = StructMap + 0xE8;                                          //Valid
+
+                    //TeamColor 
+                    TeamColor1 = (int)starcraft.MainModule.BaseAddress + 0x209796C;    //Valid?
+                    TeamColor2 = (int)starcraft.MainModule.BaseAddress + 0x3EC57A8;    //Valid?
+
+                    //Ingame Timer 
+                    TimerData = (int) starcraft.MainModule.BaseAddress + 0x2096DFC;//0x1EC6A14;     //
+
+                    //Pause 
+                    PauseEnabled = (int)starcraft.MainModule.BaseAddress + 0x216B7B8;/* 0x022ab7b8
+                                               * 0x25ef0b8 
+                                               * 0x3de06e4 
+                                               * 0x3e0fc20 */
+
+                    //Gamespeed 
+                    Gamespeed = (int)starcraft.MainModule.BaseAddress + 0x03E12688; //or 0x3e0fc08
+
+                    //Fps VALID
+                    FramesPerSecond = (int)
+                    starcraft.MainModule.BaseAddress + 0x3EC608C;   //or 0x3ec320c
+
+                    //Gametype NOT VALID
+                    Gametype = 0x0176DCC8;
+                    break;
+
+
+                #endregion
+
+
                 #region HNew, unknown versions
 
                 default:

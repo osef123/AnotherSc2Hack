@@ -22,6 +22,7 @@ namespace Another_SC2_Hack.Classes
         private const float fFontSize = 0.0217607334817899f;
         readonly Stopwatch _swPrimeBenching = new Stopwatch();
         Stopwatch _swBench = new Stopwatch();
+        private bool _bStopFlickering = false;  //Toggles when changing pos/Size with mouse - Stops issues with the ActiveWindowsing within the timer
 
         /* Settings */
         #region Settings
@@ -324,6 +325,16 @@ namespace Another_SC2_Hack.Classes
             var i2 = 0;
             for (var i = 0; i < _pInfo.Playercount(); i++)
             {
+                /* With Patch 2.0.4 Blizzard 
+                 * Changes the way how they store 
+                 * Playerinformation.
+                 * They leave spots open for no reason.
+                 * However, we have to avoid those 
+                 * holes. We check for a name and when it's 
+                 * not available and the counter hasn't reached 
+                 * the max, there is another player! */
+            Spot_CalculateAgain:
+
                 #region Escape Sequences
 
                 /* Dead Player */
@@ -386,6 +397,17 @@ namespace Another_SC2_Hack.Classes
 
                 else
                     clUsercolor = _pInfo.Color(i);
+
+
+                /* Check for the playername */
+                if (_pInfo.Name(i).Length <= 0)
+                {
+                    i++;
+
+                    goto Spot_CalculateAgain;
+                }
+
+
 
                 #endregion
 
@@ -523,6 +545,8 @@ namespace Another_SC2_Hack.Classes
             for (var i = 0; i < _pInfo.Playercount(); i++)
             {
 
+            Spot_CalculateAgain:
+
                 #region Escape Sequences
 
                 /* Dead Player */
@@ -585,6 +609,16 @@ namespace Another_SC2_Hack.Classes
 
                 else
                     clUsercolor = _pInfo.Color(i);
+
+
+                /* Check for the playername */
+                if (_pInfo.Name(i).Length <= 4)
+                {
+                    i++;
+
+                    goto Spot_CalculateAgain;
+
+                }
 
                 #endregion
 
@@ -699,6 +733,8 @@ namespace Another_SC2_Hack.Classes
             for (var i = 0; i < _pInfo.Playercount(); i++)
             {
 
+            Spot_CalculateAgain:
+
                 #region Escape Sequences
 
                 /* Dead Player */
@@ -761,6 +797,16 @@ namespace Another_SC2_Hack.Classes
 
                 else
                     clUsercolor = _pInfo.Color(i);
+
+
+                /* Check for the playername */
+                if (_pInfo.Name(i).Length <= 4)
+                {
+                    i++;
+
+                    goto Spot_CalculateAgain;
+
+                }
 
                 #endregion
 
@@ -825,6 +871,7 @@ namespace Another_SC2_Hack.Classes
             var i2 = 0;
             for (var i = 0; i < _pInfo.Playercount(); i++)
             {
+            Spot_CalculateAgain:
 
                 #region Escape Sequences
 
@@ -888,6 +935,16 @@ namespace Another_SC2_Hack.Classes
 
                 else
                     clUsercolor = _pInfo.Color(i);
+
+
+                /* Check for the playername */
+                if (_pInfo.Name(i).Length <= 4)
+                {
+                    i++;
+
+                    goto Spot_CalculateAgain;
+
+                }
 
                 #endregion
 
@@ -1104,7 +1161,7 @@ namespace Another_SC2_Hack.Classes
                 var iUnitX = (_pInfo.UnitPosX(i) - _pInfo.MapLeft()) * iScale + iX;
                 var iUnitY = (_pInfo.MapTop() - _pInfo.UnitPosY(i)) * iScale + iY;
 
-                var dsize = _pInfo.UnitSize2(i);
+            
 
                 #endregion
 
@@ -1350,13 +1407,18 @@ namespace Another_SC2_Hack.Classes
                 var iPlayerX = (_pInfo.CameraX(i) - _pInfo.MapLeft()) * iScale + iX;
                 var iPlayerY = (_pInfo.MapTop() - _pInfo.CameraY(i)) * iScale + iY;
 
+                if (iPlayerX <= 0 ||
+                    iPlayerY <= 0)
+                    continue;
+                
+
                 //Base distance: 139216
                 //1.0273020422787531350770333213902 * 34,06982421875 = 35
                 var ptPoints = new PointF[4];
-                ptPoints[0] = new PointF((int)iPlayerX - (int)(1.0273020422787531350770333213902 * distance), (int)iPlayerY - (int)(0.73378717305625223934073808670727 * distance));
-                ptPoints[1] = new PointF((int)iPlayerX + (int)(1.0273020422787531350770333213902 * distance), (int)iPlayerY - (int)(0.73378717305625223934073808670727 * distance));
-                ptPoints[2] = new PointF((int)iPlayerX + (int)(0.73378717305625223934073808670727 * distance), (int)iPlayerY + (int)(0.29351486922250089573629523468291 * distance));
-                ptPoints[3] = new PointF((int)iPlayerX - (int)(0.73378717305625223934073808670727 * distance), (int)iPlayerY + (int)(0.29351486922250089573629523468291 * distance));
+                ptPoints[0] = new PointF((int)iPlayerX - 35, (int)iPlayerY - 24);
+                ptPoints[1] = new PointF((int)iPlayerX + 35, (int)iPlayerY - 24);
+                ptPoints[2] = new PointF((int)iPlayerX + 24, (int)iPlayerY + 10);
+                ptPoints[3] = new PointF((int)iPlayerX - 24, (int)iPlayerY + 10);
 
                 //If you want, take this with the angle of attack (0x014), doesnt need to be divided by 4096!
                 //ptPoints[0] = new PointF((int)iPlayerX - (int)(0.0068789308176101 * distance), (int)iPlayerY - (int)(0.0049135220125786 * distance));
@@ -1386,7 +1448,7 @@ namespace Another_SC2_Hack.Classes
                 var iUnitX = (_pInfo.UnitPosX(i) - _pInfo.MapLeft()) * iScale + iX;
                 var iUnitY = (_pInfo.MapTop() - _pInfo.UnitPosY(i)) * iScale + iY;
 
-                var dsize = _pInfo.UnitSize2(i);
+                var dsize = _pInfo.UnitSize(i);
 
                 #endregion
 
@@ -2336,10 +2398,13 @@ namespace Another_SC2_Hack.Classes
         private void tmrMainTick_Tick(object sender, EventArgs e)
         {
             /* Check if SC2 is in foreground */
-            if ((IntPtr) Pinvokes.GetForegroundWindow() != (IntPtr) PStarcraft.MainWindowHandle)
+            if (Pinvokes.GetForegroundWindow() != PStarcraft.MainWindowHandle)
             {
-                Visible = false;
-                return;
+                if (!_bStopFlickering)
+                {
+                    Visible = false;
+                    return;
+                }
             }
 
             else
@@ -2415,6 +2480,7 @@ namespace Another_SC2_Hack.Classes
                 Point mousePos = Control.MousePosition;
                 mousePos.Offset(_pt.X, _pt.Y);
                 Location = mousePos;
+                _bStopFlickering = true;
 
 
                 /* Save to Form... */
@@ -2468,6 +2534,7 @@ namespace Another_SC2_Hack.Classes
         private void BufferForm_MouseUp(object sender, MouseEventArgs e)
         {
             Pinvokes.SetForegroundWindow(PStarcraft.MainWindowHandle);
+            _bStopFlickering = false;
         }
 
         /* Change size of Form using scroll */

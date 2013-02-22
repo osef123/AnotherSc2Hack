@@ -2739,10 +2739,6 @@ namespace Another_SC2_Hack.Forms
 
                         if (highest < LastSample)
                             highest = LastSample;
-                        
-
-                        if (!_pInfo.MapIngame())
-                            highest = 0;
                     }
                 }
             }
@@ -2766,10 +2762,6 @@ namespace Another_SC2_Hack.Forms
 
                         if (highest < LastSampleRam)
                             highest = LastSampleRam;
-
-
-                        if (!_pInfo.MapIngame())
-                            highest = 0;
                     }
                 }
             }

@@ -1,0 +1,10 @@
+Explination about various things in the AnotherSc2Hack- tool
+############################################################
+
+Types:
+######
+Teamcolor:
+	2	=	Enabled
+	0	=	Disabled
+	
+	

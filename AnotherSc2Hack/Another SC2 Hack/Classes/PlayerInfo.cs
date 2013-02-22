@@ -47,7 +47,13 @@ namespace Another_SC2_Hack.Classes
         //Size is 1 byte + NameLength
         public string Name(Int32 playerNum)
         {
-            return (Encoding.UTF8.GetString(Pinvokes.ReadProcess(_myForm.HStarCraft, _myForm.OOffset.Name + _myForm.OOffset.Size * playerNum, NameLength(playerNum))));
+            
+            string strname = (Encoding.UTF8.GetString(Pinvokes.ReadProcess(_myForm.HStarCraft, _myForm.OOffset.Name + _myForm.OOffset.Size * playerNum, 32)));
+
+            if (strname.Contains("\0"))
+                strname = strname.Substring(0, strname.IndexOf('\0'));
+
+            return strname;
         }
 
         //Size is 4 bytes
@@ -111,6 +117,10 @@ namespace Another_SC2_Hack.Classes
                 case 15:
                     strresult = "255,228,91,175";
                     break;
+
+                default:
+                    return System.Drawing.Color.Indigo;
+
             }
 
             string[] strendresult = strresult.Split(',');
@@ -252,13 +262,16 @@ namespace Another_SC2_Hack.Classes
         {
             var iCount = 0;
 
-            for (var i = 0; i < 64; i++)
+            for (var i = 0; i < 16; i++)
             {
-                if (NameLength(i) > 0)
-                    iCount++;
+                string name = Name(i);
 
-                else
-                    break;
+                /* Remove the '\0' */
+                if (name.Contains("\0"))
+                    name = name.Substring(0, name.IndexOf('\0'));
+
+                if (name.Length > 0)
+                    iCount++;
             }
 
             return iCount;
@@ -305,28 +318,10 @@ namespace Another_SC2_Hack.Classes
         //Size is 4 bytes
         public Int32 UnitTotal()
         {
-            var ver = new Version(_myForm.PStarcraft.MainModule.FileVersionInfo.FileVersion);
-            var verDummy = new Version(2, 0, 0, 0);
-
-            if (ver > verDummy)
-            {
-                /* If the value of the struct address is 0, there is no unit*/
-                var iCount = 0;
-                while (
-                    BitConverter.ToInt32(
-                        Pinvokes.ReadProcess(_myForm.HStarCraft,
-                                             _myForm.OOffset.StructUnit + _myForm.OOffset.UnitSize*iCount, 4), 0) > 0)
-                    iCount++;
-
-                return iCount;
-            }
-
-
-            /* WoL */
             return (BitConverter.ToInt32(Pinvokes.ReadProcess(_myForm.HStarCraft, _myForm.OOffset.UnitTotal, 4), 0));
         }
 
-        //Size is byte
+        //Size is 1 byte
         public Int32 UnitOwner(Int32 unitNum)
         {
             return
@@ -360,8 +355,8 @@ namespace Another_SC2_Hack.Classes
                                      8), 0);
         }
 
-        //Size is 4 bytes
-        public Int32 UnitId(Int32 unitNum)
+        //Size is 2 bytes
+        public Int16 UnitId(Int32 unitNum)
         {
             var iContentofUnitModel =
                 BitConverter.ToInt32(
@@ -371,8 +366,8 @@ namespace Another_SC2_Hack.Classes
             var iContentofUnitModelShifted = (iContentofUnitModel << 5) & 0xFFFFFFFF;
 
             var id =
-                BitConverter.ToInt32(
-                    Pinvokes.ReadProcess(_myForm.HStarCraft, _myForm.OOffset.UnitModelId + (int)iContentofUnitModelShifted, 4),
+                BitConverter.ToInt16(
+                    Pinvokes.ReadProcess(_myForm.HStarCraft, _myForm.OOffset.UnitModelId + (int)iContentofUnitModelShifted, 2),
                     0);
 
             return id;
