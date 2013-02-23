@@ -166,6 +166,11 @@ namespace Another_SC2_Hack.Classes
 
             #region Excape Sequences - OKAY
 
+            
+
+            if (!Various.StarcraftAvailable())
+                return;
+
             if (!_pInfo.MapIngame())
                 return;
 
@@ -365,6 +370,11 @@ namespace Another_SC2_Hack.Classes
                         continue;
                 }
 
+                /* Hostile */
+                if (_pInfo.Team(i) == 17)
+                    continue;
+                
+
                 /* Localplayer */
                 if (_myForm._bResRemoveLocalplayer)
                 {
@@ -410,6 +420,8 @@ namespace Another_SC2_Hack.Classes
 
 
                 #endregion
+
+
 
 
                 /* Draw Background per box */
@@ -576,6 +588,10 @@ namespace Another_SC2_Hack.Classes
                     if (_pInfo.Type(i).Equals(5))
                         continue;
                 }
+
+                /* Hostile */
+                if (_pInfo.Team(i) == 17)
+                    continue;
 
                 /* Localplayer */
                 if (_myForm._bIncRemoveLocalplayer)
@@ -765,6 +781,10 @@ namespace Another_SC2_Hack.Classes
                         continue;
                 }
 
+                /* Hostile */
+                if (_pInfo.Team(i) == 17)
+                    continue;
+
                 /* Localplayer */
                 if (_myForm._bApmRemoveLocalplayer)
                 {
@@ -902,6 +922,10 @@ namespace Another_SC2_Hack.Classes
                     if (_pInfo.Type(i).Equals(5))
                         continue;
                 }
+
+                /* Hostile */
+                if (_pInfo.Team(i) == 17)
+                    continue;
 
                 /* Localplayer */
                 if (_myForm._bArmRemoveLocalplayer)

@@ -81,6 +81,9 @@
             this.btnPrev = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tpGame = new System.Windows.Forms.TabPage();
+            this.btnWorker = new System.Windows.Forms.Button();
+            this.btnIncome = new System.Windows.Forms.Button();
+            this.btnResource = new System.Windows.Forms.Button();
             this.gbBenchmark = new System.Windows.Forms.GroupBox();
             this.lblNotification = new System.Windows.Forms.Label();
             this.lblArmy = new System.Windows.Forms.Label();
@@ -99,10 +102,14 @@
             this.lblGametype = new System.Windows.Forms.Label();
             this.lblShowFps = new System.Windows.Forms.Label();
             this.tpSettings = new System.Windows.Forms.TabPage();
-            this.pnlShow = new Another_SC2_Hack.Classes.BufferPanel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.slblTimer = new System.Windows.Forms.ToolStripStatusLabel();
             this.ttMaininfo = new System.Windows.Forms.ToolTip(this.components);
+            this.btnMaphack = new System.Windows.Forms.Button();
+            this.btnApm = new System.Windows.Forms.Button();
+            this.btnArmy = new System.Windows.Forms.Button();
+            this.btnNotification = new System.Windows.Forms.Button();
+            this.pnlShow = new Another_SC2_Hack.Classes.BufferPanel();
             this.msSimpleStrip.SuspendLayout();
             this.gbRes.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -626,9 +633,16 @@
             // 
             // tpGame
             // 
+            this.tpGame.Controls.Add(this.btnNotification);
+            this.tpGame.Controls.Add(this.btnMaphack);
             this.tpGame.Controls.Add(this.gbBenchmark);
+            this.tpGame.Controls.Add(this.btnApm);
             this.tpGame.Controls.Add(this.btnDebug);
+            this.tpGame.Controls.Add(this.btnArmy);
             this.tpGame.Controls.Add(this.groupBox4);
+            this.tpGame.Controls.Add(this.btnWorker);
+            this.tpGame.Controls.Add(this.btnResource);
+            this.tpGame.Controls.Add(this.btnIncome);
             this.tpGame.Location = new System.Drawing.Point(4, 22);
             this.tpGame.Name = "tpGame";
             this.tpGame.Padding = new System.Windows.Forms.Padding(3);
@@ -636,6 +650,48 @@
             this.tpGame.TabIndex = 0;
             this.tpGame.Text = "Game";
             this.tpGame.UseVisualStyleBackColor = true;
+            // 
+            // btnWorker
+            // 
+            this.btnWorker.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnWorker.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnWorker.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnWorker.ForeColor = System.Drawing.Color.Red;
+            this.btnWorker.Location = new System.Drawing.Point(208, 502);
+            this.btnWorker.Name = "btnWorker";
+            this.btnWorker.Size = new System.Drawing.Size(95, 24);
+            this.btnWorker.TabIndex = 2;
+            this.btnWorker.Text = "Worker";
+            this.btnWorker.UseVisualStyleBackColor = true;
+            this.btnWorker.Click += new System.EventHandler(this.btnWorker_Click);
+            // 
+            // btnIncome
+            // 
+            this.btnIncome.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnIncome.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnIncome.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnIncome.ForeColor = System.Drawing.Color.Red;
+            this.btnIncome.Location = new System.Drawing.Point(107, 502);
+            this.btnIncome.Name = "btnIncome";
+            this.btnIncome.Size = new System.Drawing.Size(95, 24);
+            this.btnIncome.TabIndex = 1;
+            this.btnIncome.Text = "Income";
+            this.btnIncome.UseVisualStyleBackColor = true;
+            this.btnIncome.Click += new System.EventHandler(this.btnIncome_Click);
+            // 
+            // btnResource
+            // 
+            this.btnResource.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnResource.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnResource.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnResource.ForeColor = System.Drawing.Color.Red;
+            this.btnResource.Location = new System.Drawing.Point(6, 502);
+            this.btnResource.Name = "btnResource";
+            this.btnResource.Size = new System.Drawing.Size(95, 24);
+            this.btnResource.TabIndex = 0;
+            this.btnResource.Text = "Resource";
+            this.btnResource.UseVisualStyleBackColor = true;
+            this.btnResource.Click += new System.EventHandler(this.btnResource_Click);
             // 
             // gbBenchmark
             // 
@@ -718,7 +774,7 @@
             // 
             // btnDebug
             // 
-            this.btnDebug.Location = new System.Drawing.Point(21, 504);
+            this.btnDebug.Location = new System.Drawing.Point(21, 232);
             this.btnDebug.Name = "btnDebug";
             this.btnDebug.Size = new System.Drawing.Size(114, 22);
             this.btnDebug.TabIndex = 1;
@@ -822,15 +878,6 @@
             this.tpSettings.Text = "Settings";
             this.tpSettings.UseVisualStyleBackColor = true;
             // 
-            // pnlShow
-            // 
-            this.pnlShow.CurrentItem = 0;
-            this.pnlShow.Location = new System.Drawing.Point(20, 86);
-            this.pnlShow.MaxItem = 2;
-            this.pnlShow.Name = "pnlShow";
-            this.pnlShow.Size = new System.Drawing.Size(674, 17);
-            this.pnlShow.TabIndex = 6;
-            // 
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -852,6 +899,71 @@
             // 
             this.ttMaininfo.BackColor = System.Drawing.Color.Black;
             this.ttMaininfo.ForeColor = System.Drawing.Color.White;
+            // 
+            // btnMaphack
+            // 
+            this.btnMaphack.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnMaphack.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnMaphack.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnMaphack.ForeColor = System.Drawing.Color.Red;
+            this.btnMaphack.Location = new System.Drawing.Point(510, 502);
+            this.btnMaphack.Name = "btnMaphack";
+            this.btnMaphack.Size = new System.Drawing.Size(95, 24);
+            this.btnMaphack.TabIndex = 5;
+            this.btnMaphack.Text = "Maphack";
+            this.btnMaphack.UseVisualStyleBackColor = true;
+            this.btnMaphack.Click += new System.EventHandler(this.btnMaphack_Click);
+            // 
+            // btnApm
+            // 
+            this.btnApm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnApm.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnApm.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnApm.ForeColor = System.Drawing.Color.Red;
+            this.btnApm.Location = new System.Drawing.Point(409, 502);
+            this.btnApm.Name = "btnApm";
+            this.btnApm.Size = new System.Drawing.Size(95, 24);
+            this.btnApm.TabIndex = 4;
+            this.btnApm.Text = "Apm";
+            this.btnApm.UseVisualStyleBackColor = true;
+            this.btnApm.Click += new System.EventHandler(this.btnApm_Click);
+            // 
+            // btnArmy
+            // 
+            this.btnArmy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnArmy.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnArmy.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnArmy.ForeColor = System.Drawing.Color.Red;
+            this.btnArmy.Location = new System.Drawing.Point(309, 502);
+            this.btnArmy.Name = "btnArmy";
+            this.btnArmy.Size = new System.Drawing.Size(95, 24);
+            this.btnArmy.TabIndex = 3;
+            this.btnArmy.Text = "Army";
+            this.btnArmy.UseVisualStyleBackColor = true;
+            this.btnArmy.Click += new System.EventHandler(this.btnArmy_Click);
+            // 
+            // btnNotification
+            // 
+            this.btnNotification.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnNotification.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnNotification.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnNotification.ForeColor = System.Drawing.Color.Red;
+            this.btnNotification.Location = new System.Drawing.Point(611, 502);
+            this.btnNotification.Name = "btnNotification";
+            this.btnNotification.Size = new System.Drawing.Size(100, 24);
+            this.btnNotification.TabIndex = 6;
+            this.btnNotification.Text = "Notification";
+            this.btnNotification.UseVisualStyleBackColor = true;
+            this.btnNotification.Click += new System.EventHandler(this.btnNotification_Click);
+            // 
+            // pnlShow
+            // 
+            this.pnlShow.CurrentItem = 0;
+            this.pnlShow.Location = new System.Drawing.Point(20, 86);
+            this.pnlShow.MaxItem = 2;
+            this.pnlShow.Name = "pnlShow";
+            this.pnlShow.Size = new System.Drawing.Size(674, 17);
+            this.pnlShow.TabIndex = 6;
             // 
             // MainForm
             // 
@@ -970,6 +1082,13 @@
         private System.Windows.Forms.ToolTip ttMaininfo;
         private System.Windows.Forms.Label lblCpuUsage;
         private System.Windows.Forms.Label lblRamUsage;
+        private System.Windows.Forms.Button btnResource;
+        private System.Windows.Forms.Button btnWorker;
+        private System.Windows.Forms.Button btnIncome;
+        private System.Windows.Forms.Button btnMaphack;
+        private System.Windows.Forms.Button btnApm;
+        private System.Windows.Forms.Button btnArmy;
+        private System.Windows.Forms.Button btnNotification;
 
     }
 }

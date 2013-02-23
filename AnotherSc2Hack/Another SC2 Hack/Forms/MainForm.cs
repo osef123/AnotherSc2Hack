@@ -300,13 +300,13 @@ namespace Another_SC2_Hack.Forms
 
 
             /* We have to refresh this */
-            HandleInput(ref _bfRes, Typo.BufferformType.Ressource, _sResShortcut, _kResHotkey1, _kResHotkey2, _kResHotkey3);
-            HandleInput(ref _bfInc, Typo.BufferformType.Income, _sIncShortcut, _kIncHotkey1, _kIncHotkey2, _kIncHotkey3);
-            HandleInput(ref _bfApm, Typo.BufferformType.Apm, _sApmShortcut, _kApmHotkey1, _kApmHotkey2, _kApmHotkey3);
-            HandleInput(ref _bfArm, Typo.BufferformType.Army, _sArmShortcut, _kArmHotkey1, _kArmHotkey2, _kArmHotkey3);
-            HandleInput(ref _bfWor, Typo.BufferformType.Worker, _sWorShortcut, _kWorHotkey1, _kWorHotkey2, _kWorHotkey3);
-            HandleInput(ref _bfMap, Typo.BufferformType.Maphack, _sMapShortcut, _kMapHotkey1, _kMapHotkey2, _kMapHotkey3);
-            HandleInput(ref _bfNot, Typo.BufferformType.Notification, _sNotShortcut, _kNotHotkey1, _kNotHotkey2, _kNotHotkey3);
+            HandleInput(ref _bfRes, Typo.BufferformType.Ressource, _sResShortcut, _kResHotkey1, _kResHotkey2, _kResHotkey3, btnResource, "Resource");
+            HandleInput(ref _bfInc, Typo.BufferformType.Income, _sIncShortcut, _kIncHotkey1, _kIncHotkey2, _kIncHotkey3, btnIncome, "Income");
+            HandleInput(ref _bfApm, Typo.BufferformType.Apm, _sApmShortcut, _kApmHotkey1, _kApmHotkey2, _kApmHotkey3, btnApm, "Apm");
+            HandleInput(ref _bfArm, Typo.BufferformType.Army, _sArmShortcut, _kArmHotkey1, _kArmHotkey2, _kArmHotkey3, btnArmy, "Army");
+            HandleInput(ref _bfWor, Typo.BufferformType.Worker, _sWorShortcut, _kWorHotkey1, _kWorHotkey2, _kWorHotkey3, btnWorker, "Worker");
+            HandleInput(ref _bfMap, Typo.BufferformType.Maphack, _sMapShortcut, _kMapHotkey1, _kMapHotkey2, _kMapHotkey3, btnMaphack, "Maphack");
+            HandleInput(ref _bfNot, Typo.BufferformType.Notification, _sNotShortcut, _kNotHotkey1, _kNotHotkey2, _kNotHotkey3, btnNotification, "Notification");
 
             /* Fill Statuslabel */
             FillStatuslabel();
@@ -988,6 +988,48 @@ namespace Another_SC2_Hack.Forms
                     _dOptions.Show();
                 }
             }
+        }
+
+        /*** Toggle Resource Panel ***/
+        private void btnResource_Click(object sender, EventArgs e)
+        {
+            HandleButtons(ref _bfRes, Typo.BufferformType.Ressource, btnResource, "Resource");
+        }
+
+        /*** Toggle Income Panel ***/
+        private void btnIncome_Click(object sender, EventArgs e)
+        {
+            HandleButtons(ref _bfInc, Typo.BufferformType.Income, btnIncome, "Income");
+        }
+
+        /*** Toggle Worker Panel ***/
+        private void btnWorker_Click(object sender, EventArgs e)
+        {
+            HandleButtons(ref _bfWor, Typo.BufferformType.Worker, btnWorker, "Worker");
+        }
+
+        /*** Toggle Army Panel ***/
+        private void btnArmy_Click(object sender, EventArgs e)
+        {
+            HandleButtons(ref _bfArm, Typo.BufferformType.Army, btnArmy, "Army");
+        }
+
+        /*** Toggle Apm Panel ***/
+        private void btnApm_Click(object sender, EventArgs e)
+        {
+            HandleButtons(ref _bfApm, Typo.BufferformType.Apm, btnApm, "Apm");
+        }
+
+        /*** Toggle Maphack Panel ***/
+        private void btnMaphack_Click(object sender, EventArgs e)
+        {
+            HandleButtons(ref _bfMap, Typo.BufferformType.Maphack, btnMaphack, "Maphack");
+        }
+
+        /*** Toggle Notification Panel ***/
+        private void btnNotification_Click(object sender, EventArgs e)
+        {
+            HandleButtons(ref _bfNot, Typo.BufferformType.Notification, btnNotification, "Notification");
         }
 
         #endregion
@@ -2404,7 +2446,7 @@ namespace Another_SC2_Hack.Forms
         }
 
         /* This part handles all Input and toggles */
-        private void HandleInput(ref BufferForm bfForm, Typo.BufferformType bfType, string strShortcut, Keys keya, Keys keyb, Keys keyc)
+        private void HandleInput(ref BufferForm bfForm, Typo.BufferformType bfType, string strShortcut, Keys keya, Keys keyb, Keys keyc, Button btnButton, string strPanelName)
         {
             /* Open/ Close process, using the Keys- combination */
             if (HotkeysPressed(keya, keyb, keyc))
@@ -2413,14 +2455,22 @@ namespace Another_SC2_Hack.Forms
                     bfForm = new BufferForm(bfType, this);
 
                 if (bfForm.Created)
+                {
                     bfForm.Close();
+
+                    btnButton.Text = strPanelName + " offline";
+                    btnButton.ForeColor = Color.Red;
+                }
 
                 else
                 {
                     bfForm = new BufferForm(bfType, this);
                     bfForm.Show();
+
+                    btnButton.Text = strPanelName + " online";
+                    btnButton.ForeColor = Color.Green;
                 }
-                    
+
                 GC.Collect();
             }
 
@@ -2434,18 +2484,50 @@ namespace Another_SC2_Hack.Forms
                     bfForm = new BufferForm(bfType, this);
 
                 if (bfForm.Created)
+                {
                     bfForm.Close();
+
+                    btnButton.Text = strPanelName + " offline";
+                    btnButton.ForeColor = Color.Red;
+                }
 
                 else
                 {
                     bfForm = new BufferForm(bfType, this);
                     bfForm.Show();
+
+                    btnButton.Text = strPanelName + " online";
+                    btnButton.ForeColor = Color.Green;
                 }
 
                 Pinvokes.SimulateCompleteKeypress(Process.GetProcessesByName("SC2")[0].MainWindowHandle, Keys.Enter, 3);
 
 
                 GC.Collect();
+            }
+        }
+
+        /* This part toggles the panel(s) */
+        private void HandleButtons(ref BufferForm bfForm, Typo.BufferformType bfType, Button btnButton, string strPanelName)
+        {
+            if (bfForm == null)
+                bfForm = new BufferForm(bfType, this);
+
+            if (bfForm.Created)
+            {
+                bfForm.Close();
+
+                btnButton.Text = strPanelName + " offline";
+                btnButton.ForeColor = Color.Red;
+            }
+
+            else
+            {
+                bfForm = new BufferForm(bfType, this);
+                bfForm.Show();
+
+                btnButton.Text = strPanelName + " online";
+                btnButton.ForeColor = Color.Green;
             }
         }
 
@@ -2768,5 +2850,7 @@ namespace Another_SC2_Hack.Forms
 
             return LastSampleRam;
         }
+
+
     }
 }

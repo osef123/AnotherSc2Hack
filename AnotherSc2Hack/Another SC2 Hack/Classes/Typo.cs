@@ -219,5 +219,13 @@
             VersusAi = 3,
             Ladder = 4
         };
+
+        public enum PlayerType
+        {
+            Ai = 2,
+            Hostile = 4,
+            Referee = 5,
+            Observer = 6
+        };
     }
 }
